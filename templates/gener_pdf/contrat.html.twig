@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* table, th, td {
+          border: 1px solid black;
+        } */
+        table{
+            width: 100%;
+        }
+        hr
+        {
+            color: #009cde;
+        }
+        .keep-together {
+        page-break-inside: avoid;
+        }
+
+        .break-before {
+            page-break-before: always;
+        }
+
+        .break-after {
+            page-break-after: always;
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <link href="../../public/assets/css/bootstrap.css" rel="stylesheet">
+        <link href="../../public/assets/css/style.css" rel="stylesheet">
+    </header>
+    <div class="conainer-fluid mt-5">
+        
+        <table style="margin-bottom: 40px ;">
+            <tbody>
+                <tr>
+                    <td style="width: 30%;">
+                        <div class="col-4">
+                            <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJQAAAAZCAYAAADXEgfSAAAAAXNSR0IArs4c6QAAEd1JREFUaEPtm3mUVdWVxn/73PeKGl8BiggCNYHSDhk0aTsa0xqTdCcmnUEtBRVDMRmVdGISTTu0xDiQRKOtERuZDA4I0UTjPGJCYlQwGCUgAjUIGBQFai7qvXt3r33uo3hVVFHof73grMWCVXXvPefs/e29v/2dg9DH0CXktWQYQ8DJKCeocAwwCigS6FT4B/B3YJkKf0y18rpMpKOv7x34+f5hAem5TZ2Baz+G4ekM3xL4BvAxYCAQ9GISBVoE1iE8rLC4ZDXrZAbR/mG+A7vsaYFugNKlJFq28jlVvgd83rIReHA0AptVeFeUViBPhaGiHAYclAVbBlghyi+L23nkQLbaP8HWBShdQtAYcaoTrgWOAxxxWXtalWcCWOWSfBCG7HQBiVApJWSMwr8L/BtQkX2nDrihRLhHqmnfP826/+7aA0oVafkNp6gyE/g0kFb4gwizMvD8oDNpEsHK2x5Dl1DQrByr8F0HX1Uo9NkMfpRaw+ID5W//ApcHVNuDjMiE3IHyFSAEnnAhVxW9xap9BUTbIkaGwqUINVlQvRJFXDRwHCs+tEmXaACb8uhIOnY0Z5g+uhORXgHd9e0Z6hi8PsnAkgTtkTJoW4bqozv7nXvG0gRHjk76ucL2kIbyTmbI3jmgra+1PklQEPh3vl2+s9/19RqNKtxVX0oYjkCDYgLXRDpZz7Thbf2ue28PmC3K6vP8+vLTEYzopFrMr71kBBXufDUBw5MUOOnX3mavwSOCbj7Z5S8aQ9HHGdDczMXAT4ECEZ6WiEuLz+ZvH3ZTrQ8yLMz4LHcOYGCdn07zg4POpWmfvrVwSxE7244FPofoaJAC0B3A6wQ8Q0Plhm7OVhXm1h1CoMeg8klUKiAahDgF3QqyEgmfY2LVpj0cPqthEHnR8YiegDIKpQCRFlRrEX2JwL3KxAqbe/dYsrGAxszHEf4VOBzUOGYzyCqce4biUWv7dFxPA5jTR9ba3BeBrV2LcdKM6lO4xK3UlNXuk81yH5r9TiHS9gkCdyLKGCAF2o64eiJ9kYQs79rTPetSdARjETkW9XsZAiSBJkRWE+nzbG5YzYxTjBvHw2w2IJyMahUiv6Wj7UUKio5DOZlIK3E0SPP9HK2OWSgnAVsQLixZzcM9M5MuIH9HiqHJkFQGWkphS28cqfF+Pi2OuSgfE3hbI85NjWNZv8ZZUHcoYTQR5DxgdJboW6aw7tIi9s84/QVvVz7fBarZG0YR8BMQayAOtWYhZx7LaAbkJyG6lsmjV3X9bnb9MILweyDVwIicDtaCwAy4GeQ+An7e5YC5GwcjmQlEWoOYA7zx4/UpHQgvE+lNDKx8Yp9ANb+hkijzKxDjnx8A7wLl2e/eSKrtmn3KsLs29etNB5FJn5ddn4EpP8cWlp02AwuRzp/TkVHyC7+LynhQm9MCI3eY/PMawg1srHi0y95z158I7oGsrR9DWYpoDYjZIwFsl8YlXCxqTmEwyt0Zx/TB1b6r88P4VfODHEGG8xHf+Q0GWkVZFsHC1Ju8mgs+6xSbt/JDlBk2iSrXpRq5VqaR7hNU894sQfMuA6ZnN/cG6FOI24JG5SBfAyqBV4jCGqaOMf0LbIMqixExWWMDqhsQ3gMxAx2fBWaE6hxK8y6hemQ7s1ckSQz+Hsp/Y3xP9TVEXjBjgB7sswUcDfoykpzMpFHvYJGf6LB3Lon3L6sRfRJkE6rW6dr6jgD+huhkJlX1X+bn1H0d0fnAAFSvxcnvUK4AzkN5lnRQzYVl2/sNRHvA1uc6vo/w/WzXbYBYA1IHmgCf7S1IlxE6C1gIovuAE4C3gfXApuxcn8hKRRacf8YFE7qy5dwNp/lA85nP7OWDrwTYCryH8po0L+Y+hbMsdStcXHoW9+RuoukBxhL6zu+rfvO7h0XnX1S4JDWEv3b9eCvaDP+MYhMb+p8MEtQUne47xt7HnNovIswByhCWE0U/prTjTz5CF9TlE0Wno3IzMAjlGqJtM5n2qTSWNbTzLETSqIEt/Q6UtJFoCiD5pew7I4G1qPsmU8rXMHvtwQTJu4DTsllhCuG2J5l6XIa76m1/h5Lh40j4PuGOV/w88+o/g0YLsqBZBfpjUnnPe4AuWZVHc/FpROFtiAwDbiGVvNL/bm9jbt03QOej5OO4DCePEOkvUM4AfQhJT2DS2OZ9AlScOWx9Y1DaEe4hklkMSG6ko1VIDhhFFJ1ApPUMbH+aLQOEAncazo1Cw+UEwQbaWltIDI5Ido4lim4CTjaNEdWpTKlaFAdwN0DZTxpA5iOyjIgt5CXek6bFXu0+0hDthPHF1bzWlZ1mk2wZyOXApRqn+BWqvObEZ4uTFOMd/Mk7U7NiplhSIyXwdcAMvDaIGFc0jpW9Gsd4SVP6GvDRnwa5mlTrzaw+Kq7dV6Ms3DyYdHoh6Fd89EZuAtPKY4Aaj8ol7MZNjkRo2TCcyBv5VGAH6BlMrnoOK60ZvRvhCz6yVC9gQNFT1A5t75WMxxntRyhXe14ozCSTP5Opw9r5CeLXZ8Q6o7MRrIS+TBiew7QxG/YKhnm1R6DY+j6D8gZCvXeieKnlSqLwCZw7FOfW78Hlcj9sJHlk2aXZ9VlWWYYLLqCmbHW3+c1ONnJtlWs7+/dvTCralJf1xw9i+3IVkyuu9+91B5SB/RpSydtzg8cAZTzD0tbSRMT5hePYuGshzUsYovCQHb0AyzVieipg5Y6Q4UHAbajPWvG0vQ/bxGaB80rOYmmvj9yx/hDy3Dz/LR9dlvr1TURyRNcoQOTLqJc01kBU3cWJrFyGA6pwOgaVYYip+poHWgzy5Zg800yk45la9Wic8fRaYvHWtLa3EHkRjdahrhbC9USynmlVcdn35DVxB+h4wLrGR0Be7+6syCFiAD3RR624cUwq/8teAWVlKth5JegPs7zJHn8f5EY0cy/iLgY5HfQGJlUu6LOLvH1VMQMKfwWc7zmdcjsDCv+LCYeaAN33sMzaWlBGyOGIGwlqlMeaoCTIZyxhZBura0lVzPC8sDug1mdtujx3EgOUcRsjVI+7kJri8Z4c+rH9QcqCDE+bUwQWdaa5wDo2E0GblKsFn716O5LJnWOLKjWlZ/NEr7v79cbD6Ezfm+2crIwa8nd3FrtfMufbnzcIZQrTKt7Eotx4l3puNzTrGCOg9r4B0gLFonY3oOx7d244HCdXAl/Kcg7bv71nTrD9v4S4O6gpe8lnx0znXdngsfW1xJl0j7FrfesRvWCvPMqc2VhwOiKXgj8jtbU6kA0okwnCDURuieeBwmXUVNzYJ6AW1A0k0jlxqSSD6nWUtl+/V0JvZT+RnIhyepaWmHZoScH2ZXs0DrrrZ9eTqrh6T0DJ31E509OInGGAMgPZB/bIUE33cTAJHkU5XuCvUcSFlqEa4TCn/JL4rK+vDLUrw2wWYUJJNc/3Cijf3emvs861bu5/UV2B8+DpPiIiHBtxbgXRziRR8hpELvIBoboS5EnEiLlv/4t9S25tcU9A2VfnrxtC6D6NuGMQrfSkVdWy2XDvXCutuKkUpD9gZ2AZ1BxmZHc+6J998es5FEXdO3S2ruCio82uvQ/PeYLZoEcZjfAdVUwRDgaeReRxVA1shSDfZnLFQ31+K85QszyZ9xlKb6U07/K9cri5tfas+c/m2wjyKBq94amBkzC7V9uv7fG6PgEVcoYP7B6Ash9YpK91ylm5+pPOJtk0kCsEfpzNYq+q8qqIP2axlGgc6o8or+ZyKKA0ayBr5dcEEef0yaG89tRqEXhBNkKuYVPDzG76R2/WnFNfgURGFq2ba0KYQmbb7zyJtrGgrpxQ7wY+2yugdn3TOFfluwWE7SWE0VGew8V724G4GjbWPcLI8p9mHRyB3kTgZjCx4qPdrDBOFgy2DtOy+3aUC4j0GQKZAlj5Mydv838LK9BoPJNHWxfW+zAONaL8ctCr4sDiD+AmMqXcjsD2HFbyQwOTfifOynoT+dF1nDsm1gq91pb+GeK1yQ8PqMb7uV9iMtmsyoWlZ3Nv7ip2PEClhNyQvXmQq/NYWXmJiMtKDuWVrnesy1P+xag0MXl/LIiYWjSOd/o0ypzaMxBm+5ZceBPc5dDxLBuPiHmAd3hrJaEzEa6B0vJlNDaMwkWLs7zKyuQkJlf+xj9/67oBFAQmc1h3aoLd7pJnAO5ss7PKDgJ5i2+XN3aVk9kbSgm4xWcFOxBXmcaUisXEXah1hpa9ar3zQh7jH5XNnpTf+Y8CXGcZRMehspWOzAt8d8zOXvfruVP77dk53ibSM5hatZw401hQGdisVFvpmUUgP+oXvHNqT0Kw4CnLlu1bkMQsMu9tZVC+0JI/lCg4CsJN5BXXkW77JcrU7By3EMgVfg4LrsPqTVS2jtrkAxsfLkM1L+YitZegVODejny+M+Trnsd0jR33U+WEGvCd0WCNecSLplulHMul2vMPP7LKu3UIPmJUuT7luE6qPaHtfZgol+40hX1ClvPUI7LUq9bxV0eAGAiOQPVZgmgaGnZA3o2ec8SR9BKqd+OCLaAfAz0b9YDuzqHm1x9LGM5BJIXyMrASp1v8NJGYCj4uK3auJJIapla8hhF/K6/INMSIK5t8JhB5C9UQ8UCz0npkLF/oJKZVmb6z5/AZatCVIKY5WVDeDfIgRGlwp2Yzh+lqNv6Ec//JxLKVez3aiXUo0/0uzq6vETExWVahpkOZrobpa08T6nQCOdPLGzHVeRtlLiJveE0tTi72rIH6IwBqCUcqGKmzTu5dhKmpan7f0xIGlPZGDokCBmYcrZ0R7x1S7YHVbTQu4nhxPtt83LKJOM4vqbY03M+YW1uG8gME26wR7J4cxUBrm7+dKP8Of951Z90nEP0FwueywLGsYMA1gvkCIsWoGmHfBlrtZYPZ66oI3I0gX8wa1DhDJ/Hht6nL9vcaRG6iNbOoK9PMe3s4hNNRPbeLZ3XfkmUUU9jnEkb/09Ul9rbtebVmm9uywqLt08qNvW9O3ImwBsX0M6MMD6PhxUwZs0t47N2Qtj7NmLBpx15mv54cdBvKPKL8GbiOEsRnQutcDbwGbJMrTIKxDrYBVSPsCYSr2Fgx00sqc+pORvTBbCVZTiYc11MeEeNJzYN8p2RZKl+F54IMlxSPp3tr3B8g7HxkCYdlTHiMM405Zn5GuCxXed/rZ0yoJGMp95Q4GzEIEetc3vfnSyEvEOx8sUvw84egtUeRkW8gPiBMxbfs+hLq7sUxFg2n+DJJdJ13ir0zbH0FLjgV4VPZMmGcz+z5AehqxD2O07/sUWrikvjZ+KhH/wnE5osQf3SyllBfQFm2VzDZNHaY2lL/KUI9B+fpgTnV+Nk7iDxrNIFIT0Cs9Mp60MuZXNnQrwv8WZuejEafRxmLYFnYgNKAk6UkEs9w/kg7gjGOaXrcf+D4IuqPnwxUaxBd6OmABbeakC03M6UyPjqLJZ4rUI4CfQxJz+0pvvos0LqI4aHzSrXpNmagJxxcXnQmq/q6ttJzcyYxJDJcovjSWGxOjSKmf7TbBqaRFFnbmk9GlYKwndbG9i7C3XNyI6Zl5TZnPi6ZpmBHs2+bzXHba4spKMpw3tC2PUS9WBm3rBSfe3VG7bC9rc95ds1rZYtBheS5Ar++SDv26b2e6zaCrOEQf3SUjiIkeJ9o2zY/v0kLTYXDCGQnDeXv9XsDIvfbxiETeYUEmg870/70wITYnjc2LLiG/L2QvMIiMpFy0IBm3x2ayDl/bTGZpGNQZUu3s0kj7e9H+Rzc3NqbNNFVVpoWcZI4btGYCxhaDZW37sznuZ6cKnftWxZSVJjPJ0W5UOMzrWI7FI6Uq1JDuU9O6VVT6jfYDjzw/9MCu29szsA1juUL4pgp6hm+/W4LyjMqPB0If3MB23fd2IxCBimMFuULGt/YrMqKnHbk8LOWQu4d/jV/S+DA2I8s0P1O+RKCFvisWv2MOzrraIwLWddgtzC39LhTbt2N6SamlhuxXSERtzUX8fsDYNqPUJSz1T3V3iynihzfVPhWtoU00rqnch2DzUjwm2JnXMJvi2Ftroywf5p1/911r4Ayc/h7TR8wWjL+nOxEFV8GrZW1rGXtuXULq+1imYYsTQW8fuA/Jey/QNq18/8Df5SvGfbjYvsAAAAASUVORK5CYII=">
+                            {#<img src="{{asset('assets/img/logo_EC.png')}}"> #}
+                        </div>
+                    </td>
+                    <td style="width: 50%;">
+                        <div style="margin-left: 70px;">
+                            <h2 style="margin-left: 70px;" class="text-center titre deviTitre">Contrat de location</h2>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>  
+        
+        <!-- Société -->
+        <div class="break-after">
+            <!-- contrat numéro -->
+            <div style="border: 3px solid #009cde; margin-bottom: 40px;">
+                <table style="padding-left: 10px;">
+                    <tbody>
+                        <tr>
+                            <td><h2>Contrat numéro</h2></td>
+                            <td> {{contrat.numContrat}} </td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- information société -->
+            <div style="margin-bottom: 40px ;">
+                <h3 class="text-left">Société</h3>
+                <hr style="margin-top: -15px;">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td scope="row">raison sociale :</td>
+                            <td>{{contrat.raisonSociale}}</td>
+                            <td>siret :</td>
+                            <td>{{contrat.siret}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row"> adresse :</td>
+                            <td>{{contrat.adresse}}</td>
+                            <td>Forme juridique :</td>
+                            <td>{{contrat.formeJuridique}}</td> 
+                        </tr>
+                        <tr>
+                            <td scope="row">téléphone :</td>
+                            <td>{{contrat.telephone}}</td>
+                            <td>RCS :</td>
+                            <td>{{contrat.RCS}}</td> 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- informations client -->
+            <div style="margin-bottom: 40px ;">
+                <h3 class="text-left">Informations client</h3>
+                <hr style="margin-top: -15px;">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td scope="row">Nom :</td>
+                            <td>{{contrat.nom}}</td>
+                            <td>Mail : </td>
+                            <td>{{contrat.mail}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row"> Prénom :</td>
+                            <td>{{contrat.prenom}}</td>
+                            <td>Société :</td>
+                            <td>{{contrat.societeClient}}</td> 
+                        </tr>
+                        <tr>
+                            <td scope="row"> Téléphone :</td>
+                            <td>{{contrat.telephoneClient}}</td>
+                            <td>Adresse :</td>
+                            <td>{{contrat.adresseClient}}</td> 
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- information véhicule -->
+            <div style="margin-bottom: 40px ;">
+                <h3 class="text-left">Information véhicule</h3>
+                <hr style="margin-top: -15px;">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td scope="row">Réferences :</td>
+                            <td>{{contrat.reference}}</td>
+                            <td style="width: 20%;">Immatriculation : </td>
+                            <td style="width: 20%;">{{contrat.immatriculation}}</td>
+                        </tr>
+                        <tr>
+                            <td scope="row"> Type : </td>
+                            <td>{{contrat.type}}</td>
+                            <td style="width: 20%;">Carburant :</td>
+                            <td style="width: 20%;">{{contrat.carburant}}</td> 
+                        </tr>
+                        <tr>
+                            <td scope="row"> Kilomètrage :</td>
+                            <td>{{contrat.kilometrage}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div style="border: 3px solid #009cde;">
+                <table style="padding-left: 10px;">
+                    <tbody>
+                        <tr>
+                            <td><h2>Votre véhicule est situé à : </h2></td>
+                            <td> {{contrat.emplacement}} </td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+        </div> 
+
+        <!-- 2e page -->
+        <div class="break-after">
+            <div style="border: 3px solid #009cde; margin-bottom: 40px;">
+                <table style="padding-left: 10px;">
+                    <tbody>
+                        <tr>
+                            <td><h2>Contrat numéro</h2></td>
+                            <td> {{contrat.numContrat}} </td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- information sur la location -->
+            <div style="margin-bottom: 40px ;">
+                <h3 class="text-left">Information sur la location</h3>
+                <hr style="margin-top: -15px;">
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td scope="row"></td>
+                            <td>Départ</td>
+                            <td>Date de retour :</td>
+                            <td>Durée prévue/facturée</td>
+                        </tr>
+                        <tr>
+                            <td scope="row"> Date/Heure</td>
+                            <td>{{ contrat.debut|date('d/m/Y') }}</td>
+                            <td>{{ contrat.fin|date('d/m/Y') }}</td>
+                            <td></td> 
+                        </tr>
+                        <tr>
+                            <td scope="row">Prix de location</td>
+                            <td>Quantité</td>
+                            <td>prix H.T</td>
+                            <td>TVA (20.00%)</td> 
+                            <td>prix T.T.C</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Prix de base</td>
+                            <td>1</td>
+                            <td>{{(tht)|number_format(2,',')}}€</td>
+                            <td>{{(TVA)|number_format(2,',')}}€</td>
+                            <td>{{(TTC)|number_format(2,',')}}€</td> 
+                        </tr>
+                    </tbody>
+                </table>
+                <p>3 mois de location incluant Rachat partiel de franchise en cas de dommage*, Rachat partiel de franchise en cas de vol (TPC)* et 1100 Km inclus
+                </p>
+                <table class="table table-bordered">
+                    <tbody>
+                        <tr>
+                            <td scope="row">Suppléments</td>
+                            <td>Prix H.T</td>
+                            <td>TVA(20,00%)</td>
+                            <td>Prix T.T.C</td>
+                        </tr>
+                        <tr>
+                            <td scope="row">Participation aux coûts d'immatriculation</td>
+                            <td>{{(tht)|number_format(2,',')}}€</td>
+                            <td>{{(TVA)|number_format(2,',')}}€</td>
+                            <td>{{(TTC)|number_format(2,',')}}€</td> 
+                        </tr>
+                        <tr>
+                            <td scope="row">Immatriculation :</td>
+                            <td></td>
+                            <td></td>
+                            <td></td> 
+                        </tr>
+                        <tr>
+                            <td scope="row">Estimation du tarif de votre location </td>
+                            <td>455.36</td>
+                            <td>91.07</td>
+                            <td>546.43</td> 
+                        </tr>
+                    </tbody>
+                </table>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Remarques</td>
+                            <td></td>
+                            <td></td>
+                            <td>Cnditions</td>
+                        </tr>
+                        <tr>
+                            <td>Jour supplémentaire</td>
+                            <td>€57.60 T.T.C.</td>
+                            <td></td>
+                            <td>Prix soumis à un minimum de 1 mois de location</td>
+                        </tr>
+                        <tr>
+                            <td>Km supplémentaire</td>
+                            <td>€0.28 T.T.C.</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Prix du carpurant par litre</td>
+                            <td>€3.03 H.T.</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Franchise dommage par incident</td>
+                            <td>€2200.00</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>frais d’administration des dommages</td>
+                            <td>€45.60 T.T.C.</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Frais d’immobilisation</td>
+                            <td>€48.00</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Km supplémentair</td>
+                            <td>€0.28 T.T.C.</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <h3 class="text-left">Informations complémentaires</h3>
+                    <hr style="margin-top: -15px;">
+                    <br>
+                </div>
+            </div>
+        </div>
+        <!-- 3e page -->
+        <div>
+            <div style="border: 3px solid #009cde; margin-bottom: 40px;">
+                <table style="padding-left: 10px;">
+                    <tbody>
+                        <tr>
+                            <td><h2>Contrat numéro</h2></td>
+                            <td> {{contrat.numContrat}} </td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+            <!-- Etat du véhicule -->
+            <table style="width: 100%;">
+                <tbody>
+                   <tr>
+                        <th style="width: 50%; text-align:left;">
+                            Etat du véhicule
+                        </th>
+                        <td>
+                            Immatriculation :
+                        </td>
+                        <th style="text-align: left;">
+                            {{contrat.immatriculation}}
+                        </th>
+                   </tr>
+                </tbody>
+            </table>
+            <hr>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Exterieur</td>
+                        <td>Interieur</td>
+                    </tr>
+                    <br>
+                    <tr>
+                        <td style="width: 50%; margin-left:30px;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANcAAACbCAYAAADx5w6iAAAAAXNSR0IArs4c6QAAIABJREFUeF7t3Qe0LEX1NfDGnHPOOeecxZxzQBCzYkQFFQwoCggKSFIxgQGzYM6KijnnnHPOOet//epzs4r+Zu5Mz/S8mbmva61Z7757Z3q6q2qfs88+p6q2+e9///vfZmhDDww90HsPbDOAq/c+HS449EDpgQFcw0QYemBBPTCAa0EdO1x26IEBXMMcGHpgQT0wgGtBHTtcduiBAVzDHBh6YEE9MIBrQR07XHbogU0Drve9733NqU51quawww5rfvvb3za/+93vNhzdE53oRM1JTnKS5s53vnNzvvOdrznXuc7VnOY0p2kucYlLDLNiC/SAMXr605/efOc732l+9KMfbfiNJz3pSZtTnvKUza1udavmLGc5S3Pa0562udSlLtVc6EIX2gJ3OvtXrDW4vvvd7xYQ/fnPf26+/vWvN2c961mb3XffvTn5yU9eXgZEjrydJwcsg/utb32r2WmnnZqLXvSizQUucIFyrUte8pLNFa94xdl7dPjk2B7461//2nzqU59q/vOf/zS///3vmyOOOKKMwx/+8IfmTGc6U/n9qJqGv//972WMb3azm5UxPvOZz9yc/vSnb85znvMUg3rBC16w/H/V2lqD6wMf+ECxYCzaD37wg+ZnP/tZ6d+HPexh5XXhC1+4+fe//9384x//OEG/n/rUp27e8IY3NPe4xz2av/3tb2VQtTOe8YzN1a52teYd73jHqo3Tprifb3/722WsjBNwaQ94wAOaO93pTgU4QNQeK+/5xCc+0Rx99NHNK1/5ygIyhvPsZz97c4Mb3KB5znOe03zlK19prnCFK6xcH60luH7+858XMH3+859vvvjFLzYveclLmlvc4hbNta997eKF0DwvVo0lDHjS+yc+8YmbX/ziF+Wz/sZjffOb3yzX+eMf/1iu85jHPKa5+tWvvnIDtq43dNBBBzUf+tCHmne9613NjW50owKGa1zjGs15z3ve5hznOEehe8aiPVaeFxCN+U9/+tPmT3/6U/F2T3va08rY3vSmNy1jb6y33XbbleqetQPXD3/4w8LR0YCXvexlZcB+/etfN/e6172a29zmNoXW/fOf/ywvgGHldDxA8VLAo/k8AKKIwMX6HXLIIc2Xv/zlArwnP/nJzY1v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" alt=""></td>
+                        <td style="width: 50%;"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAANcAAACbCAYAAADx5w6iAAAAAXNSR0IArs4c6QAAIABJREFUeF7t3Qm4fWP1B/Ct0qBRKkWjUlIpJVSSIU1mRYYMkVlIMkbSQCJSosHUrBSSSqLSnDRrEFFUNNCgefo/n7dn3f+2nXvuPvvsfc4+vO/znOd3f/eevc8+79rftb7ru9b77kX++9///rfII89AnoHWZ2CRDK7W5zSfMM9AmoEMrnwj5BnoaAYyuDqa2HzaPAMZXPkeyDPQ0QxkcHU0sfm0eQYyuPI9kGegoxnI4OpoYvNp8wz0Elw//elPC68zzjijuOyyy2pZ6e53v3vx2Mc+tnjyk59cLLPMMsVNN91UrLXWWrWOzW9qdwbe8pa3JLt997vfrXXi5ZZbrnjSk55U3Pve9y7ucpe7FBtttFGt4/r+pt6A6w9/+ENx5ZVXFn/5y1+Ka665pvjXv/5VnHDCCcX3v//9BJj//Oc/RbXevcgiixTxYsiVVlopAWr55ZcvfvWrXxWPetSjipVXXjkZLI9uZ8D833jjjclG7373u4urrrqq+NOf/lTc+c53LhZddNHi3//+980ugN1ud7vbJVtzho95zGOKBzzgAcnOq666anG3u92tuNe97lU84hGP6PbCOzx7b8D1zW9+s7jrXe9a7LDDDsWXvvSl9JXvdKc7FY985COTB/zb3/5W/POf/7zZVPj77W9/+/Ty8z/+8Y+5v9/hDnco7njHO6ZjH/7wh3c4hfnUZmC99dYrLrzwwmQn40EPelDxkY98pHjYwx5WLLHEEolJlAd7sc8b3/jG4vOf/3xx3nnnJScIhOz46U9/Otn7ec973sxOcC/AZWJ//etfF6ecckpx/fXXF/e73/2Kgw8+OIGGB3vqU5+aPJpXefB8EbkuuOCCub9/+9vfLr72ta8VH/vYx9Kxz3nOc4qDDjpoZo3U5wvnvPbbb7+CcwSYXXbZJTkzUegJT3hCAgwQYSJV27Hf1VdfXdxwww3Fb37zmxT1vvCFL6TIt/TSSycmsv766xdo40Me8pA+T8PAa5squP74xz8mWgAM/j3mmGNS3oR/H3XUUQk4Jhxl/O1vf1v8+c9/Lu573/sm7wZoDMa7+ffRj350AqNjvv71rxcXX3xx8YEPfCBx/9VXX7048sgj03syRWzvHv3xj3+c5nmnnXZK9A0dBzR0/D73uU+y0y9/+ctkP/QQmLzQRLYUzR760Icmm3ix5UUXXVS8/e1vLy655JJ0Lzj3Pe5xjwRY752lMVVwMYxJ3meffQpA46X23HPPZKQYDCCymXDRaPfddy9+//vfJz4PcCKdqPeDH/wg0UreszwYXS5n8K4rrrjiLNmn19f6lKc8pfjqV7+arvH8888vnvWsZ81dL+fHthjDWWedlRwbFrLYYoulqIT6f/nLXy7e+973pnxLlCuPQw45JJ37M5/5TEEgQS232GKLXs9H9eKmCq5PfvKTxRFHHJFAIrcyocsuu2yKSp/73OeKL37xi0k1JE78/Oc/T4B69rOfXTzucY9LXuy4445LlEIiveaaaxb3v//9k+H22muvBDSRzGegjMcee2wyNOButdVWM2Wkvl0sKsg+BCdR6FWvelViB1jF3//+97nI89e//rW44oorkvNDDZ/xjGck53bdddcVl156aXqhfCIT8YLd5GoPfvCDk5AlF2NjUfDxj398cdJJJ/VtKoZez9TAde2116abfvvtty/WWGON4ulPf3px+OGHJ2/3i1/8ojj99NOLj370o8Xll1+eJv+e97xn8ny4vBwKH3cs43qhlYz7wAc+MHk6QGMwADvnnHOKF7/4xcXGG2+c6IV8Lo/mMyCaiFRyWk7x3HPPTfSdmMGu++67b/o7oFECSew/+tGPiq233jo5R0yEwwQyjhU7QR1PPPHERClFObbDVKQKqKJU4V3velex5JJLzgy1nxq4gId3OvrooxNFIL/i4x//+MeTR5Mv4etUv5e85CXFOuusk7zaS1/60vReRmCsww47LHnOPfbYI8m/KKDoJZIBH3EEZUQ/fOYTn/jEFM3yaD4DnJVaFAbAKe68886FKMURAtb3vve9RNeNk08+udhggw1S/oQ5bLnllskJvvzlL0/pgPHhD384AWuFFVZITnTxxRcv9t9//wRKLIYjpSCyMZApr8zCmBq48GdgQBnOPPPMRBeIEaeeemrxk5/8JCXDjCiSkXTlUiaa12QE6tEqq6xSHHjggcUBBxyQBAue7rOf/Wzxyle+MnF0EU+UQx2/8pWvJIOhk4ceemj6l0ycx2gzgKYRG97//vcn4FBjUTvzKxqJQG9729uSQ0MV995771SnlI/Jp4ESuIAQwAgd8ulXv/rVSbxAHwGJrdhQRAQo1B/z2GyzzZJznYUxNXBJYsmvQMVg6AUaIfQzEuC89a1vTe8hz5Js/YxGoA3ooXOIZEQOxpajfepTnyrOPvvsJHpQIfF4oAVkgEYXSb2/+93vsrjR4A41h4BDhcU42Ml4z3vekwCgLsXZUWwBQf2LE9tmm20SkwAy9tt1113TC/17xzvekVKC17/+9Un5FfVEKbkWpwqkUgWiB0AC9CyMqYLLpKN/FCSTByCECMB5wQtekNQkXF20AiwRyP9RDJHnQx/6UDIADwekwMbLrb322inqEUjkdeikgRKiLvKyd77znYnS5DHaDMiZfvazn6WDtKcRGgzFfw4Ny/jWt76V2AcnR4SiBFOGOVBihSHC+T27sYfcbLvttktOlFjiOO8X6YAYI2FPfyOMzMKYKrhMqsIxmsATog3ECQCjGgIZ4Ilo8i+JLwABFMoHKF4MictTFH/4wx+m4+RejKIDgMcDutVWW61QmwHGDK5mtydwUXBRN+ABFk5Q7sxGyimcoPwZCJQ/MBGyvVxKD6jBSXoBZzQDcLCYCVHE+QldIhob6/7YbbfdMrjqmC16yci5DCRfIkIYaBzuvfnmmyfPJsJRlhQZUcDy4Cm9FC/lbvi+PE3O5rXjjjsmI0u+n/nMZyaDUh0zuOpY6ZbvAS7yujmm+gWtwyJENM4RlZMTYyKf+MQnEiWvyuhR5xKdRDy5t7xZNItuDrRSdMRatEO96EUvyuCqY7Zh4ELfKIYGQ4pikmecvToCXIwgeSbd8nLk4Te/+c3FK17xisTR0YsMrjqWGf6eKriwDiDCQJQ95LPKHaIXu8nJMIf5alSAKL9iN0POzSEaAS5UUWrg95kW1rBhHXDh3SIN6XUUcKEpKAtKOB+4CB28LpqYR/0ZUCohXETkKoOLsoeJoHpsVxdc8jX0j/QOpBlc9e0x8J11wIXDq4XxlqOAS0Itor3uda+bF1wKyWgmw+ZRfwZQdLR9ELjQOR03mII8uS64UHbSu1Y1pZgMrvr2GBlckXPpqhC18HKtMMBGni8PNESBWK7lPUClDsP4Cpvz5VySbGvHqt3aY36tW/3hxCCFfSNyLnUqhWA5l7+pXQEhxVbhnlglJysP/YbYhQYB+bS8TM4l4g3LudB94ojhs4ghBnu7P6QUfRlTVQu1ssiLcHS5VSwLiYSYKkg5ZCxVf0mviaUGMrKoRkly7Atf+MI0wZJjbThUQ/JvVS30e0qjJBkNIfn3YfD02r3cHLpP+jqIRuaZKFRWC9UqgQTLoOq66eVacmeOzO9D5TX3AOclD44VDtReggYbmg/1LfI7JiKPRvE5yyj+xyoIc+X9nKnPQPfZ+PnPf/5Up3Gq4DIRJFxFRVFELcMg2So2Mt53vvOdlBeV6yVohwZcya/6iJdBalfEpDDyjIPqXAzq/D5PW42+tT4MeYxuEqJMn7u/0Xkg0GJWrnMpo6hdiVTKIGym6yKW+MQSEsBQ3OcwOVEgoBajkAQMwFJa8a/3ug9ERY6yylrms9uGG26YujgUs6c5OgeXIi66hr7xLqIUjyRxBRjRQ6gn3ZLjeTVeT6FYmxKliGyLcvib6AVYSy21VPqXUalNQIiGnHbaaSkaqpNo5iVckId5VZMucqGdCshAqiugD8NcvOxlL0sRWB9lXwdwmUM2KndooHccBFqOzgMDu5hjDEVnhe+mLCK30urkGCwkOjS0skXzL4HDcUoynKZ6mcikBYoCOUg5NodyNg5T534Am72j13GS89oJuEQNE+HFi5l0BUITxRuZHAKFYiTwoBrAhE74HRApJPJYPJgIhQaiAd4bjbvl3kJejUpIslULAz7eVSFSYdLfGM/nGXrbGA3g+jDcGGjPpptumjpM+joAxI2Oir/pTW8qnva0p6W8mFPjwCiFHBZnZ24JRpYIad4FOvQQuERojk+0k49RGdU13SNoIsEJveOQAdT5DI3anHPURMvzBJjYDxrpPsJOHKddyz2kgK0x2D4rHG7Xo3VwkWMpPxa66Qk09Jeprgv/IhVv5cvybnrSGMkEAgv6oC9NUdjEog7+xkgAiKPzXoxa7ooHlNhjQ2uUG9QxAOlajj/++NR3COhG3+olswKust005LrRUXsDnWPnale8rg024fQAjq2iKx5r8X529x4OEUWkIAIAewGk/HoUu7kP5XrUy6CTaKcWK58fnSJdAqwVcLkxeC7RwSRpikW7AMHExHos6k5sKCNxVTMxiXIvdEFUAiiRRkWeIXkhQ+SSK/GMRAjgUmMBVr8XGeVeqCLVyd98rkEo2HbbbZNXBGATjp5KyvsyZgVc7MY2mm5FCnbgtAzODevgLEUQEc6Sn7iR2Q0YFZRjBTlxJO4JDpANsRvHoHfYhsijfQ3lw0jqbtVAdcR8vCxvATb3SawH5Ai6HGODywQSCUQhId5NYmJ4NRPvZjZ5g4Yc67WvfW3i7ibNuizRyU0PYMCH3/NeVEGThDahIagFQFITvZ830qDL++HzYYDySmQAFdE4AhExZNwuJ7juuWcFXL4PQcKCVPbhxNiNOCRH0gsq7/Ieoga7ARIHykYoomiFVnoRoNwvXvJn5wBIdsMuyPycIrtp8m465OFSDbk7+sq5+mysqi5YR/3sscEF/Ra6GUI9qbSulMzzaZNBG4DUADZ5EmAahAk1EAkuDwlcjpPP4eqhFuphG8Sjy3toABexYBwjjTrBdd8/S+AK6VwU4iANOTQAVHdp0tYEKL4fgAER4HGeGA7bYh/BMmK+ynbjoOVYGEcbQ94lAhtELw3kXYxG4OKZgAKo3Py8FQ/D47iByax1BiNprsXV5We25RLBeEMLIqlNIiCqyNuYEBQwtlkTyXg1UYgnogoZOjN4TTwdpUAPAE9+x8P2cRehWQKXOZbTYCteVF35NNubW2JRrLmi7rIbO0daEMV7v6M+Bi3k9DhZNS12cx9hI7ErmHujjUHk8FlveMMbElPSd/qa17ymjVPf7BwjgYuaR+IkEODW6hzCvJWoLrTpABZfmBBicvFwHpC6FLsCoQs8TnUEuBwXO/Li7lFrkfuhjcBlk5qoiTW91rrHcQjorH9dV1BjP7up3DhenIUxCFyOjejOccQ5wrk4HqWhqk1jAI77gaDBfr6D78NJcmIGOw7aFDS2UxPFOD8vdU3ihjQBhWRzAgcVte3ogppSKJWJsCSf4d828/CRwIU/ExioLybTJFLuoh1lHAMH1Vh33XWTnF4dqu1hsPLfrCxmBCpUdUde78Prp7HjrsTZymgtOcAkNzT8zEm56XjiWPg3CFzO4XjiAOcQjABbQIt5dcl/H1bmktHVNDGa8iC5k76re/6HcLHJJpvM5erl4+TaqGG0Wo1zbw071hzKxQzXWN7Wb9zPrA0uVBA108MXwgG5PFpaxr0Qx/PqPCEDuQmFarTDQBUHyacilxsPBYzIRaGkLsmv8PWuEtZh35nSZQsC4gvPjToHuERm1wssRIH5IheqrcCq4ySSfu/lRIALeOU91LlpDzQutmFA4+ypYYg4IisqWB4Rud3QohZ7c9TUYA4n9vgPqt/V91MewHqwMczGvd1W29SC4OJReX83ucmTt4gublrydhcDSEw4FYpiZKBYVQP5ffB4KhAAohEUILkayXVagxfXgRAlg4hcvpccROQH+mi/GhS5KFxeIlPs7ef7RORyrKiA3vRhhPQtRYj9/okWInU1AgWg2Cts6KbWWzmoQNzV96McYwY6iAQLzoBTbGMsCC40EB3UACt8CvPUPYnoJAc1cNAjaXB8npFSaRMUdRG8uWuPt9B3J9KI9oDkWiLqAgaqhxZ62Z5gvsilZviNb3wjfW/HU9UMuZjo53ujMX1+5I4uG8271bww6k86MeTSVbVwoflt8+8ChnvH0Emija6NsSC4dEuQ20UvaqBlBvKcSVS4y19QrSTk0/LvY1NQEr7KPs8nWkyivWWYAWIJRCyfCM8ttwSOSOgjUReZOS1eU4uRETeg7+34+E6hsvo/O7BHXwdH4ntU7RF7/LOZv3WdWw2bH0EDNaROG8QUrKluSWm+cw8Flz483Jl3JbXi/hSdPg79bLwfasiTV/eM7+M1l68JfdIzqQAu94gHFnR10wF9PDUmpHB5XFnFnHb0n7TNCHNYmu+tsdz9HjuHNbmWoeDiSbU0ERhsXez/fR28jp5FCtMsgktRVc1FROMYUCXfp6uoJH8OJkBwQdukAOqLor++TGLRbWlYIiOY2Ir7gx/84NzSp6ZzMBBc0Cuc60A24aIB5arP3dqzDi43O3agZqh04OaOKDJOm1YoqBGFRKso6qJmVMvYQ5AI4xrI5ESSus0A1ZvPzRlPlml6Y07qOGKLvDUe3qeArRNEzdVcjNN/OBBc8iz5ldoFoAmXqvCxu+qkvvgonzPr4FKQVa+jDCojKIQDBjDM15tZZ36C+gEoMClKE1uisK41SdSU87mxOFLXoZ2pXMKIa4l6ZCiWrkHOVHYA73vf+1IxGKAHPbSwznV3+R4U3HeTRlCZyf7oOAdHgSWOoeYW8er2aToGgssk6yyn8vCi1BNKVVNP1vTiRjnu1gIuMrTcq4tFnOR/yqPivxtKAVqnuU4YPZsiFoqodlkd8jEAJCxZiUxqB0y5m9xEHS/yQ+WBWHXghlVm6NPQnS91EDA8V4Cz8aIU+o4ir6HHNVbHN7n+geCypAAtiYkjpwLWOB60ycWNckwG181ny/IKS3gM0UOksU0dCoiBKAMAkd+honJVnly+x6vHam7Hc6zAJcKJbKgU2hdPkNRpUt4sRpQTyeSNQNc3ccnmooQKHT/mQUQ3L/oilT7iEVO+H8cDiE2Uw1uAy8QBl4KeXZfI2pSTvg8SdggaWqH6ZtCF5i9oIa8vctWlI0HTOMLIr9zYQKNfjlOMrdB0oJsX3hgt9LeQ9f1bVgflIG46ooZyAToJXMQO7yNy2ZZAhKp2wMjTRThlAqBFM/s0PPJIQ4LvbOlM1A9do1KTUghnwpHo8tEM0GR/+luACy1BH4THvq3WHWYgxWMelDEJL7OmdAW4dL+gIzrL6wwRhDOk5hIqRArz4MaRL2uqHfTACZTf3+UcfpYjiTTA54XKcbAA6jOcl/OqMyjMzq2lyGrxWD5U59hJvMfiWWUm10i8iOZpnx0b5NijAwAtoVL38hp13AJcDKFTWQRrG1yoih6yNkf03JkMnkZoF/aNvnH9+b434yo68/CilpUAlvMAixe65u9+JhGLIjFEK6944iIQAInfyXdEQvMikrGr35H8dX+IZPow/Wtdkz5F1B/FU+hGF1FIN5zf1e0Y13DsZS8V9AvY+9RFQnCRe5LdddGYnxiiMwVVzyHFnC3kZk1asm4BLsZlBJPbNrhERNy/zcGbeqnBuUn1qlF7fI5G41kYHEIABBUXfdGT6Ip3czI6Y9t2TX4Qg1wsMqBo8gcULbohYpUAcGgQtqe7dW460SnCAKWnDktxTkv32xrOqXyj+wFl7dPzjCmhBBktdShsOSKjs7o1bAvAIRnVh6nXnaM5cOHhPKLchYdCs8Lr1T3ZfO9DWXBbQ6Qh84uMIROPc34eXfimdIXUTGpFCyfdotX0e8Qus9bGsQHHZvcizb7RTV8+t/c4xoYrvjfJWPc8gIhgFp4CoyFKmQv2dcOgzJNcgkMMs3yE9+/TAHzzYXU7ZxYAi6VC9rykILYCLovGgMqGMRJWci3JUiSIEVtVVesa1UmzbMA5ovYR4LJhTUi9Iksb4AIo55KUopy8pOtEY2Yl74q5AIxYOEgwiOU01fn1HgCM3YWjiZczcQ75hHOik/6P6gGrvMGNVE7gu77hgQsFs1+FCF03b+v6ukQjEQwrUJaIBmrU2/xRCTEt95SIjh3AxihjLnJZG8QL4uCMBVgAVl65yxvakYk3HdYYG1uahXQf4LLlsS9TTiBHudj83pvPAO9KNLC4FDMQ+aJdCj2MpzhOc97KXfGipqVAfRga0Qk5OjCISOhxecix5GScGLVUwIi1d3Wvfw5cCsVufjq/jgyA4Dkj+ujWEN0keORYRhRCDe+RuFKe/I6HkhzHzrHULMVKEqi8ID/ou655hr/PejU5mhUBZHV2KHdKjNM21c4V/m9hJ7qKFnLYUo0+jChBROnDkqrykHdZwyiXFQzc96NufT4HLvJk7O3mA1XfDRdB84dw4Z0qByAUqdhgEwVENUi2AOb3KKBaiQFcFqWRNR07qX0s+mDELq+Bkqe4SW43/1110I/7HWIhqPsBNZ3Wnh+Dvod2MyJedTU3MUwwEVSoicDlPh5lzIHLNmWxjohHDHDh7uigqAY0Hnc636BE4faioHOE/JrBNYpJ6r9X/oQFaJWyeHWQ+FH/bN29M8ClEKtvUrTty9C6JZ8a9JAHajl6ODYtXAhckj/hPbYuHjQ5CpGUIeEzg6v720e9hqKlLoPW9JVuy1uUFjhf5YRQjrufoYU/AZMS8bEAc1gW8AJctAPOi8JoiHR1xoKRC2emSlmC4F8RbL6BNgIX2TeDq870j/ceIhRFi5zMLpOU2Ee5cuCSwwOXnDw2kR3lHF29V7FYvU/5xkMUaQexVwuxiEIoqEhlpDaYHD2hzlgQXKRIH6ZNRHV/GC3M4Koz5e29BwVX8Negixr2cbNT31bO7sZUXqBEd9Hx33RW1VtFVcv6qYFloU6gcN9zCnJaP8u/6ooyC4JLnqVXzEPNRDEtLTlyNTVlu8fFjsKkeEsn+iC9D/qGRDHe33VS4ShwCuSxI1a7szLa2crgUouTt0bbnJqXLeOAi/JKpLPjGem+zlgQXNbuiFb6AqH3qKOOWhBcOgQ8EdD6GCMLGnVMMfp7qLMRuXjVvkau+GYUafeGZuDyPoyjf/P2jtDu5P50X1MGFd6jRU8aREdQ79Ke5u8AWHfLvgXBpe5FQlWwpPZop1kocinOCZ1xERlc7d0M5TOhWPJbm6cqgjZZc9TNlQ0+qy3MbCVgIW5fwCVnlbuaP03RZVFIYNGPackVUcN7UNzWci7UQ/HX5h1qAsPkXhK8yeOZ1MGinpHB1c0tjG55yohdkPUZkub1GfZ1qCXp2FA/ih2npn2tUwWXpE6XeeyhMWy7LXK+pLDaSpLB1d0thFnoOI/Hoarb9HW4L/T0uZ9iNcO0rxW4dMgra1ALh0UuUUw+1lrkUkehpOje0PY0rKWG2GHyqssLMri6u4XikbQkYxts9qlAW/3WRA15jCirW8cK32kP4BL9RVR9s+Xni5VpoVZAa78o5nUXTi6Yc2VwTdv8wz8/wKVZGi2sPnyuT1dPKJAn6ji3Li06gqZ5jQAvICgPiExqhbFFhFKH5gm5mIjVuqCRwTVN0y/82ZQsT+dgeFFrmOC08Nm6fYelMtai2cbMFgJtPU1knKuWt1o0aY9Om/KI/tYbGvpkAU7Tuc4SG6YecMABcyr4Qp+bI9dCM9TzvxMHdMXrf0Pb23pCRxdfOx4gYaeuvoDL90QLAYjaamuD5z73uenri1ZWI3tWs5XbVh7IG+s6hQyuLu6iCZ7TxjYUXfK2OpcVyX0dfQUXQcO8WbNFbQ1wxeOeLJXhxDK4+npndXRdsS6JWojOyA/6OvoKLnUu5Qwd+7a2DnDFPJpb3SVyMbW6HLn6eod1dF0HHXRQqi3a47yvY5bBFWu5qIoiWZ2xIC2MIrKnBVr3MqzOJbR6Snp1C+AsxdcxxXjvUeTXuqNvr68jg6soUttSLJbUu0Y2BS57Gs632hU/FVolfBodyyODq/vb3Q69wJUFjdHnug4t7CRyaVxU7LPsRCFt0AYjlqVYbqJAqJNYk28G1+hGHueIDK7mszc1cFnir1/QchP9YIMexiap9j41DIVCvYgZXM2N3eTIDK4ms/a/Y6YGruaX/P9HZlrYxiwOP0cGV/M5zuBqPne3iSMzuJqbuXNwkRg1fxIm6PoEDVRw3F1x1Qa0l9jcw1IUvW/jPMS5+RTeuo/M4Gpu34mAa7vttkt5k1XEwEXEGPepJLbIPvfcc9OOP9p0LEXvy5bGzc3RvyMzuJrbZKLgIlrYLyAeptb8sou0q47OY/8Cma2rqg9LG+f8+dj/zUAGV/M7YSLg8lwrVNCe4yhcG8MSA3Uvi/p0HaOEg56528Zn3ZbPkcHV3Pqdg2u+TUGbX3JWC9uYu7rnyOCqO1O3fF8GV/O5u00cmcHV3MwZXM3n7jZxZAZXczNncDWfu9vEkRlczc08NXDFpqD2arAy07O7LBqLBl6dzuR7KzVt9WvjULvzlkfu0Ghu+LpHZnDVnake5VyUPmuFgMn2w1ZrauANcOkl9LLtr4Zdu+NYNp3B1dzYTY7MS06azNr/jpla5PK0c0tObOhox91h+3vznp5zlLvimxu66ZF5sWTTmZsiuGzQYcebAw88MC03GbZvoYWSHhXj3xy5mht7lCNjmb89zC3zt7llX8csL5a0zB9js3Fo68v87ZJqd6FhK5HzpqCTv611vtj+Lp5yYl/zvo6+gssGNXpfPZq1ukGNJohNNtmk8CC8vEFNX++sjq4rb602/sTmrdXGn8Nb5Rk8O82moDZNse8e79vXYcWFp4RYTNuXfQvRak/mPPzww9NWFjZWjcZySvkZZ5yRtrn2REyPbj344IOnsymo5y/uIdeXAAAZRElEQVTppq8+fTJL8d3d7rGdta0YbGfd1wfgmQGqMnDZztpW1n3Yzlp5Cbg8holWYA7L21kDVmxnvfHGGxde1a3X5rPugrs/jbKdtYsgaNgCOAsa3QGqfOb8IIbx5nmqD2K47LLL0o5C1mIpIA8TNDwNXWIoD/BwM7sRGTlyjXcDDDv6kksuSXNuxy5et8+0kPO98MILi2222SZF2D48NAK4UGsqIKW1/HTO8lNO1HX9vdVHCPnwrbfeOnFN+xbak3y+4dGXDG1XUu8LipLB1Q245AvAdeKJJxYbbbRRAlefH8Rw9NFHF1ZfuJmVdIaVdbqZsVuedaoPv/MUDU+UlOiR4qs1rCpFUXR2wTwpg+fI1d1tkh/bOv7cThVcV111VXHMMcekWoq+wWHg8qR2O/TyTBlc4xt+oTOwjTmnaFG6yk9FXOjYafzdw+M8cHy//fbrzTORr7vuupS2SGm23Xbb9KjheI7YDTfckPbj1DdrgW/rz0T2ASbkzDPPTPtpVMWKspFciMe82s46g6v729eGreZb90AUkbv/1NE/wXYRoqybGI3de++9Uxud/VWmPW666abivPPOS09PtbWFQrHf2dzWJrdXX311Ifeygr51cAGUjWqOOOKI1JRbldkzuKZ3e3jyoe3GOT5PRiwn49O7qlt+Mvn9tNNOKzhqIHOtfRllcHmet/1j1LQMjst9r3ld7at1cNlTA4JPOOGE4sYbb0z7YMw3cuSa7C2DfptzW9cdd9xxxTLLLDPZC6j5aZYkKdFcfvnl6QmNninQl4GiotfXXnttYmWEOA7A0LlB2XT/e5wr+u1nz0yoMxasc+Gf+tc8wcQuTrrjh4FLo+9FF12UaWGd2R/zPXIY3tVNAFxugD4OPYUoIUfgUah9ekBfKNrEOtv/lffU1E+45pprJlVTd4bIBXhU8zpjQXDFSTbYYIMCDSFYzDeET+8555xzMrjqzP6Y7yG9EzHQLMZfbLHFxjxjN4erDdlNzJIlD5ijPPdlrLjiigkslkpVR4BLNLOOEW0cZcyBixf0bCfqydprrz33CKEyuC699NLUg+XDFIlFMkNhefHFFy+uuOKK5Jmuv/76Yp111inWW2+99Pdc5xrFJPXfawmQfkJKFzVr0UUXrX/wBN8Z4LIsZrXVVkuqc1+GxgivKiPzOFzNEJtttllaygNc8Rihutc+B66zzz47JW8iE06p36o8RC4q4KqrrprWdUnwrrnmmvQWYVO1nbLid8C31lprpeiVwVXXFKO/jwMTsVDCPo8A16abbpocd5+GaLrKKqsUGiDKA90Grl133TUFDuCqPtRxoe8xBy5LnSXE9onHK3VZ77LLLjdLkqk9krqFxg477JAeN+RlSGbxWTfBUkstlS42j/Fn4JBDDin0FpLiza/NXOMRT3Y17kMTr2cQYDzqR4A16Plu48/E6GfAslzXbrvtVqy77ropnyoPv9NAQcQbmxZCqWfqbr755onm7bjjjikkltudSKqS0oXGSiutlM4R7S0BLjQRfVliiSVaecjDQtcxK38nGmllQj8sy1D+oErpZxtE9fzdMViCqOAGACQ3MHD5PZXX/20axA5qNSuvvHKS6/1+UgO4dEGIsgSXYe1zk7omn8MhAZS6FlqoU7883PvARUX0N++BiVHGXOQS8kimmnQV9yzrR+0YZ9wR4HIeuZqbSH1h3CeojHtdfTkeQIBK5GED6hphSKF1kEjhPY5xA2AbVs+Gmrvkkkumor+HERp6DS1PZ9999tknRY9JqorAhWIdeuihfZnudB16YM2H9IcwVH04CPal1EH9Pv/889PDSUYdc+Di6RjN5Ici6KR1Nf1hH+zG4Wl1FPgcnrSNhzyM+mX7+n5Rh6OhooUCqMHVRj8EJoYHFj9vv/32c0KSyCbX1fvJq4oKwBjzG3Ot24DSRcUFWj2fKJFiqZssHrfrhmprOOepp56a8nDX0afalojFAXH62sekKtXVHhRElJtdxgZXTCo1R9Vf3kWKlPC1NYTYcR9J1Na19Ok8aLIuGFFHTmLZiEjkBqXIouvsETcseh5DXos6imAYh1zLUh/OS44MeGggh6n1iJLr/H5241v8R+EFNI41cmXOUIQjVbsGn1FX6ucEFIsp0FiK7yXd6MuwvMQ9bu8MDsc1xjC3OpE4IMVlQobWKPWuUcdc5IoDnQRHxuPbBteoF3dbej/p100okV5jjTWKfffdt9bXv/LKK5NEzAuLUADAE/O4OiIs8xjEPkQufwcsP2MVQGwVrhfaaSm++pTPcN66z1VDp5yb57dcqW7RtdYXbuFNVsxzLK6RQl4W2NjBfKCM5lAf5AorrNDoO9wCXDybZM/jhKDWxGh9yqPbGQhwyXMlzxan1hkoNzrv5WZAb0QfqxjsZShqiToiHyDJvzSqSuT9PsSRoJBBj+Rzop8cmUgiD+Rw3RPe4+fdd989CSTV562hWu4jv1eHqwvKOt+3jfe4bvNh7o4//vib1d1E+JNPPjmp4r6/cpKHQjZhcLcAl4vnCZ3QQAs0hjJKSOttfMF8jpvPQIALc1BLHLe5Fc1DfwygAw4dNCKS6KjNBx0VldA/uRtaGZGLR3eMQeFFW+V9oqKf5W5ahlAq4JP/BTAd58YUCYGzbw87FE2xBBGJswAy1NccmA+LfT1PzncTZNTnll9++ZFv2YHgshT7yCOPTOHRxOOlquq8XR7dzEDb4Bp0lei+Uor6JVle6xTRgdTsBpK3AdyghxPKRUQrEYmsL1+xGZEbkwNGG2OLc9HXfQOs8heA7tNQw5VTUTAt1aFm2s5CtAYyAoaBno9aOC5/z4Hg0gjK44hePJQPseuu+lUe3cxAgAsN139n9QHvL+qMwxii3EFBRB1FHdRHVMFGdNS7+dEkCprSC6+u167sTJ3HC5hQSOdRTnGN3uf8EbnkNCRsv0M7+yZiEdbc374r+ix6iWbmQb13//33T617ul8EmaZjILggWSe8fTOoKib7pJNOSnWvPLqZAR4eVWPQZZddNnUOoGgAMM5eE1HyiBsfQKiOfu+mty0DVdHveGzXII8i0Telc559TSyYhQFQ6ovEm4svvjhtoKN/1g7TaKK6b9MxEFxxsvXXXz8V0kw+Ncr/8+hmBuQzCr5uaKASWQgB0c7U9qcCM3XRQAUJH4AmD5FLqXkB9m1peFKMrgxOxk5VVMQmxeOYs6Hg8lggH2bDSaoPutLnjf5n+UbAFDSQouIoCSro5u6q0z3arMyZXMnnoYa6Qrwk88O20ZvluZ7v2ldfffVEZ0X02DteUb/pGAouJ5V/6QrQr8aTXnDBBcnTDXuUUNOLGXacmy9WiA56HzozyzcDscBOruoqUXBFWbzkNlEs9t3jySbxzLRBAkQXNmhyzhA0QuyIcwC3F+rlu1X/3uSzmh5DpJEKcWyK57QFG/5oKxtnLAguVAF/tmZIIsj46KHcYJJD4j2saVixc5zEf5LfZdBnDVqWoYuCJOx7S8BjHVQ8LQSVIxHHFnbT/g6DPr/cFV/+uxzPS16PAscGstP4DqR3y/kNS6uo422MBcFFmiRTyr0g3AejLaTcrlpaItlWayH5GgtJumTliFx28SEP923t0DCDDQKX4r2ePDmQmy+62WPPdcuEFDeH7WvSxk1S9xxRL3I9tiMztELJ7eaLXOR/f/PitOV8bfSz1r1mWwUSMRSO99xzzxRJdWe0MRYEV3yIRlI3uD0M5V8ULZIlg7dFEYFKEQ+gGUqHgf04DJ8zqLdNTuLluFDGgF/+YuWrCBsb67cxYV2dYxC4yOFeOjbK24OTwtWdzI0yyaAl6l1d53zn1YeH2rpHPGGUrG/I3Vx7uR/S70MJVeqR46C6Hswgr+cURWTv6ZrqW32PHXBU1htKfdS72hi1weXD0EM0kTEVJBUjNX4y/rgjaii6B7RfVQepdFCdjZqmVLDhhhum+kt1WBQ3ySUWTedhELh0WWiAVcjkQKLuFJFLnilia86d9sBi5OOU5fKQRijhYD/lIWK5dg+W40yrhWY5EDGh61zMHEp3DNfYpBNjvrkfCVzCO5TLBYR7FXod1i5onPU6gOWLkUJ5EFzcl95yyy3n9j63nGLQCmY3nBf6GAVTHeUaMwGLSIBSMRKP2ofN/wcZYxC4ePvo0o6eQceGoCGSYw0EpmkM5QOKMmerSRew5E+EgXggBIYjeoXsH9cZqqR0g1PEVNxPzkdEsyKe49Rutccee6R/2xzkdlTQUhwrEXyGz2wz9xsJXPHlUESTRVFx07rprZFB3UxuXfk4ciseWgFPUilpd7Mo7OkM12dn4hlOV4CWmqAR0ajqxhPOg0JY/s5IsZWX95G1LYGQv4h0fRt93mdi0FyxHSfLbsQkAGJ/zktLEVnb4CjZrWwrwpPoC1ScZixzOf3001OuprdVkzHn4XzAy4G35URQUfcrZ65gjhVZPdD2aASu8kXoJPCUDUNV26I9OVmdoR0HaCSyOqkN3eDyiFimwAj4vKq5VaN64HhMVALAo9GUmjgI1KiFfMxgHMvNh+13X+e6u3jPLIErKDwAiTKGKCBXqjIDObqI5PthGOyldKCepJHY8YBZXlPlfGW7yZ81NBO42hgCQETS2FCpjfNWzzE2uIR1LVKKzVG7cPHUOoqiSDGfRK4x2OTzVCacB5TQ8oCM4ffyvNgQH6iAiwH1hdla2yR5CelW9MqvJKQhYoiyEn9FQeByA/CQ47YVtW2MWQKX3kRPXLQsg63ZjcKHumEW2p/QfLTcOjF5I3YjZ15uueVSvVKE8uJInYPNOWZ2dS+Q8EVFEUYEk7eN08AgVbCyG5iwGhHLvSBXbEuQax1cTujmNgkkTbmPySOHU+0IFC5eW088kymaSLVUUYgYxCQzSlBASTwpWo6HBuLCXrwlL0ayVdwOcKEfqAMDegQnY0VvHDq41VZbpesQEUnFaGSfuvxnBVzYhnwFEBS3rVyP/fzYyfewTRlRCm2kFAIH2xEvlA4AjjDmBXgh1nCAIXSwjc+h5smfiWbAHOvT6jg3ERYl9bJFmvNgMZiS+2Svvfaqc5rG7xk7clU/GRcn0UtwQ44FMvRRZJFTubF5Pp5JAc+GjBQv4Z9BeDR7eCuWikD+ptdN7x3QUiiBRCfzYYcdlpZhM3KoheGVYou3eLQpWkkuNvq2ynpWwFW2GyGAs4t8RYc5OwOPmmjQRTczm1ikSNVlKw2x/s8O3s/u3rP00kunMg9nCHTshZXEvi517eY+FKlQyShVYDTEFp8P9F2P1sHlgm1oL3rxbBJTnkOOJJKgdLwGjo42MAiPRLigDjkWpZB0ioIAY3JQDkATIQELvfCvWpjlMAwcCbZeSEAm9XoPQ1tKQNG0FslwHCoTG5d2PdELnX9WwMWhofOkcgs6zS+ASQ1EBn/DFMwzNgJE7K3miGkAipzc7yl0mIf3o22EBRGLMMWm6KJICQxKP4bPZDe/qw7vdc8Aovsu6Kdr48BRU6mBa5hEU3In4Cp/aZ5G/YPoQVY2sb7cKaeckgCHqqEVDCCMa7NiJLkaL2nyeTa/s+ZJj6GeL9FPfkVEQR0YFUhRSctjnAuoeFKKJi+mTchNwXghmqCQfRjARR2VU4rOfR2K8nIWcyjf5hQNIhGKx3mi3Zymjgdd5Rydn7fYYos076KTqMU27GhDU2DSCoWtyIvcB1RdKYQIiUKineYHoNVYq8O9gloStzjayPVda7WIPYn57Rxc830JRpK4ijjAAmhysNjXULLp/+T0WJ5u8lBJNFF+BXw4upe/4eWA61htWiR5wI4nVwCsqMiDiaYAHR0gk5jsYZ+B/oiiiq5uwr4OdhOVAIQzs9DQQMHlvaIQIACg/Ski73Wzo/XYhEgSyqFcDPhQQQBUP/Ve5/Je4Axxo24nCuoJ9AA7zTFVcJFfeTmyK4qIqgnXohnA+Df27mAsrTXqX2ojjiXfM7SXG1NUE6GAKR5lpKWF+BE7+IhcDEp5pEx5VGcfBkpjzws3RZ8fGm5bAHSfEzzrrLNSnkR0ktsAhryGnQhTqDvniHGINlEL8z4qsOiGUsbOwhwsZVgENB+OARBg4wT9LBeLbbpFpvK+HaJeUD+5vSaEaY6pggslQONMlnpHdW84uZNoBFAiEBChfOUhByOKyOH8zMgoQPQZUrUY0EYj6BbQUSdRD9Erj9FmQM4SLUl2kaLeoWKiC+puyI05R4ohuwCYv5eHCOclWnF07EHEAtwYgCo6Aiv7AxbKF/kWwSNWaaPVmhE40b6MXoJLjUzdTM4EDNRGOZsoU+01szMVI3lKCw4v4QUyUr48QB7DA8q3yuCiaCpQD+LufTFOH69DpHJDEwuAS/QnQsmhiU9yWA7R3GqBUrd0w1edYuzJIdJwfPItwFWDJJsbAS7iBKBytv4dJGZ4vyg2CaGirl16CS65EYFCHoXGoUo8ILWpOsID8nDyFUVpRvcCSAVOOVoVXNQq9BD/z6P+DBCo5EODwIUtECeASgSSRymv+H8VXPGJohx2wSmimuwcDzwIcImIQOX3daX4+t+ou3f2Gly+tlyMkUYBl4Qa6DTqzgcu3R2TXDfUnQkne2aCEZsMApccCGug4sqd6oKLJM8pGkSqDK4xbUp1mi/nimZgdQ/JPbogisWjjcofratDZzMqEU2fxA/GRSt32mmnlHPh62VamMHVzIBVcMm51KjkVHJibIBCSHQiJunasaSjGrnk2F5opUhI9EAtqaax/CQil7/JudDHHLlq2A24GICnUs9Q+EPVqExkWl7P3xlL4kpBQjXI53g6UUJDL5neS0c9IzAwvu93lq8QOORwqKVI5feUpAyuGkYa8BbgUuCnzMlzKbMK9Mcee2yykTIIQUnu472UPkKDhmm2ZDeDA/SSj8m/5GsYBycKbP7vXOwnUgKp/DiDq4bdgEsdg+ig94w8q66Fbqh/aVNRXAY6Ui/FSDQicIhmEmtNufEwPQACPFHKz2TiQXUuEjDQZnDVMNI84CIwGPPVufTvASDZXhSK+qRHJIWMHqsa2Eophk29OEg2dpz3y5V1XRCo2DODq4bdgAsFkPBaF6amBVyApu2FR1P34rWIEwwKYCZf0Vk7FCVq5513TtQPmHhJXhRgybv+r4NDLuB4TcLAiMbwroSTPEabAXPo5ic06R1lP6NcRBZh2MFC1VitII/SOoWaWy1BnPLCIpRSNBMAD+bCxpRBdTH3hUIyqR6bUevqw8rrOrM2NUFDh7QbnlfD13k0EQr1Qznc/NQ+eZOcSr6FKjAo4KEjIpUnYJLVdWKT79EHa8Kie1rTKC8pHwM0EU+jr+g1C8v/6xhxku9B06J/ECjI7uaRrbAPS0M0U3NsaB2qzwkCmZ91TwCNEgl7SAHkY2yiJUoKoIDMpnJtCqTjsRY7MykMR8vVJL93k8+aGrjUM1A+HgsoYsJ4PNzbhOPwxA1eDGcHKAbyXj2K5a54ipMcDCXRmqMgzTMyJG6v+8FnilYW7+XRfAa0lqFrRCJ5LPYgb9JxwQ7VrnigQPkwEeAgYgBW7LLEuQInp4m1yKmBS1RzXk5UHu3cgCbyzcKYGrgYQksLCqF1Sa4kColcKADlCE0EFlTORMcOSFQjHlK0iy2fKVLeQxwBWLQRsICToog6Aih+z0vm0XwGKHfmFEvg5Dx4wdDxEs8F8zcMRA8oMGlVIzqJYEoksczfcQQMNJ4oIs9yTnYUIfUT6soAPD/Ho46aX/3kjpwauHxFk2YZCKMwgqX8AIP+ETMkscAl10I5UEWcHQcXgXiw2H9B1R7QRDe8nCrlb2ikdVyKlLyhfrd49tjkpvnW9UmAQlgQbeTIKLmIwrkBFAkeG2FXSqHcmi0Ai82sKI6eUIJGbFbDuQIP6g6kPkP9i7TvfRzuLI2pgkuHO3UQPZB7yY/0mpW3txLJCBr619RF8HKcHNDI+EDEOKiff6t7FJb3YnBTMFIe7cyAfMtCVKP6UG50jm1RQWITEQpdx0Lk0CKVRmsUU7Ti9MqDuOHcOjN0fci/+rxaYNCMThVcJpdkq7ETraPiaZURlezMQ8RgpOh2B0AGiq3FdMBH5LLmx8/63oDIWiNdGgBJ0UIFcfeos7Rze922z2KeOUjr6dA2eRXnSNUTxay/Yl9AEuE4PoIFe2InXpqyRSZ/pxQ632mnnZbsxzHK6wBS2aYKwL7P/lTBFZMjMlEFeSj1DUoeXg4sJt6aIYCKTvc4LjqigZCXi79THdVGJMqOtY9HXxZF9v2GGPX6AIzQoDjPcdmXQiRC0eVOAajqA/DiYXlEK04TdWRjqYAaJLUXhST9UyOBa9ZGL8Bl0hgJrVMvif3hGYahRDZUsLqjrr9H5PKzJDkGIUOXgGOz5N79bWnlAhGDnQy5L+YAFChdeSmJv8d21lYcU4g5WI40HoAu52Zv2wPM6ugNuFAF3o8XQxFNrARWR4Wl4SZ9UOQStbwIFygl1REgiSDWFFEVu9o6a1aN3sV1Yw7mnI10zlB8DYDh5AZFLtFLkwCqzwHaQ8Xx0gJyPGo56afptDk3vQFX+UuZcHQBPVDzqjPQCGKFugtwAessPeWkzneclffYDCZ2dKpzzag7cURuBYgaDG4No5fgujVMbP4OeQYyuPI9kGegoxnI4OpoYvNp8wz8Hz8yqtPX/YxTAAAAAElFTkSuQmCC" alt=""></td>
+                    </tr>
+                    <tr>
+                        <td>Element</td>
+                        <td>Description</td>
+                        <td>Nombre</td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <br>
+        </div>
+        <!-- Informtion sur le paiment -->
+        <div style="margin-bottom: 40px ;" class="break-after">
+            <h3 class="text-left">Informations sur le paiement</h3>
+            <hr style="margin-top: -15px;">
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Paiement Carte de crédit : </td>
+                        <td>€3546.43</td>
+                    </tr>
+                    <tr>
+                        <td>Carte de crédit :</td>
+                        <td>Visa XXXX XXXX XXXX 8399</td>
+                        <td>Date d'expiration:09/22</td>
+                        <td>Code SD</td>
+                    </tr>
+                    <tr>
+                        <td>Estimation du montant dû de votre location :</td>
+                        <td>€0.00</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div>
+                <h2>Déclaration et informations importantes</h2>
+                <p style="text-align: justify;">En signant le présent document, vous (i) confirmez que toutes les informations que vous avez fournies sont vraies, exactes et complètes, (ii) comprenez et acceptez les conditions du contrat dans cette langue, (iii) acceptez de payer les frais de location ainsi que les frais supplémentaires éventuels tels que, notamment, les frais de dommage, amendes de stationnement ou de circulation, et frais de traitement administratif (frais de traitement administratif des procèsverbaux est €42). Vous reconnaissez que le véhicule vous est remis dans l’état indiqué. Vous confirmez avoir réceptionné tous les documents contractuels : le présent Contrat de location, les Conditions générales de location et les Conditions Spécifiques du lieu de location. La personne dont le nom figure sur le présent contrat doit le signer et payer les frais de location correspondants. Il s’agit du seul conducteur à bénéficier des éventuels compléments de protection et assurances supplémentaires souscrits (sauf souscription à un ou plusieurs suppléments « conducteur additionnel »). En signant le présent document, vous nous autorisez à procéder aux contrôles de sécurité et de permis de conduire, à débiter votre carte de paiement du montant total de la location et de tous les autres frais applicables, conformément au contrat (et vous confirmez avoir lu et accepter les différentes parties de l’Addendum politique de confidentialité sur les véhicules connectés des Conditions générales de location).</p>
+            </div>
+            <table style="width: 100%">
+                <tr>
+                    <td style="width: 10%">Société :</td>
+                    <td style="width: 40%">{{contrat.societeClient}}</td>
+                    <td style="width: 20%">Date d'impression : </td>
+                    <td style="width: 30%">{{contrat.date|date('d/m/Y')}}</td>
+                </tr>
+            </table>
+        </div>
+        <!-- 4e page -->
+        <!-- Conditions Essentielles -->
+        <div class="break-after">
+            <div style="border: 3px solid #009cde; margin-bottom: 40px;">
+                <table style="padding-left: 10px;">
+                    <tbody>
+                        <tr>
+                            <td><h2>Contrat numéro</h2></td>
+                            <td> {{contrat.numContrat}} </td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+            <h2><u>Conditions Essentielles</u></h2>
+            <p style="text-align: justify;"><b><u>1) Contrat de location.</u></b> Le contrat est conclu entre nous, le fournisseur du véhicule, et vousle              conducteur principal, telque désigné sur le contrat de location.
+                Veuillez lire les Conditions générales de location et les Conditions spécifiques du lieu de location, qui font partie
+                intégrante de votre contrat de location. <br>
+                <b><u>2) Le véhicule.</u></b> Nous devons fournir le véhicule et tout l’équipement de sécurité obligatoire (ci-après le " véhicule "), en
+                bon état de marche, régulièrement immatriculé et toutes taxes afférentes acquittées. En Europe, nous devons fournir des
+                véhicules obligatoirement assurés au titre de la responsabilité civile aux tiers. Le conducteur n’est à ce titre pas considéré
+                comme un tiers et n’est pas couvert par cette assurance.
+                Vous devez restituer le véhicule et les options dans l’état dans lequel ils vous ont été remis, à l’exception de l’usure normale.
+                Veuillez inspecter minutieusement le véhicule avant de partir.
+                Veuillez nous demander de rectifier l’état des lieux du véhicule si un dommage n’y est pas indiqué, si le niveau de carburant
+                est erroné, si le certificat d’immatriculation, le certificat d’assurance, le formulaire de constat d’accident ou de tout équipement
+                de sécurité obligatoire n’est pas présent dans le véhicule. <br>
+                <b><u>3) Durée de location.</u></b> Vous êtes responsable du véhicule et des options pendant la durée de la location : <br>
+                <b>a)</b> La durée de location commence quand vous prenez le véhicule (" procédure de retrait ") et prend fin quand nous confirmons
+                la restitution du véhicule et de ses clés (" procédure de restitution "). <br>
+                <b>b)</b> Vous devez restituer le véhicule pendant les heures d’ouverture auprès d’un agent de retour à l’agence de restitution
+                convenue. Si vous choisissez de restituer le véhicule en dehors des heures d’ouverture ou si vous partez avant la fin de
+                la procédure de restitution du véhicule, vous le faites à vos propres risques et demeurez responsable jusqu’à la fin de
+                la procédure de restitution. <br>
+                <b>c)</b> Si vous utilisez le service " Livraison et retrait " (selon les disponibilités), vous serez responsable du véhicule à partir
+                du moment où nous vous l’avons livré jusqu’à ce que nous le récupérions. <br>
+                <b><u>4) Coûts.</u></b> Vous devez payer les montants indiqués sur votre contrat de location au titre du véhicule et des options souscrites
+                pour la durée de location. Vous devez payer toute extension de la durée de location, y compris pour les options souscrites.
+                Vous devez payer les coûts liés au vol et aux dommages, les frais de nettoyage approfondi, frais de remorquage,
+                frais de péage, et les redevances et amendes de stationnement, de circulation ou liées à l’utilisation du véhicule,
+                ainsi que des frais de traitement correspondants, dans les cas prévus aux présentes conditions. <br>
+                <b><u>5) Utilisation du véhicule:</u></b> Vous devez: i) utiliser le véhicule de façon prudente et diligente, ii) utiliser le véhicule en
+                respectant la réglementation du pays dans lequel vous conduisez, iii) utiliser le véhicule conformément à la loi et à des
+                fins licites, iv) utiliser le carburant approprié, v) verrouiller le véhicule lorsque vous ne l’utilisez pas et vous assurer que
+                l’ensemble des fenêtres, toits ouvrants, panneaux ou capotes de toits amovibles sont convenablement fermés, vi) arrêter
+                d’utiliser le véhicule immédiatement, sous réserve de préserver votre sécurité, et nous informer immédiatement en cas de
+                défaut constaté sur le véhicule.
+                Vous ne devez pas: i) utiliser le véhicule à des fins commerciales ; pour tout sport automobile (de loisir ou
+                professionnel) ou autre activité connexe ; hors des voies carrossables ; pour remorquer un autre véhicule ou une
+                remorque ; transporter des matières inflammables, explosives, corrosives ou comburantes, à l’exception des huiles
+                essentielles de minéraux ou produits analogues dans la mesure autorisée par la législation en vigueur (ou comme
+                indiqué dans les Conditions spécifiques du lieu de location) et du carburant ou gaz nécessaire au fonctionnement
+                du véhicule ; ii) permettre à toute personne autre qu’un conducteur autorisé d’utiliser le véhicule.
+                Vous ne pourrez conduire que dans les pays que nous autorisons. Si vous conduisez un véhicule immatriculé dans
+                un État membre de l’UE en dehors de l’UE, ou si vous conduisez dans un État membre de l’UE un véhicule immatriculé
+                hors UE, vous ne devez pas utiliser le véhicule dans ce pays étranger plus longtemps que cela n’est autorisé par les lois
+                applicables.
+            </p>
+        </div>   
+        <!-- 5e page --> 
+        <div class="break-after">
+            <div style="border: 3px solid #009cde; margin-bottom: 40px;">
+                <table style="padding-left: 10px;">
+                    <tbody>
+                        <tr>
+                            <td><h2>Contrat numéro</h2></td>
+                            <td> {{contrat.numContrat}} </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div>
+                <p style="text-align: justify;">
+                    <b><u>6) Accidents, vols et dommages.</u></b> Vous devez aviser i) la police immédiatement et ii) nous-mêmes dans les 48 heures,
+                    si le véhicule est impliqué dans un accident ou un dommage, même si aucun tiers n’est impliqué.
+                    Si le véhicule est perdu, volé ou endommagé vous devez, dans la mesure autorisée par la loi, payer le montant de la
+                    franchise indiquée sur ce contrat de location pour chaque incident clairement distinct ayant causé des dommages,
+                    les taxes applicables et nos frais de traitement de dommage ou de vol (sauf si vous avez souscrit à des compléments
+                    de protection pour réduire davantage votre franchise). Votre franchise ne s’appliquera pas dans les circonstances définies
+                    à l’article 7 relatif aux Compléments de protection.
+                    Veuillez noter que si vous endommagez le véhicule plus d’une fois, vous devrez, autant que la loi le permet, payer la franchise
+                    indiquée sur le contrat de location pour chaque incident clairement distinct ayant causé des dommages.
+                    Nous tenterons de recouvrer le montant de la franchise et des autres frais auprès de la partie fautive si vous démontrez que
+                    le dommage, le vol ou la perte ne relève pas d’une faute, d’une violation délibérée, d’un acte de fraude ou d’une négligence
+                    grave de votre part (dans la mesure des termes utilisés par la loi applicable). Pour nous aider, vous devez nous remettre un
+                    formulaire de constat amiable d’accident dûment rempli et comprenant les coordonnées des autres parties concernées, dans
+                    les 48 heures suivant l’accident. Dans la mesure autorisée par la loi, nous appliquerons des frais couvrant nos coûts
+                    pour vous contacter afin d’obtenir un constat d’accident dûment complété.
+                    Votre responsabilité ne sera pas engagée en cas de perte ou de dommage imputable à un défaut d’entretien du véhicule
+                    de notre part ou couvert par la garantie du constructeur. <br>
+                    <b><u>7) Compléments de protection.</u></b> Les compléments de protection réduisent le montant que vous devez payer à celui de
+                    la franchise indiquée si le véhicule est volé ou endommagé. En Europe, nos tarifs incluent une franchise de base et nous
+                    ne vous facturerons pas plus que la franchise indiquée plus les taxes applicables et nos frais de traitement de
+                    dommages ou de vol (sauf dans les cas où votre franchise ne s’applique pas). Vous pouvez réduire davantage votre
+                    franchise en souscrivant à d’autres compléments de protection.
+                    Votre franchise ne s’applique pas si la perte ou le dommage est imputable à un i) acte délibéré ou frauduleux, une
+                    omission ou négligence grave de votre part (dans la mesure des termes utilisés par la loi applicable) ou ii) une
+                    violation délibérée des articles 5 (Utilisation du véhicule) et 6 (Accidents, vols et dommages).
+                    Si votre franchise ne s’applique pas, nous serons en droit de vous réclamer une indemnisation, dont le montant
+                    tiendra compte dela sévérité de la négligence et pourra être égal au montant de notre préjudice au titre des pertes ou dommages subis
+                    ou à venir (selon le montant le plus élevé), dans la limite autorisée par la loi applicable.</p>
+                    <b><u>8) Amendes et frais.</u></b> Vous devez payer les redevances de stationnement ou les amendes liées à la circulation
+                    encourues pendant la durée de location et liées à votre usage du véhicule. Vous devez payer nos frais de traitement,
+                    couvrant notre temps consacré au traitement de ces amendes ou redevances, sauf si vous démontrez l’absence de perte ou
+                    de dommage, ou, le cas échéant, qu’il est significativement inférieur aux frais de traitement. <br>
+                    <b><u>9) Carburant.</u></b> Vous devez restituer le véhicule avec la même quantité de carburant qu’à son retrait, sauf si vous avez
+                    souscrit au Service Plein Carburant. Si vous ne restituez pas le véhicule avec le même niveau de carburant, vous devrez
+                    payer le carburant consommé au tarif " Paiement au retour " en vigueur.
+                    Si vous parcourez une distance inférieure à celle indiquée dans la rubrique " Easyfuel " des Conditions spécifiques de votre
+                    lieu de location et que vous ne fournissez pas de justificatif d’achat de carburant, vous devez payer le forfait " Easyfuel ",
+                    sauf si vous démontrez l’absence de perte ou de dommage, ou, le cas échéant, qu’il est significativement inférieur au forfait
+                    " Easyfuel ". En souscrivant à l’option " Plein Carburant ", vous ne serez pas tenu de faire le plein de carburant avant de
+                    restituer le véhicule. Nous ne proposons aucun remboursement pour le carburant non utilisé si vous souscrivez au
+                    service "Plein Carburant",
+                   
+                </p>
+            </div>
+        </div>
+        <div class="break-after">
+            <div style="border: 3px solid #009cde; margin-bottom: 40px;">
+                <table  style="padding-left: 10px;">
+                    <tbody>
+                        <tr>
+                            <td><h2>Contrat numéro</h2></td>
+                            <td> {{contrat.numContrat}} </td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+            <p style="text-align: justify;">
+                à moins que vous ne restituiez le véhicule après avoir fait le plein de carburant, auquel cas nous
+                    vous rembourserons
+                les frais du service " Plein Carburant ". <br>
+                <b><u>10) Conducteurs additionnels et passagers.</u></b> Il vous appartient de veiller à ce que tous les conducteurs additionnels
+                que vous avez ajouté au contrat de location, ou les passagers que vous autorisez à monter dans le véhicule, respectent
+                les présentes conditions. Vous êtes tenu de supporter tous les coûts ou frais que nous subissons si un conducteur
+                additionnel ou un passager ne respecte pas les présentes conditions.
+                Votre franchise peut ne pas s’appliquer si la perte ou le dommage est dû à un acte intentionnel ou frauduleux, une
+                omission ou une grave négligence commis par un conducteur additionnel ou un passager (dans la mesure des
+                termes utilisés par la loi applicable) ou ii) une violation délibérée des articles 5 et 6. <br>
+                <b><u>11) Modifications apportées à votre location.</u></b> Vous devez payer un prix potentiellement plus important si vous modifiez
+                la durée de location ou si vous dépassez le kilométrage convenu. Vous devez payer un supplément d’aller simple si vous
+                restituez le véhicule dans une agence différente de celle de son retrait. <br>
+                <b><u>12) Restitutions anticipées.</u></b> Si vous restituez le véhicule et les options de façon anticipée, vous perdrez le bénéfice de
+                toutes offres spéciales dont vous ne rempliriez plus les conditions. Cela pourrait avoir pour conséquence que la location vous
+                coûte plus cher. Aucun remboursement n’est accordé pour les jours de location non utilisés. <br>
+                <b><u>13) Restitutions tardives.</u></b> Sauf accord contraire, vous devez restituer le véhicule ainsi que l’ensemble des produits
+                optionnels aux heure, date et lieu convenus dans le contrat de location. Si vous pensez être en retard, il est dans votre intérêt
+                de nous soumettre une demande de prolongation du délai de restitution. En cas de restitution tardive, nous nous réservons le
+                droit de recourir le troisième jour suivant la date de restitution initialement prévue au contrat de location, à une pré-autorisation
+                de paiement de 5 jours supplémentaires de location sur votre carte de débit, ou de 10 jours supplémentaires de location si
+                vous utilisez une carte de crédit, et ce aux tarifs en vigueur en agence au troisième jour de retard. En cas de restitution du
+                véhicule dans les 5 ou 10 jours suivant la date de restitution initialement prévue au contrat de location, seuls les jours de
+                location effectifs ainsi que l’ensemble des frais exigibles (et notamment les frais de restitution tardive) vous seront facturés. <br>
+                <b><u>14) Pré-autorisation (de paiement).</u></b> Nous effectuons une demande de pré-autorisation bancaire de débit sur votre carte
+                de paiement. Cela a pour effet de bloquer une somme sur votre carte de paiement, et vous devez donc vous assurer de
+                disposer d’une quantité de fonds suffisante, étant précisé que nous ne procéderons au paiement qu’au terme de la location.
+                Si vous réglez avec une autre carte, nous attirons votre attention sur le fait qu’il pourra s’écouler jusqu’à 28 jours avant que
+                votre banque ne libère le montant bloqué sur votre autre carte. <br>
+                <b><u>15) Paiements.</u></b> Si vous avez opté de payer dans une devise autre que celle de ce pays, nous effectuons la conversion en
+                utilisant un taux de change basé sur l’indice des tarifs de gros de la Citibank, majoré de 4 %.
+                En signant le contrat de location, vous nous autorisez à débiter sur votre carte de paiement tous les frais engagés
+                au cours de la période de location. <br>
+                <b><u>16) Repérage.</u></b> Les véhicules peuvent être équipés de systèmes de géo-localisation et de repérage afin de les localiser
+                en cas de vol ou de non-restitution à l’agence de location, ou pour localiser le véhicule en cas d’accident ou de panne. <br>
+                <b><u>17) Utilisation de vos données personnelles.</u></b> Nous utilisons vos données personnelles pour: a) vous fournir les
+                services de location et b) décider si nous vous fournirons des services de location à l’avenir. Nous ne communiquons vos
+                données personnelles que dans la mesure autorisée par la loi et, si nécessaire, avec votre consentement exprès :
+            </p>
+        </div>
+        <div>
+            <div style="border: 3px solid #009cde; margin-bottom: 40px;">
+                <table class="teste">
+                    <tbody>
+                        <tr>
+                            <td><h2>Contrat numéro</h2></td>
+                            <td> {{contrat.numContrat}} </td>
+                        </tr> 
+                    </tbody>
+                </table>
+            </div>
+            <p style="text-align: justify;">    
+                <b><u>a)</u></b> aux membres du système Avis Rent A Car, situés au sein et en dehors de l’Europe, mais uniquement dans la mesure
+                nécessaire à la fourniture des services de location, et à Wizard Co. Inc., le propriétaire du système de réservation,
+                situé aux États-Unis d’Amérique, mais uniquement dans la mesure nécessaire au traitement de votre réservation via le
+                système de réservation, <br>
+                <b><u>b)</u></b> aux Autorités et aux sociétés gestionnaires de parcs de stationnement, s’ils ont légalement droit à cette information
+                et dans la mesure qui nous est permise par la loi, ou pour vérifier la validité de votre permis de conduire. <br>
+                <b><u>c)</u></b> à des tiers agissant pour notre compte pour le traitement des réclamations, le recouvrement de sommes que vous
+                nous devez et de la réalisation d’enquêtes auprès des clients, que nous utilisons pour améliorer les services que nous
+                vous proposons.
+                Vous avez un droit légal d’accès aux données personnelles que nous détenons vous concernant (sous réserve du paiement
+                des frais afférents, si la loi applicable l’autorise) et, sous réserve de justification, vous pouvez demander que toute donnée
+                personnelle soit corrigée, modifiée, bloquée ou supprimée. Le responsable du traitement des données est le fournisseur de
+                location du véhicule, tel que précisé sur le contrat de location. <br>
+                <b><u>18) Propriété perdue.</u></b> Nous ferons de notre mieux pour vous contacter si nous retrouvons des effets personnels dans
+                le véhicule. Tous les éléments contenant des renseignements personnels ou financiers seront détruits sous 28 jours,
+                conformément à notre politique de confidentialité et aux Conditions générales de location. Tous les autres éléments seront
+                supprimés sous trois mois. <br>
+                <b><u>19) Droit applicable.</u></b> Le droit applicable à notre contrat est celui du pays où vous avez effectué le retrait du véhicule et
+                conclu le contrat de location.
+            </p>
+        </div>
+        <div style="margin-top: 20px;">
+            <input type="checkbox" id="check" name="check">
+                <label for="check" style="margin-top: -5px;">J’ai lu et compris le contenu du présent document, que j’accepte<label>
+          </div>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,24 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Edit Client{% endblock %}
+
+{% block content %}
+
+<div class="flex-column container mt-5">
+    <h1>Modifer Client</h1>
+
+
+
+    {{ include('client/_form.html.twig', {'button_label': 'Modifier'}) }}
+
+    <div style="background-color: #e6e6e6" class="container mt-5 p-3">
+        {{ include('notes/_form.html.twig', {'button_label': 'Commenter'}) }}
+    </div>
+    
+    
+    
+    {# <a href="{{ path('client_index') }}">back to list</a> #}
+
+    {# {{ include('client/_delete_form.html.twig') }} #}
+</div>
+{% endblock %}

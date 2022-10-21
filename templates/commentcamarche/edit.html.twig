@@ -1,0 +1,18 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Edit Commentcamarche{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-5">
+
+    <h1>Edit Commentcamarche</h1>
+
+    {# <a href="{{ path('commentcamarche_index') }}">Retour à la liste</a> #}
+
+    {{ include('commentcamarche/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    {# {{ include('commentcamarche/_delete_form.html.twig') }} #}
+
+    </div>
+
+{% endblock %}

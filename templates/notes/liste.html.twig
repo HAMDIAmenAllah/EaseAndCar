@@ -1,0 +1,28 @@
+
+
+{% block body %}
+    
+
+    <table class="table">
+        <tbody>
+        <tr style="background: rgba(29, 37, 45, 0.2);">
+            <th class="w-75" >Commentaires</th>
+            <th class="w-25" >Date</th>
+            <th></th>
+        </tr>
+        {% for note in notes %}
+            <tr>
+                <td class="text-break w-75" style="text-align : justify;">{{ note.Commentaires }}</td>
+                <td class="25">{{ note.createdAt|date("m/d/Y") }}</td> 
+                <td>{{ include('notes/_delete_form.html.twig') }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3 ">Pas de commentaire</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+{% endblock %}

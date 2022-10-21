@@ -1,0 +1,14 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}New Sectiontemoignage{% endblock %}
+
+{% block content %}
+<div class="flex-column container mt-5">
+
+    <h1>Create new Sectiontemoignage</h1>
+
+    {{ include('sectiontemoignage/_form.html.twig') }}
+
+    {# <a href="{{ path('sectiontemoignage_index') }}">back to list</a> #}
+</div>
+{% endblock %}

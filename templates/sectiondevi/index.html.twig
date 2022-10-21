@@ -1,0 +1,42 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Sectiondevi index{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-5">
+
+    <h1>Gestion Section Devis</h1>
+
+    <table class="table-sm table table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+        <tbody class="align-middle text-start">
+            <tr>
+                {# <th>Id</th> #}
+                <th>Image</th>
+                <th>Titre</th>
+                <th>Btn</th>
+                <th>Urlbtn</th>
+                <th>Actions</th>
+            </tr>
+        {% for sectiondevi in sectiondevis %}
+            <tr>
+                {# <td>{{ sectiondevi.id }}</td> #}
+                <td>{{ sectiondevi.image }}</td>
+                <td>{{ sectiondevi.titre }}</td>
+                <td>{{ sectiondevi.btn }}</td>
+                <td>{{ sectiondevi.urlbtn }}</td>
+                <td>
+                    {# <a href="{{ path('sectiondevi_show', {'id': sectiondevi.id}) }}">show</a> #}
+                    <a class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" href="{{ path('sectiondevi_edit', {'id': sectiondevi.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Champ vide</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('sectiondevi_new') }}">Create new</a> #}
+    </div>
+{% endblock %}

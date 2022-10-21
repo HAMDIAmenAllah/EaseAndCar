@@ -1,0 +1,11 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Liste Devis - Ease & Car{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-2 ">
+        <h1>Edit Devis</h1>
+		{{ include('devis/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+        {{ include('notes/_form.html.twig', {'button_label': 'Commenter'}) }} 
+    </div>
+{% endblock %}

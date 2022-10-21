@@ -1,0 +1,39 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Commentcamarche index{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-5">
+
+    <h1>Gestion Comment ça Marche</h1>
+
+    <table class="table-sm table table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+        <tbody class="align-middle text-start">
+            <tr>
+                {# <th>Id</th> #}
+                <th>Image</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+        {% for commentcamarche in commentcamarches %}
+            <tr>
+                {# <td>{{ commentcamarche.id }}</td> #}
+                <td>{{ commentcamarche.image }}</td>
+                <td>{{ commentcamarche.description }}</td>
+                <td>
+                    {# <a href="{{ path('commentcamarche_show', {'id': commentcamarche.id}) }}">show</a> #}
+                    <a class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" href="{{ path('commentcamarche_edit', {'id': commentcamarche.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Champ vide</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('commentcamarche_new') }}">Create new</a> #}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Edit Sectiontemoignage{% endblock %}
+
+{% block content %}
+<div class="flex-column container mt-5">
+
+    <h1>Modifier Section Temoignage</h1>
+
+    {# <a href="{{ path('sectiontemoignage_index') }}">Retour à la liste</a> #}
+
+    {{ include('sectiontemoignage/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    {# {{ include('sectiontemoignage/_delete_form.html.twig') }} #}
+    </div>
+{% endblock %}

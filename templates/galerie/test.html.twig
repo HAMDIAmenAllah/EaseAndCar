@@ -1,0 +1,135 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Galerie index{% endblock %}
+{% block stylesheets %}
+    <link href="https://releases.transloadit.com/uppy/v2.2.0/uppy.min.css" rel="stylesheet">
+{% endblock %}
+{% block content %}
+<div class="collapsed d-flex container flex-column">
+    <div class="uppy-depart"></div>
+    <div class="uppy-retour"></div>
+</div>
+
+    <script src="https://releases.transloadit.com/uppy/v2.2.0/uppy.js"></script>
+    <script>
+        let list = []
+        const StatusBar = Uppy.StatusBar
+        const Informer = Uppy.Informer
+        const Webcam = Uppy.Webcam
+        const Dashboard = Uppy.Dashboard
+        const GoogleDrive = Uppy.GoogleDrive
+        const Dropbox = Uppy.Dropbox
+        const Instagram = Uppy.Instagram
+        const Facebook = Uppy.Facebook
+        const OneDrive = Uppy.OneDrive
+        const ScreenCapture = Uppy.ScreenCapture
+        const ImageEditor = Uppy.ImageEditor
+        const Tus = Uppy.Tus
+        const DropTarget = Uppy.DropTarget
+        const GoldenRetriever = Uppy.GoldenRetriever
+        const XHRUpload = Uppy.XHRUpload
+
+        const uppy = new Uppy.Core({
+            id: 'uppy',
+            autoProceed: false,
+            allowMultipleUploads: true,
+            debug: false,
+            restrictions: {
+            maxFileSize: null,
+            minFileSize: null,
+            maxTotalFileSize: null,
+            maxNumberOfFiles: 20,
+            minNumberOfFiles: null,
+            allowedFileTypes: ['image/*']
+            },
+            meta: {},
+            onBeforeFileAdded: (currentFile, files) => currentFile,
+            onBeforeUpload: (files) => {},
+            locale: {},
+            // store: new DefaultStore(),
+            // logger: justErrorsLogger,
+            infoTimeout: 5000
+        })
+        .use(Dashboard, {
+        trigger: '.UppyModalOpenerBtn',
+        inline: true,
+        target: '.uppy-depart',
+        replaceTargetContent: true,
+        showProgressDetails: true,
+        note: 'Images and video only, 2–3 files, up to 1 MB',
+        height: 400,
+        width: 450,
+        metaFields: [
+            { id: 'name', name: 'Name', placeholder: 'file name' },
+            { id: 'caption', name: 'Caption', placeholder: 'describe what the image is about' }
+        ],
+        browserBackButtonClose: false
+        })
+        .use(Webcam, { target: Dashboard })
+        .use(ScreenCapture, { target: Dashboard })
+        .use(ImageEditor, { target: Dashboard })
+        // .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
+        .use(DropTarget, {target: document.body })
+        .use(GoldenRetriever)
+        uppy.use(XHRUpload, {
+            endpoint: 'https://127.0.0.1:8000/upload_hanlder.PHP?var=depart'
+        })
+        uppy.on('complete', result => {
+            //document.location.reload();
+            console.log('successful files:', result.successful)
+            console.log('failed files:', result.failed)
+        })
+    </script>
+    <script>
+        const uppyR = new Uppy.Core({
+            id: 'uppyR',
+            autoProceed: false,
+            allowMultipleUploads: true,
+            debug: false,
+            restrictions: {
+            maxFileSize: null,
+            minFileSize: null,
+            maxTotalFileSize: null,
+            maxNumberOfFiles: null,
+            minNumberOfFiles: null,
+            allowedFileTypes: ['image/*']
+            },
+            meta: {},
+            onBeforeFileAdded: (currentFile, files) => currentFile,
+            onBeforeUpload: (files) => {},
+            locale: {},
+            // store: new DefaultStore(),
+            // logger: justErrorsLogger,
+            infoTimeout: 5000
+        })
+        .use(Dashboard, {
+        trigger: '.UppyModalOpenerBtn',
+        inline: true,
+        target: '.uppy-retour',
+        replaceTargetContent: true,
+        showProgressDetails: true,
+        note: 'Images and video only, 2–3 files, up to 1 MB',
+        height: 400,
+        width: 450,
+        metaFields: [
+            { id: 'name', name: 'Name', placeholder: 'file name' },
+            { id: 'caption', name: 'Caption', placeholder: 'describe what the image is about' }
+        ],
+        browserBackButtonClose: false
+        })
+        .use(Webcam, { target: Dashboard })
+        .use(ScreenCapture, { target: Dashboard })
+        .use(ImageEditor, { target: Dashboard })
+        // .use(Tus, { endpoint: 'https://tusd.tusdemo.net/files/' })
+        .use(DropTarget, {target: document.body })
+        .use(GoldenRetriever)
+        uppyR.use(XHRUpload, {
+            endpoint: 'https://127.0.0.1:8000/upload_hanlder.PHP?var=retour'
+        })
+        uppyR.on('complete', result => {
+            //document.location.reload();
+            console.log('successful files:', result.successful)
+            console.log('failed files:', result.failed)
+        })
+    </script>
+{% endblock %}

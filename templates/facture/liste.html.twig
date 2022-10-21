@@ -1,0 +1,557 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Facture index{% endblock %}
+{% block stylesheets %}
+  <style>
+    #devis-tab
+      .nav-link{
+      font-size: .875rem;
+      font-weight: bold;
+      color : black;
+      text-decoration: none;
+    }
+    #devis-tab
+    .nav-link.active.all-tab{
+      color: #009cde;
+      border-bottom: 2px solid #009cde;
+    }
+    #devis-tab
+    .nav-link.active.valider-tab{
+      color: #198754;
+      border-bottom: 2px solid #198754;
+    }
+    #devis-tab
+    .nav-link.active.refuser-tab{
+      color: #dc3545;
+      border-bottom: 2px solid #dc3545;
+    }
+    #devis-tab
+    .nav-link.active.encours-tab{
+      color: #ffc107;
+      border-bottom: 2px solid #ffc107;
+    }
+    #devis-tab
+    .nav-link.active.enattente-tab{
+      color: #6c757d;
+      border-bottom: 2px solid #6c757d;
+    }
+  </style>
+{% endblock %}
+
+{% block content %}
+<div class="collapsed d-flex container flex-column mt-5">
+    <h1>Liste Factures</h1>
+       {#  <a class="btn btn-ease" style="width :142px;"href="{{ path('facture_new') }}">Nouvelle facture</a> #}
+     <nav id="devis-tab" class="devis-tab nav shadow-lg bg-body flex-column flex-sm-row mb-2 mt-4">
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link active all-tab" id="devis-all-tab" data-bs-toggle="tab" href="#devis-all" role="tab" aria-controls="devis-all" aria-selected="true">All</a>
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link valider-tab"  id="devis-valider-tab" data-bs-toggle="tab" href="#devis-valider" role="tab" aria-controls="devis-valider" aria-selected="false">Archivé</a>
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link refuser-tab" id="devis-refuser-tab" data-bs-toggle="tab" href="#devis-refuser" role="tab" aria-controls="devis-refuser" aria-selected="false">En retard</a>
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link encours-tab" id="devis-encours-tab" data-bs-toggle="tab" href="#devis-encours" role="tab" aria-controls="devis-encours" aria-selected="false">A encaisser</a>
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link enattente-tab" id="devis-enattente-tab" data-bs-toggle="tab" href="#devis-enattente" role="tab" aria-controls="devis-enattente" aria-selected="false">Brouillon</a>
+    </nav>
+      <div class="tab-content" id="devis-tab-content">
+        <div class="tab-pane fade show active" id="devis-all" role="tabpanel" aria-labelledby="devis-all-tab">
+          <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+              <tbody>
+                <tr class="align-middle text-start" style="table-hover : disabled;">
+                        <th>NumFacture</th>
+                        <th>Date</th>
+                        <th>Nom Client</th>
+                        <th>Adresse </th>
+                        <th>Téléphone </th>
+                        <th>Etat</th>
+                        <th></th>
+                    </tr>
+                {% for facture in factures %}
+                
+                    <tr>
+                        <td>{{ facture.numFacture }}</td>
+                        <td>{{ facture.date ? facture.date|date('Y-m-d') : '' }}</td>
+                        <td>{{ facture.nom }}</td>
+                        <td>{{ facture.adresseClient }}</td>
+                        <td>{{ facture.telephoneClient }}</td>
+                        <td class="align-middle text-start">
+                              {% if ( facture.etat =="En attente") %}
+                                <span class="badge bg-secondary">{{ facture.etat }}</span>
+                                {% elseif (facture.etat =="A encaisser") %}
+                                <span class="badge bg-warning text-dark">{{ facture.etat }}</span>
+                                {% elseif ( facture.etat =="Archivé") %}
+                                <span class="badge bg-success">{{ facture.etat }}</span>
+                                {% elseif ( facture.etat =="En retard") %}
+                                <span class="badge bg-danger">{{ facture.etat }}</span>
+                              {% else %}
+                                <span class="badge bg-light text-dark">{{ facture.etat }}</span>
+                              {% endif %}
+                        </td>
+                        <td>
+                        {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') %}
+                              <div class="btn-group align-middle text-start " role="group" aria-label="Button group with nested dropdown">
+                                <div class="btn-group text-start" role="group">
+                                  <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                  </button>
+                                  <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-{{ facture.id }}">Afficher</button></li>
+                                    <li><a class="dropdown-item" href="{{path('facture_edit', {'id': facture.id})}}">Modifier</a>{# <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-{{ devi.id }}"> #}{# </button> #}</li>
+                                  {#  {% if facture.etat == "Archivé" or facture.etat == "en attente" or facture.etat == "en cours" %} #}
+                                      <li><a class="dropdown-item" href="{{path('afficher_facture', {'id': facture.id})}}">Générer Facture</a>{# <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-{{ devi.id }}"> #}{# </button> #}</li>
+                                    {# {% endif %} #}
+                                      <li>{{ include('facture/_delete_form.html.twig', {'id': facture.id}) }}</li>
+                                  </ul>
+                                </div>
+                              </div>
+                            {% else %}
+                              <button type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="modal" data-bs-target="#Show-{{ facture.id }}">Afficher</button>
+                            {% endif %}
+                            <!-- Modal Show -->
+                            <div class="modal fade" id="Show-{{facture.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                <div class="modal-header">
+                                  <table class="table table-borderless m-0 p-0">
+                                    <tbody>
+                                      <tr>
+                                        <th class="w-50"><h5 class="modal-title" id="exampleModalLabel">Devis</h5></th>
+                                        <td class="w-50">
+                                          {% if ( facture.etat =="En attente") %}
+                                            <span class="badge bg-secondary">{{ facture.etat }}</span>
+                                            {% elseif (facture.etat =="A encaisser") %}
+                                            <span class="badge bg-warning text-dark">{{ facture.etat }}</span>
+                                            {% elseif ( facture.etat =="Archivé") %}
+                                            <span class="badge bg-success">{{ facture.etat }}</span>
+                                            {% elseif ( facture.etat =="En retard") %}
+                                            <span class="badge bg-danger">{{ facture.etat }}</span>
+                                          {% else %}
+                                            <span class="badge bg-light text-dark">{{ facture.etat }}</span>
+                                          {% endif %}
+                                        </td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    {{ render(path('facture_show', {'id': facture.id})) }}
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="13">Champ vide</td>
+                    </tr>
+                {% endfor %}
+              </tbody>
+          </table>
+        </div>
+        <div class="tab-pane fade show" id="devis-valider" role="tabpanel" aria-labelledby="devis-valider-tab">
+          <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+              <tbody>
+              <tr class="align-middle text-start" style="table-hover : disabled;">
+                      <th>NumFacture</th>
+                      <th>Date</th>
+                      <th>Nom Client</th>
+                      <th>Adresse </th>
+                      <th>Téléphone </th>
+                      <th>Etat</th>
+                      <th></th>
+                  </tr>
+              {% for facture in factures %}
+                {% if facture.etat == "Archivé" %}
+                  <tr>
+                      <td>{{ facture.numFacture }}</td>
+                      <td>{{ facture.date ? facture.date|date('Y-m-d') : '' }}</td>
+                      <td>{{ facture.nom }}</td>
+                      <td>{{ facture.adresseClient }}</td>
+                      <td>{{ facture.telephoneClient }}</td>
+                      <td class="align-middle text-start">
+                             {% if ( facture.etat =="En attente") %}
+                                <span class="badge bg-secondary">{{ facture.etat }}</span>
+                                {% elseif (facture.etat =="A encaisser") %}
+                                <span class="badge bg-warning text-dark">{{ facture.etat }}</span>
+                                {% elseif ( facture.etat =="Archivé") %}
+                                <span class="badge bg-success">{{ facture.etat }}</span>
+                                {% elseif ( facture.etat =="En retard") %}
+                                <span class="badge bg-danger">{{ facture.etat }}</span>
+                              {% else %}
+                                <span class="badge bg-light text-dark">{{ facture.etat }}</span>
+                              {% endif %}
+                      </td>
+                      <td>
+                      {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') %}
+                            <div class="btn-group align-middle text-start " role="group" aria-label="Button group with nested dropdown">
+                              <div class="btn-group text-start" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                  <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-{{ facture.id }}">Afficher</button></li>
+                                  <li><a class="dropdown-item" href="{{path('facture_edit', {'id': facture.id})}}">Modifier</a>{# <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-{{ devi.id }}"> #}{# </button> #}</li>
+                                  {% if facture.etat == "validé" or facture.etat == "en attente" or facture.etat == "en cours" %}
+                                    <li><a class="dropdown-item" href="{{path('', {'id': facture.id})}}">Générer Devis</a>{# <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-{{ devi.id }}"> #}{# </button> #}</li>
+                                  {% endif %}
+                                  <li>{{ include('facture/_delete_form.html.twig', {'id': facture.id}) }}</li>
+                                </ul>
+                              </div>
+                            </div>
+                          {% else %}
+                            <button type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="modal" data-bs-target="#Show-{{ facture.id }}">Afficher</button>
+                          {% endif %}
+                          <!-- Modal Show -->
+                          <div class="modal fade" id="Show-{{facture.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                              <div class="modal-content">
+                              <div class="modal-header">
+                                <table class="table table-borderless m-0 p-0">
+                                  <tbody>
+                                    <tr>
+                                      <th class="w-50"><h5 class="modal-title" id="exampleModalLabel">Devis</h5></th>
+                                      <td class="w-50">
+                                         {% if ( facture.etat =="En attente") %}
+                                          <span class="badge bg-secondary">{{ facture.etat }}</span>
+                                          {% elseif (facture.etat =="A encaisser") %}
+                                          <span class="badge bg-warning text-dark">{{ facture.etat }}</span>
+                                          {% elseif ( facture.etat =="Archivé") %}
+                                          <span class="badge bg-success">{{ facture.etat }}</span>
+                                          {% elseif ( facture.etat =="En retard") %}
+                                          <span class="badge bg-danger">{{ facture.etat }}</span>
+                                        {% else %}
+                                          <span class="badge bg-light text-dark">{{ facture.etat }}</span>
+                                        {% endif %}
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  {{ render(path('facture_show', {'id': facture.id})) }}
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </td>
+                  </tr>
+                {% endif %}
+                  
+              {% else %}
+                  <tr>
+                      <td colspan="13">Champ vide</td>
+                  </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+        </div>
+        <div class="tab-pane fade show" id="devis-refuser" role="tabpanel" aria-labelledby="devis-refuser-tab">
+          <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+              <tbody>
+                <tr class="align-middle text-start" style="table-hover : disabled;">
+                        <th>NumFacture</th>
+                        <th>Date</th>
+                        <th>Nom Client</th>
+                        <th>Adresse </th>
+                        <th>Téléphone </th>
+                        <th>Etat</th>
+                        <th></th>
+                </tr>
+              {% for facture in factures %}
+                {% if facture.etat == 'En retard' %}
+                  <tr>
+                      <td>{{ facture.numFacture }}</td>
+                      <td>{{ facture.date ? facture.date|date('Y-m-d') : '' }}</td>
+                      <td>{{ facture.nom }}</td>
+                      <td>{{ facture.adresseClient }}</td>
+                      <td>{{ facture.telephoneClient }}</td>
+                      <td class="align-middle text-start">
+                            {% if ( facture.etat =="En attente") %}
+                              <span class="badge bg-secondary">{{ facture.etat }}</span>
+                              {% elseif (facture.etat =="A encaisser") %}
+                              <span class="badge bg-warning text-dark">{{ facture.etat }}</span>
+                              {% elseif ( facture.etat =="Archivé") %}
+                              <span class="badge bg-success">{{ facture.etat }}</span>
+                              {% elseif ( facture.etat =="En retard") %}
+                              <span class="badge bg-danger">{{ facture.etat }}</span>
+                            {% else %}
+                              <span class="badge bg-light text-dark">{{ facture.etat }}</span>
+                            {% endif %}
+                      </td>
+                      <td>
+                      {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') %}
+                            <div class="btn-group align-middle text-start " role="group" aria-label="Button group with nested dropdown">
+                              <div class="btn-group text-start" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                  <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-{{ facture.id }}">Afficher</button></li>
+                                  <li><a class="dropdown-item" href="{{path('facture_edit', {'id': facture.id})}}">Modifier</a>{# <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-{{ devi.id }}"> #}{# </button> #}</li>
+                                  {% if facture.etat == "validé" or facture.etat == "en attente" or facture.etat == "en cours" %}
+                                    <li><a class="dropdown-item" href="{{path('', {'id': facture.id})}}">Générer Devis</a>{# <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-{{ devi.id }}"> #}{# </button> #}</li>
+                                  {% endif %}
+                                  <li>{{ include('facture/_delete_form.html.twig', {'id': facture.id}) }}</li>
+                                </ul>
+                              </div>
+                            </div>
+                          {% else %}
+                            <button type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="modal" data-bs-target="#Show-{{ facture.id }}">Afficher</button>
+                          {% endif %}
+                          <!-- Modal Show -->
+                          <div class="modal fade" id="Show-{{facture.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                              <div class="modal-content">
+                              <div class="modal-header">
+                                <table class="table table-borderless m-0 p-0">
+                                  <tbody>
+                                    <tr>
+                                      <th class="w-50"><h5 class="modal-title" id="exampleModalLabel">Devis</h5></th>
+                                      <td class="w-50">
+                                        {% if ( facture.etat =="en attente") %}
+                                          <span class="badge bg-secondary">{{ facture.etat }}</span>
+                                          {% elseif (facture.etat =="en cours") %}
+                                          <span class="badge bg-warning text-dark">{{ facture.etat }}</span>
+                                          {% elseif ( facture.etat =="validé") %}
+                                          <span class="badge bg-success">{{ facture.etat }}</span>
+                                          {% elseif ( facture.etat =="refusé") %}
+                                          <span class="badge bg-danger">{{ facture.etat }}</span>
+                                          {% else %}
+                                          <span class="badge bg-light text-dark">{{ facture.etat }}</span>
+                                        {% endif %}
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  {{ render(path('facture_show', {'id': facture.id})) }}
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </td>
+                  </tr>
+                {% endif %}
+                {% else %}
+                  <tr>
+                      <td colspan="13">Champ vide</td>
+                  </tr>
+              {% endfor %}
+
+                
+              </tbody>
+          </table>
+        </div>
+        <div class="tab-pane fade show" id="devis-encours" role="tabpanel" aria-labelledby="devis-encours-tab">
+          <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+              <tbody>
+              <tr class="align-middle text-start" style="table-hover : disabled;">
+                      <th>NumFacture</th>
+                      <th>Date</th>
+                      <th>Nom Client</th>
+                      <th>Adresse </th>
+                      <th>Téléphone </th>
+                      <th>Etat</th>
+                      <th></th>
+                  </tr>
+              {% for facture in factures %}
+                 {% if facture.etat == 'A encaisser' %}
+                   <tr>
+                      <td>{{ facture.numFacture }}</td>
+                      <td>{{ facture.date ? facture.date|date('Y-m-d') : '' }}</td>
+                      <td>{{ facture.nom }}</td>
+                      <td>{{ facture.adresseClient }}</td>
+                      <td>{{ facture.telephoneClient }}</td>
+                      <td class="align-middle text-start">
+                            {% if ( facture.etat =="En attente") %}
+                              <span class="badge bg-secondary">{{ facture.etat }}</span>
+                              {% elseif (facture.etat =="A encaisser") %}
+                              <span class="badge bg-warning text-dark">{{ facture.etat }}</span>
+                              {% elseif ( facture.etat =="Archivé") %}
+                              <span class="badge bg-success">{{ facture.etat }}</span>
+                              {% elseif ( facture.etat =="En retard") %}
+                              <span class="badge bg-danger">{{ facture.etat }}</span>
+                            {% else %}
+                              <span class="badge bg-light text-dark">{{ facture.etat }}</span>
+                            {% endif %}
+                      </td>
+                      <td>
+                      {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') %}
+                            <div class="btn-group align-middle text-start " role="group" aria-label="Button group with nested dropdown">
+                              <div class="btn-group text-start" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                  <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-{{ facture.id }}">Afficher</button></li>
+                                  <li><a class="dropdown-item" href="{{path('facture_edit', {'id': facture.id})}}">Modifier</a>{# <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-{{ devi.id }}"> #}{# </button> #}</li>
+                                  {% if facture.etat == "validé" or facture.etat == "en attente" or facture.etat == "en cours" %}
+                                    <li><a class="dropdown-item" href="{{path('', {'id': facture.id})}}">Générer Devis</a>{# <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-{{ devi.id }}"> #}{# </button> #}</li>
+                                  {% endif %}
+                                  <li>{{ include('facture/_delete_form.html.twig', {'id': facture.id}) }}</li>
+                                </ul>
+                              </div>
+                            </div>
+                          {% else %}
+                            <button type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="modal" data-bs-target="#Show-{{ facture.id }}">Afficher</button>
+                          {% endif %}
+                          <!-- Modal Show -->
+                          <div class="modal fade" id="Show-{{facture.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                              <div class="modal-content">
+                              <div class="modal-header">
+                                <table class="table table-borderless m-0 p-0">
+                                  <tbody>
+                                    <tr>
+                                      <th class="w-50"><h5 class="modal-title" id="exampleModalLabel">Devis</h5></th>
+                                      <td class="w-50">
+                                        {% if ( facture.etat =="en attente") %}
+                                          <span class="badge bg-secondary">{{ facture.etat }}</span>
+                                          {% elseif (facture.etat =="en cours") %}
+                                          <span class="badge bg-warning text-dark">{{ facture.etat }}</span>
+                                          {% elseif ( facture.etat =="validé") %}
+                                          <span class="badge bg-success">{{ facture.etat }}</span>
+                                          {% elseif ( facture.etat =="refusé") %}
+                                          <span class="badge bg-danger">{{ facture.etat }}</span>
+                                          {% else %}
+                                          <span class="badge bg-light text-dark">{{ facture.etat }}</span>
+                                        {% endif %}
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  {{ render(path('facture_show', {'id': facture.id})) }}
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </td>
+                  </tr>
+                 {% endif %} 
+              {% else %}
+                  <tr>
+                      <td colspan="13">Champ vide</td>
+                  </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+        </div>
+        <div class="tab-pane fade show" id="devis-enattente" role="tabpanel" aria-labelledby="devis-enattente-tab">
+          <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+              <tbody>
+              <tr class="align-middle text-start" style="table-hover : disabled;">
+                      <th>NumFacture</th>
+                      <th>Date</th>
+                      <th>Nom Client</th>
+                      <th>Adresse </th>
+                      <th>Téléphone </th>
+                      <th>Etat</th>
+                      <th></th>
+                  </tr>
+              {% for facture in factures %}
+                {% if facture.etat == 'Brouillon' %}
+                  <tr>
+                      <td>{{ facture.numFacture }}</td>
+                      <td>{{ facture.date ? facture.date|date('Y-m-d') : '' }}</td>
+                      <td>{{ facture.nom }}</td>
+                      <td>{{ facture.adresseClient }}</td>
+                      <td>{{ facture.telephoneClient }}</td>
+                      <td class="align-middle text-start">
+                             {% if ( facture.etat =="En attente") %}
+                              <span class="badge bg-secondary">{{ facture.etat }}</span>
+                              {% elseif (facture.etat =="A encaisser") %}
+                              <span class="badge bg-warning text-dark">{{ facture.etat }}</span>
+                              {% elseif ( facture.etat =="Archivé") %}
+                              <span class="badge bg-success">{{ facture.etat }}</span>
+                              {% elseif ( facture.etat =="En retard") %}
+                              <span class="badge bg-danger">{{ facture.etat }}</span>
+                            {% else %}
+                              <span class="badge bg-light text-dark">{{ facture.etat }}</span>
+                            {% endif %}
+                      <td>
+                      {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') %}
+                            <div class="btn-group align-middle text-start " role="group" aria-label="Button group with nested dropdown">
+                              <div class="btn-group text-start" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                  Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                  <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-{{ facture.id }}">Afficher</button></li>
+                                  <li><a class="dropdown-item" href="{{path('facture_edit', {'id': facture.id})}}">Modifier</a>{# <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-{{ devi.id }}"> #}{# </button> #}</li>
+                                  {% if facture.etat == "validé" or facture.etat == "en attente" or facture.etat == "en cours" %}
+                                    <li><a class="dropdown-item" href="{{path('', {'id': facture.id})}}">Générer Devis</a>{# <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-{{ devi.id }}"> #}{# </button> #}</li>
+                                  {% endif %}
+                                  <li>{{ include('facture/_delete_form.html.twig', {'id': facture.id}) }}</li>
+                                </ul>
+                              </div>
+                            </div>
+                          {% else %}
+                            <button type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="modal" data-bs-target="#Show-{{ facture.id }}">Afficher</button>
+                          {% endif %}
+                          <!-- Modal Show -->
+                          <div class="modal fade" id="Show-{{facture.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                              <div class="modal-content">
+                              <div class="modal-header">
+                                <table class="table table-borderless m-0 p-0">
+                                  <tbody>
+                                    <tr>
+                                      <th class="w-50"><h5 class="modal-title" id="exampleModalLabel">Devis</h5></th>
+                                      <td class="w-50">
+                                        {% if ( facture.etat =="en attente") %}
+                                          <span class="badge bg-secondary">{{ facture.etat }}</span>
+                                          {% elseif (facture.etat =="en cours") %}
+                                          <span class="badge bg-warning text-dark">{{ facture.etat }}</span>
+                                          {% elseif ( facture.etat =="validé") %}
+                                          <span class="badge bg-success">{{ facture.etat }}</span>
+                                          {% elseif ( facture.etat =="refusé") %}
+                                          <span class="badge bg-danger">{{ facture.etat }}</span>
+                                          {% else %}
+                                          <span class="badge bg-light text-dark">{{ facture.etat }}</span>
+                                        {% endif %}
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  {{ render(path('facture_show', {'id': facture.id})) }}
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </td>
+                  </tr>
+                {% endif %}
+              {% else %}
+                  <tr>
+                      <td colspan="13">Champ vide</td>
+                  </tr>
+              {% endfor %}
+              </tbody>
+          </table>
+        </div>
+      </div> 
+    
+</div>
+{% endblock %}

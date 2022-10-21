@@ -1,0 +1,40 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Liste actualité - Ease & Car{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-5">
+        <h1>Liste d'actualité</h1>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Image</th>
+                    <th>Titre</th>
+                    <th>Contenu</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for actualit in actualits %}
+                <tr>
+                    <td>{{ actualit.id }}</td>
+                    <td>{{ actualit.image }}</td>
+                    <td>{{ actualit.titre }}</td>
+                    <td>{{ actualit.contenu }}</td>
+                    <td>
+                        <a href="{{ path('actualit_show', {'id': actualit.id}) }}">show</a>
+                        <a href="{{ path('actualit_edit', {'id': actualit.id}) }}">edit</a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Champ vide</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ path('actualit_new') }}">Create new</a>
+    <div>    
+{% endblock %}

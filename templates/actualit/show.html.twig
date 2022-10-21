@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Actualit{% endblock %}
+
+{% block body %}
+    <h1>Actualit</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ actualit.id }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ actualit.image }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ actualit.titre }}</td>
+            </tr>
+            <tr>
+                <th>Contenu</th>
+                <td>{{ actualit.contenu }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('actualit_index') }}">back to list</a>
+
+    <a href="{{ path('actualit_edit', {'id': actualit.id}) }}">edit</a>
+
+    {{ include('actualit/_delete_form.html.twig') }}
+{% endblock %}

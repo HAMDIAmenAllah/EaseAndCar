@@ -1,0 +1,44 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}FAQ index{% endblock %}
+
+{% block content %}
+
+<div class="flex-column container">
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</thclass=>
+                <th>Contenu</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if faqs %}
+        <tr>
+            <td>{{ faqs[0].id }}</td>
+            <td>{{ faqs[0].Contenu|raw }}</td>
+            <td>
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-ease dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">Actions</button>
+                        <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                            <li><a href="{{ path('faq_show', {'id': faqs[0].id}) }}" class="btn dropdown-item">Afficher</a></li>
+                            <li><a href="{{ path('faq_edit', {'id': faqs[0].id}) }}" class="btn dropdown-item">Modifier</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="3">Champ vide</td>
+        </tr>
+        {% endif %}
+        </tbody>
+    </table>
+</div>
+    {# <a href="{{ path('faq_new') }}">Create new</a> #}
+{% endblock %}

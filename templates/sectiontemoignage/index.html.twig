@@ -1,0 +1,42 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Sectiontemoignage index{% endblock %}
+
+{% block content %}
+<div class="flex-column container mt-5">
+
+    <h1>Gestion Section Témoignage</h1>
+    <a type="button" class="btn btn-ease"href="{{ path('sectiontemoignage_new') }}">Créer un nouveau</a>
+    <table class="table-sm table table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+        <tbody class="align-middle text-start">
+            <tr>
+                {# <th>Id</th> #}
+                <th>Image</th>
+                <th>Nom</th>
+                <th>Situation</th>
+                <th>Avis</th>
+                <th>Actions</th>
+            </tr>
+        {% for sectiontemoignage in sectiontemoignages %}
+            <tr>
+                {# <td>{{ sectiontemoignage.id }}</td> #}
+                <td>{{ sectiontemoignage.image }}</td>
+                <td>{{ sectiontemoignage.nom }}</td>
+                <td>{{ sectiontemoignage.situation }}</td>
+                <td>{{ sectiontemoignage.avis }}</td>
+                <td>
+                    {# <a href="{{ path('sectiontemoignage_show', {'id': sectiontemoignage.id}) }}">show</a> #}
+                    <a type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" href="{{ path('sectiontemoignage_edit', {'id': sectiontemoignage.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Champ vide</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+    </div>
+{% endblock %}

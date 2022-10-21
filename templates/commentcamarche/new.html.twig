@@ -1,0 +1,15 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}New Commentcamarche{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-5">
+
+    <h1>Create new Commentcamarche</h1>
+
+    {{ include('commentcamarche/_form.html.twig') }}
+
+    <a href="{{ path('commentcamarche_index') }}">back to list</a>
+    </div>
+
+{% endblock %}

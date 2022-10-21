@@ -1,0 +1,62 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Galerie index{% endblock %}
+
+{% block content %}
+<div class="collapsed d-flex container flex-column">
+    <div class="container row">
+        <h1>Galerie Depart</h1>
+        {% for galerie in galeries %}
+            {% if galerie.aller == true %}
+                <div class="card m-2 p-0" style="width: 12rem;">
+                    <img src="{{asset('/assets/uploads/'~ galerie.nom)}}" height="100" width="200" class="card-img-top" data-bs-toggle="modal" data-bs-target="#Depart-{{galerie.id}}">
+                </div>
+                <div class="modal fade" id="Depart-{{galerie.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body ratio ratio-16x9">
+                                <img src="{{asset('/assets/uploads/'~ galerie.nom)}}">
+                            </div>
+                            <div class="modal-footer border-top justify-content-center">
+                                <button type="button" class="btn btn-warning"
+                                    data-bs-dismiss="modal">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% else %}
+                <div class="card  m-2 p-0" style="width: 12rem;">
+                    <svg class="bd-placeholder-img card-img-top" width="200" height="100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+                </div>
+        {% endfor %}
+        <h1>Galerie Retour</h1>
+        {% for galerie in galeries %}
+            {% if galerie.retour == true %}
+                <div class="card m-2 p-0" style="width: 12rem;">
+                    <img src="{{asset('/assets/uploads/'~ galerie.nom)}}" height="100" width="200" class="card-img-top" data-bs-toggle="modal" data-bs-target="#Retour-{{galerie.id}}"> 
+                </div>
+                <div class="modal fade" id="Retour-{{galerie.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-body ratio ratio-16x9">
+                                <img src="{{asset('/assets/uploads/'~ galerie.nom)}}">
+                            </div>
+                            <div class="modal-footer border-top justify-content-center">
+                                <button type="button" class="btn btn-warning"
+                                    data-bs-dismiss="modal">Fermer</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        {% else %}
+            <div class="card m-2 p-0" style="width: 18rem;">
+                <svg class="bd-placeholder-img card-img-top" width="200" height="100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Image cap" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#868e96"></rect><text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image cap</text></svg>
+            </div>
+        {% endfor %}
+    </div>
+    {# <a href="{{ path('galerie_new') }}">Create new</a> #}
+</div>
+    
+{% endblock %}

@@ -1,0 +1,74 @@
+{% block body %}
+
+    <table class="table">
+        <tbody>{# 
+            <tr>
+                <th>Id</th>
+                <td>{{ devi.id }}</td>
+            </tr> #}
+            <tr>
+                <th class="w-50">Type d'Entreprise</th>
+                <td class="w-50">{{ devi.typeEntreprise }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Nom d'Entreprise</th>
+                <td class="w-50">{{ devi.nomEntreprise }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Adresse Email</th>
+                <td class="w-50">{{ devi.adresseEmail }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Numero Téléphone</th>
+                <td class="w-50">{{ devi.numeroTel }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Adresse Siege</th>
+                <td class="w-50">{{ devi.adresseSiege }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Departement Depart</th>
+                <td class="w-50">{{ devi.departementDepart }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Début Location</th>
+                <td class="w-50">{{ devi.debutLocation ? devi.debutLocation|date('d/m/Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Fin Location</th>
+                <td class="w-50">{{ devi.finLocation ? devi.finLocation|date('d/m/Y') : '' }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Type de Vehicule</th>
+                <td class="w-50">{{ devi.typeVehicule }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Type de Location</th>
+                <td class="w-50">{{ devi.typeLocation }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Nombre de Places</th>
+                <td class="w-50">{{ devi.nombrePlaces }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Besoin d'un Chauffeur</th>
+                <td class="w-50">{{ devi.besoinChauffeur }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Message</th>
+                <td class="w-50">{{ devi.message }}</td>
+            </tr>
+            {% if is_granted('ROLE_COMMER') or  is_granted('ROLE_ADMIN') %}
+           <tr>
+                <td class="w-50" colspan="2" style="border-bottom: none;">{{ include('notes/liste.html.twig') }}</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+
+    {# <a class="btn btn-success" href="{{ path('devis_liste') }}">back to list</a>
+
+    <a class="btn btn-warning" href="{{ path('devis_edit', {'id': devi.id}) }}">edit</a>
+
+    <div>{{ include('devis/_delete_form.html.twig') }}</div> #}
+{% endblock %}

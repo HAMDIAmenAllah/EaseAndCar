@@ -1,0 +1,12 @@
+
+{% block content %}
+<div class="flex-column container">
+    <h1>Modifier les données de Ease & Car</h1>
+
+    {{ include('easeandcar/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    {# <a href="{{ path('easeandcar_index') }}">back to list</a>
+
+    {{ include('easeandcar/_delete_form.html.twig') }} #}
+</div>
+{% endblock %}

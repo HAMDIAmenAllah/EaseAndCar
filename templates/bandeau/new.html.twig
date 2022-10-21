@@ -1,0 +1,15 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}New Bandeau{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-5">
+
+    <h1>Create new Bandeau</h1>
+
+    {{ include('bandeau/_form.html.twig') }}
+
+    <a href="{{ path('bandeau_index') }}">back to list</a>
+    </div>
+
+{% endblock %}

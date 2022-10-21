@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Galerie index{% endblock %}
+
+{% block body %}
+    <h1>Galerie index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Aller</th>
+                <th>Retour</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for galerie in galeries %}
+            <tr>
+                <td>{{ galerie.id }}</td>
+                <td>{{ galerie.nom }}</td>
+                <td>{{ galerie.aller ? 'Yes' : 'No' }}</td>
+                <td>{{ galerie.retour ? 'Yes' : 'No' }}</td>
+                <td>
+                    <a href="{{ path('galerie_show', {'id': galerie.id}) }}">show</a>
+                    <a href="{{ path('galerie_edit', {'id': galerie.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('galerie_new') }}">Create new</a>
+
+    <video id="video" width="640" height="480" autoplay></video>
+    <button id="snap">Snap Photo</button>
+    <canvas id="canvas" width="640" height="480"></canvas>
+
+    <script>
+
+
+    // Grab elements, create settings, etc.
+    var video = document.getElementById('video');
+
+    // Get access to the camera!
+    if(navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        // Not adding `{ audio: true }` since we only want video now
+        navigator.mediaDevices.getUserMedia({ video: true }).then(function(stream) {
+            //video.src = window.URL.createObjectURL(stream);
+            video.srcObject = stream;
+        });
+    }
+    // Elements for taking the snapshot
+    var canvas = document.getElementById('canvas');
+    var context = canvas.getContext('2d');
+    var video = document.getElementById('video');
+
+    // Trigger photo take
+    document.getElementById("snap").addEventListener("click", function() {
+        context.drawImage(video, 0, 0, 640, 480);
+    });
+
+    </script>
+    
+{% endblock %}

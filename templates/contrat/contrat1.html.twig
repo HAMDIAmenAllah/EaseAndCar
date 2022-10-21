@@ -1,0 +1,338 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+
+{% block title %}Contrat {# {{devisCar.Client.nom}} #}{% endblock %}
+{% block stylesheets %}
+<style>
+	.titre {
+		color: #009cde;
+	}
+
+	section {
+		margin-top: 50px;
+	}
+
+	.background {
+		background: #009cde;
+	}
+
+	.right {
+		text-align: right;
+	}
+
+	.tabBorder {
+		border-bottom: hidden;
+		border-left: hidden;
+	}
+
+	.signature {
+		text-align: -webkit-center;
+	}
+
+	.devidate {
+		position: absolute;
+		top: 280px;
+		left: 1000px;
+	}
+
+	.societe {
+		margin-left: 12px;
+	}
+	.icon:hover{
+
+	}
+</style>
+{% endblock %}
+{% block content %}
+
+<div class="container mt-5 shadow-lg" style="margin: 60px;
+    padding-top: 78px; padding-left: 30px;">
+	<div class="row">
+		<div class="col-6">
+			<img src="{{asset('assets/img/logo_EC.png')}}">
+		</div>
+		<div class="col-6">
+			<h1 class="text-center titre">Contrat</h1>
+		</div>
+	</div>
+
+	<!--infos société-->
+	<section>
+		<h3 class="titre">Société</h3>
+		<div class="row">
+			<div class="col-4 shadow-lg p-3 ps-5 societe">
+				<div class="row">
+					<p class="col-10">{{contrat.raisonSociale}}</p>
+					<span class="col-2 text-end">
+						<a data-bs-toggle="modal" data-bs-target="#EditEC"><i class="bi bi-pencil"></i></a>
+					</span>
+				</div>
+				<p>{{contrat.adresse}}</p>
+				<p>N° de téls: {{contrat.telephone}}</p>
+			</div>
+			
+			<div class="col-3 shadow-lg devidate p-3 ps-5 mt-3 ms-5">
+				<div class="row">{# modifierDetails #}
+					<p class="col-10">Contrat N°: {{ contrat.numContrat }}</p> 
+					<span class="col-2 text-end">
+						<a data-bs-toggle="modal" data-bs-target="#modifierDetails"><i class="bi bi-pencil"></i></a>
+					</span>
+				</div>
+				<p>Date : {{ contrat.date|date("d/m/Y") }}</p>
+			</div>
+		</div>
+	</section>
+	<!-- infos client-->
+	<section>
+		<h3 class="titre">Information client:</h3>
+		<div class="border p-3 ps-5 shadow-lg col-6">
+			<div class="row">
+				<p class="col-10">Nom : {{contrat.nom}}</p> 
+				<span class="col-2 text-end icon">
+					<a data-bs-toggle="modal" data-bs-target="#EditClient"><i class="bi bi-pencil"></i></a>
+				</span>
+			</div>
+			<p>Adresse : {{contrat.adresseClient}}</p>
+			<p>N° de tél : {{contrat.telephoneClient}}</p>
+			{# <p>Détails de la voiture :</p> #}
+		</div>
+	</section>
+	<!-- infos voiture-->
+	<section>
+		<h3 class="titre">Information voiture : </h3>
+		<table class="table table-bordered">
+			<thead>
+				<tr class="background">
+					<th scope="col">Réf</th>
+					<th scope="col">Type</th>
+					<th scope="col">Date de début</th>
+					<th scope="col">Date de fin</th>
+					<th scope="col">Nombre de véhicules</th>
+					<th scope="col">Kilomètrage</th>
+					<th scope="col">Tarif HT</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th>{{contrat.reference}}</th>
+					<td>{{contrat.type}}</td>
+					<td>{{contrat.debut|date("d/m/Y")}}</td>
+					<td>{{contrat.fin|date("d/m/Y")}}</td>
+					<td>{{contrat.nombreVehicules}}</td>
+					<td>{{contrat.kilometrage}}km</td>
+					<td class="text-end">{{(contrat.tarifHT)|number_format(2, ',')}}€</td>
+				</tr>
+				<div class="modal fade" id="EditLigne-{{contrat.id}}" tabindex="-1" aria-labelledby="exampleModalLabel"
+						aria-hidden="true">
+						<div class="modal-dialog modal-dialog-scrollable">
+							<div class="modal-content">
+								<div class="modal-header">
+									<h5 class="modal-title" id="exampleModalLabel">Ligne contrat</h5>
+									<button type="button" class="btn-close" data-bs-dismiss="modal"	aria-label="Close"></button>
+								</div>
+								<div class="modal-body">
+									{# <form class="form" method="post" action="{{ path('modif_ligne', {'id': row.id, 'facture': facture.id,}) }}">
+										{{ render(path('modif_ligne', {'id': row.id, 'facture': facture.id,})) }}
+									</form> #}
+								</div>
+								<div class="modal-footer">
+									<button type="button" class="btn btn-secondary"
+										data-bs-dismiss="modal">Fermer</button>
+								</div>
+							</div>
+						</div>
+				</div>
+
+			</tbody>
+		</table>
+	</section>
+	<section class="mt-0">
+
+	</section>
+
+	<!--signature-->
+	<section>
+		<div>
+			<b>
+				 Le paiement est dû dans :
+				 <span class="ms-5text-end icon">
+					<a data-bs-toggle="modal" data-bs-target="#modifierpaiement"><i class="bi bi-pencil"></i></a>
+				</span>
+				&nbsp;
+				 {# {{facture.delaiPaiement}} #}
+			</b>
+		</div>
+		<div class="row mt-4">
+			<h4 class="col-6">Date :</h4>
+			<h4 class="col-6 signature">signature</h4>
+		</div>
+	</section>
+	<!--Conditions générales-->
+	<section class="mt-5">
+		<div>
+			<b>
+				Validité de la facture: 
+				<span class="ms-5text-end icon">
+					<a data-bs-toggle="modal" data-bs-target="#modifiervalidite"><i class="bi bi-pencil"></i></a>
+				</span>
+				&nbsp;
+				{# {{facture.delaiFacture}} #} <br />{# modifierCondition #}
+				Conditions de réglement : 
+				<span class="ms-5text-end icon">
+					<a data-bs-toggle="modal" data-bs-target="#modifierCondition"><i class="bi bi-pencil"></i></a>
+				</span>
+				&nbsp;
+				{# {{facture.conditionReglement}} #}
+				
+				{# {% if facture.conditionReglement != null %}{{facture.conditionReglement}}.{% endif %}
+				<span class="ms-5text-end icon">
+					<a data-bs-toggle="modal" data-bs-target="#modifierCondition"><i class="bi bi-pencil"></i></a>
+				</span>
+				<br />
+				{{facture.raisonSociale}} - {{facture.formeJuridique}} / {{facture.numTVA}} #}
+			</b>
+		</div>
+		<div class="position-relative  mb-5">
+			{# <form method="post" action="{{ path('facture_pdf', {'id': facture.id}) }}"  #}{# onsubmit="return confirm('Êtes-vous sûr de bien vouloir telecharger ce devis ?');" #}>
+				{# <button class="btn btn-ease">Télecharger PDF</button>
+			</form>
+ #}
+			{# <form method="post" action="{{ path('facture_pdf', {'id': facture.id}) }}">
+				<button class="btn btn-ease">Envoyer par mail</button>
+			</form> #}
+      </div>
+	</section>
+	<div class="modal fade" id="EditEC" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ease & Car</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					{# <form class="form" method="post" action="{{ path('modif_societe', {'id': facture.id, 'facture': facture.id,}) }}" id="EditEC">
+						{{ render(path('modif_societe', {'id': facture.id, 'facture': facture.id,})) }}
+					</form> #}
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="modal fade" id="modifierDetails" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Modifier Numéro et Date Devis</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					{# <form class="form" method="post" action="{{ path('modif_facture', {'id': facture.id}) }}" id="modifierDetails">
+						{{ render(path('modif_facture', {'id': facture.id})) }} #}
+					</form>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="EditClient" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Client</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				{# <form class="form" method="post" action="{{ path('modif_client', {'id': facture.id, 'devis': facture.id,}) }}" id="EditClient">
+					{{ render(path('modif_client', {'id': facture.id, 'facture': facture.id,})) }}
+				</form> #}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modifierTVA" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Modifier TVA</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				{# <form class="form" method="post" action="{{ path('modifier_TVA', {'id': facture.id}) }}" id="modifierTVA">
+					{{ render(path('modifier_TVA', {'id': facture.id})) }}
+				</form> #}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modifierpaiement" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Modifier TVA</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				{# <form class="form" method="post" action="{{ path('modifier_paiement', {'id': facture.id}) }}" id="modifierpaiement">
+					{{ render(path('modifier_paiement', {'id': facture.id})) }}
+				</form> #}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modifiervalidite" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Modifier TVA</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				{# <form class="form" method="post" action="{{ path('modifier_validite', {'id': facture.id}) }}" id="modifiervalidite">
+					{{ render(path('modifier_validite', {'id': facture.id})) }}
+				</form> #}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="modal fade" id="modifierCondition" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-dialog-scrollable">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Modifier TVA</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				{# <form class="form" method="post" action="{{ path('modifier_Condition', {'id': facture.id}) }}" id="modifierCondition">
+					{{ render(path('modifier_Condition', {'id': facture.id})) }}
+				</form> #}
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+{% endblock %}

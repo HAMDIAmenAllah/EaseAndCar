@@ -1,0 +1,41 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Sectionnosservices index{% endblock %}
+
+{% block content %}
+<div class="flex-column container mt-5">
+
+    <h1>Gestion Section Nos Services</h1>
+
+    <table class="table-sm table table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+        <tbody class="align-middle text-start">
+            <tr>
+                {# <th>Id</th> #}
+                <th>Image</th>
+                <th>Titre</th>
+                <th>Url</th>
+                <th>actions</th>
+            </tr>
+        {% for sectionnosservice in sectionnosservices %}
+            <tr>
+                {# <td>{{ sectionnosservice.id }}</td> #}
+                <td>{{ sectionnosservice.image }}</td>
+                <td>{{ sectionnosservice.titre }}</td>
+                <td>{{ sectionnosservice.url }}</td>
+                <td>
+                    {# <a href="{{ path('sectionnosservices_show', {'id': sectionnosservice.id}) }}">show</a> #}
+                    <a class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" href="{{ path('sectionnosservices_edit', {'id': sectionnosservice.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Champ vide</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('sectionnosservices_new') }}">Create new</a> #}
+</div>
+
+{% endblock %}

@@ -1,0 +1,70 @@
+{% extends 'base.html.twig' %} 
+{% block content %} 
+{% include "header.html.twig" %}
+<main id="main">
+  <section id="hero2" class="d-flex justify-cntent-center align-items-center">
+    <div
+      id="heroCarousel"
+      class="container carousel carousel-fade"
+      data-bs-ride="carousel"
+      data-bs-interval="5000"
+    >
+      <!-- Slide 1 -->
+      <div class="carousel-item active">
+        <div class="carousel-container">
+          <img src="" alt="" class="img-fluid" />
+          <h2>Nous contacter</h2>
+          <br />
+          <p class="animate__animated animate__fadeInUp">
+            Vous avez une question ? Remplissez le formulaire et nous
+          </p>
+          <p class="animate__animated animate__fadeInUp">
+            vous répondons dans les meilleurs délais.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- End Hero -->
+
+  <!-- ======= Contact Section ======= -->
+  <section
+    class="contact"
+    data-aos="fade-up"
+    data-aos-easing="ease-in-out"
+    data-aos-duration="500"
+  >
+    <div class="container">
+      <div class="section-title">
+        <h2>Formulaire de contact</h2>
+      </div>
+      <div>
+        <br />
+        <h1 class="text-center">Votre demande a été bien envoyé !</h1>
+        <br />
+        <br />
+
+        <p class="text-center ps-1">
+          Nous nous efforçons de vous répondre dans les plus brefs délais.
+        </p>
+        <br />
+        <br />
+        <br />
+        <center>
+          <a href="{{ path('home') }}">Revenir à la page d'accueil</a>
+        </center>
+        <br />
+        <br />
+        <br />
+      </div>
+    </div>
+  </section>
+  <!-- End Contact Section -->
+
+  <!-- ======= Our Team Section ======= -->
+
+  <!-- End Our Team Section -->
+
+  <!-- ======= Team Section ======= -->
+</main>
+{% include "footer.html.twig" %} {% endblock content %}

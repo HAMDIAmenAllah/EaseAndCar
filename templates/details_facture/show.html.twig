@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DetailsFacture{% endblock %}
+
+{% block body %}
+    <h1>DetailsFacture</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ details_facture.id }}</td>
+            </tr>
+            <tr>
+                <th>Reference</th>
+                <td>{{ details_facture.reference }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ details_facture.type }}</td>
+            </tr>
+            <tr>
+                <th>Debut</th>
+                <td>{{ details_facture.debut ? details_facture.debut|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fin</th>
+                <td>{{ details_facture.fin ? details_facture.fin|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>NombreVehicules</th>
+                <td>{{ details_facture.nombreVehicules }}</td>
+            </tr>
+            <tr>
+                <th>TarifHT</th>
+                <td>{{ details_facture.tarifHT }}</td>
+            </tr>
+            <tr>
+                <th>Kilometrage</th>
+                <td>{{ details_facture.kilometrage }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('details_facture_index') }}">back to list</a>
+
+    <a href="{{ path('details_facture_edit', {'id': details_facture.id}) }}">edit</a>
+
+    {{ include('details_facture/_delete_form.html.twig') }}
+{% endblock %}

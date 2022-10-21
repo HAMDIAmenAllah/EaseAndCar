@@ -1,0 +1,41 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Sectiontemoignage{% endblock %}
+
+{% block content %}
+<div class="flex-column container mt-5">
+
+    <h1>Sectiontemoignage</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sectiontemoignage.id }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ sectiontemoignage.image }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ sectiontemoignage.nom }}</td>
+            </tr>
+            <tr>
+                <th>Situation</th>
+                <td>{{ sectiontemoignage.situation }}</td>
+            </tr>
+            <tr>
+                <th>Avis</th>
+                <td>{{ sectiontemoignage.avis }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('sectiontemoignage_index') }}">back to list</a>
+
+    <a href="{{ path('sectiontemoignage_edit', {'id': sectiontemoignage.id}) }}">edit</a>
+
+    {{ include('sectiontemoignage/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

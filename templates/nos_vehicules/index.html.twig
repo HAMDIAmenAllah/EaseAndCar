@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+{% include "header.html.twig" %}
+
+<main id="main">
+<section id="hero1" class="d-flex justify-cntent-center align-items-center">
+      
+      <div
+        id="heroCarousel"
+        class="container carousel carousel-fade"
+        data-bs-ride="carousel"
+        data-bs-interval="5000"
+      >
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+          <div class="carousel-container">
+            <img src="" alt="" class="img-fluid" />
+            
+            <h2 style="margin-top: 50px">Nos véhicules</h2>
+            <br>
+            <p class="animate__animated animate__fadeInUp">
+                <b>Ease&Car</b> compte 300 véhicules en parc et en partenariat.
+                Ils sont renouvelés <br><br>  régulièrement, possèdent une technologie de pointe et respectent <br> <br> les dernières normes environnementales et sécuritaires.
+            </p>
+            <p class="animate__animated animate__fadeInUp">
+              
+            </p>
+          </div>
+        </div>
+
+    </section>
+    <!-- End Hero -->
+
+    <main id="main">
+      <!-- ======= Nos véhicules Section ======= -->
+      <section id="vehicules" class="features">
+        <div class="container">
+          <div class="row" data-aos="fade-up">
+            <div class="col-md-6">
+              <img src="{{ asset('image/voiture4.png') }}" class="img-fluid" alt="" />
+            </div>
+            <div class="col-md-6 pt-4">
+              <div class="text">
+                <h3>Location de véhicule handicap</h3>
+                <p class="fst-italic">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+
+                <a
+                  href="{{path('handicap')}}"
+                  class="btn-get-started animate__animated animate__fadeInUp"
+                  >Voir nos modèles
+                </a>
+            </div>
+            </div>
+          </div>
+
+          <div class="row" data-aos="fade-up">
+            <div class="col-md-6 order-1 order-md-2">
+              <img src="{{ asset('image/voiture3.png') }}" class="img-fluid" alt="" />
+            </div>
+            <div class="col-md-6 pt-5 order-2 order-md-1">
+              <div class="text">
+                <h3>Location de minibus</h3>
+                <p class="fst-italic">
+                  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                  do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                </p>
+                <a
+                  href="{{path('minibus')}}"
+                  class="btn-get-started animate__animated animate__fadeInUp"
+                  >Voir nos modèles
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="row" data-aos="fade-up">
+            <div class="col-md-6">
+              <img src="{{ asset('image/voiture2.png') }}" class="img-fluid" alt="" />
+            </div>
+            <div class="col-md-6 pt-5">
+              <div class="text">
+                <h3>Location de citadine</h3>
+                <p>
+                  Cupiditate placeat cupiditate placeat est ipsam culpa.
+                  Delectus quia minima quod. Sunt saepe odit aut quia voluptatem
+                  hic voluptas dolor doloremque.
+                </p>
+                <a
+                  href="{{path('citadine')}}"
+                  class="btn-get-started animate__animated animate__fadeInUp"
+                  >Voir nos modèles
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+</main>
+
+{% include "footer.html.twig" %}
+{% endblock content %}

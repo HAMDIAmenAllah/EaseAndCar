@@ -1,0 +1,15 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}New Sectioncarousel{% endblock %}
+
+{% block content %}
+<div class="flex-column container mt-5">
+
+    <h1>Create new Sectioncarousel</h1>
+
+    {{ include('sectioncarousel/_form.html.twig') }}
+
+    {# <a href="{{ path('sectioncarousel_index') }}">back to list</a> #}
+</div>
+
+{% endblock %}

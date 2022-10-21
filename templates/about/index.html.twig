@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{controller_name}}{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block content %}
+{% include "header.html.twig" %}
+
+<main id="main">
+
+    <!-- ======= Hero Section ======= -->
+    <section id="heroA" class="d-flex justify-cntent-center align-items-center">
+      <div
+        id="heroCarousel"
+        class="container carousel carousel-fade"
+        data-bs-ride="carousel"
+        data-bs-interval="5000"
+      >
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+          <div class="carousel-container">
+            <img src="" alt="" class="img-fluid" />
+            <h2>À Propos</h2>
+            <br />
+            <p class="animate__animated animate__fadeInUp fs-4">
+              Nos chauffeurs professionnels vous accompagnent chaque jour à destination. <br>
+            C’est à bord de véhicules modernes, adaptés et peu polluants que nous vous accueillons. <br>
+            Bienvenue à bord.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Hero -->
+    
+    <!-- ======= About Section ======= -->
+    <section class="about" data-aos="fade-up">
+      <div class="container">
+        <div class="row m-3">
+          <div class="col-lg-6">
+            <img src="{{asset('assets/img/about.jpg')}}" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-6 pt-5 pt-lg-0">
+            <h3 class="fs-1">Qui sommes nous ?</h3>
+            <p class="fs-4" style="text-align: justify;">
+              Ease & Car est une société de transport de personnes et acteur de la mobilité. <br>
+              Notre réseau de chauffeurs-professionnels est disponible pour vous transporter chaque jour dans vos trajets quotidiens. <br>
+              Nos véhicules dernière génération sont entièrement adaptés et équipés en fonction de vos besoins : handicap, berline, citadine, grande capacité. <br>
+              Nous exerçons notre métier avec passion et nous plaçons l’humain au cœur de nos priorités. 
+            </p>
+            <!--<ul>
+              <li><i class="bi bi-check2-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+              <li><i class="bi bi-check2-circle"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+              <li><i class="bi bi-check2-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
+            </ul>-->
+            
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+    <!-- ======= Services Section ======= -->
+    <section class="services section-bg">
+      <div class="container">
+        <div class="section-title">
+          <h2 id="titre" class="fs-1">Nos engagements qualité</h2>
+        </div>
+        <div class="row">
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up">
+            <div class="icon-box icon-box-pink">
+              <div class="icon"><i class="bx bxl-dribbble"></i></div>
+              <h4 class="title"><a href="">Fiabilité</a></h4>
+              <p class="description">Tous nos véhicules sont neufs, géolocalisés et contrôlés fréquemment. Ils disposent tous des équipements obligatoires : trousse de secours, triangle de signalisation, gilet fluo etc.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="100">
+            <div class="icon-box icon-box-cyan">
+              <div class="icon"><i class="bx bx-file"></i></div>
+              <h4 class="title"><a href="">Disponibilité</a></h4>
+              <p class="description">Nos chauffeurs sont disponibles sur toute la France pour vous conduire et notre Assistance répond à toutes vos questions sans interruption dans l’année et sans surcoût. </p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon-box icon-box-green">
+              <div class="icon"><i class="bx bx-tachometer"></i></div>
+              <h4 class="title"><a href="">Réactivité</a></h4>
+              <p class="description">Voyagez à bord de véhicules neufs et dernière génération. Nos chauffeurs sont formés à la relation client et s’assurent que votre trajet s’effectue dans de bonnes conditions.</p>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-3 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon-box icon-box-blue">
+              <div class="icon"><i class="bx bx-world"></i></div>
+              <h4 class="title"><a href="">Simplicité</a></h4>
+              <p class="description">Nous nous adaptons à vos exigences : nous proposons des services à la carte et personnalisés en fonction de votre cahier des charges. </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Services Section -->
+
+  </main><!-- End #main -->
+
+  {% include "footer.html.twig" %}
+
+{% endblock %}

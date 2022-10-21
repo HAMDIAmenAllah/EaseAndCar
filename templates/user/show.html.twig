@@ -1,0 +1,40 @@
+{% block body %}
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.lastname }}</td>
+            </tr>
+            <tr>
+                <th>Prénom</th>
+                <td>{{ user.firstname }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Role</th>
+                <td>
+                {% if (user.roles[0] =="ROLE_ADMIN") %}
+                    Admin
+                {% elseif (user.roles[0] =="ROLE_USER") %}
+                    Utilisateur
+                {% elseif (user.roles[0] =="ROLE_COMMER") %}
+                    Commercial
+                {% elseif (user.roles[0] =="ROLE_COMMU") %}
+                    Communication
+                {% endif %}
+                {# {{ user.roles[0]}} #} {#  ? user.roles|json_encode : '' #}</td>
+            </tr>
+            
+        </tbody>
+    </table>
+{# 
+    <a href="{{ path('user_index') }}">back to list</a>
+
+    <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a>
+
+    {{ include('user/_delete_form.html.twig') }} #}
+{% endblock %}

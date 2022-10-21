@@ -1,0 +1,20 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Edit Confidentialite{% endblock %}
+
+{% block content %}
+<div class="flex-column container mt-5">
+    <h1>Edit Confidentialite</h1>
+    
+    {{ form_start(form) }}
+        {{ form_widget(form.Contenu) }}
+        <button class="btn btn-ease mt-2">{{ button_label|default('Mise à jour') }}</button>
+    {{ form_end(form) }}
+
+    {# {{ include('confidentialite/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('confidentialite_index') }}">back to list</a>
+
+    {{ include('confidentialite/_delete_form.html.twig') }} #}
+</div>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Edit Bandeau{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-5">
+
+    <h1>Modifier Bandeau</h1>
+
+    {{ include('bandeau/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    {# <a type="button" class="btn btn-ease" href="{{ path('bandeau_index') }}">back to list</a> #}
+
+    {# {{ include('bandeau/_delete_form.html.twig') }} #}
+    </div>
+
+{% endblock %}

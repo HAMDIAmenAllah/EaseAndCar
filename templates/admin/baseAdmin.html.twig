@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %} {{ controller_name }} {% endblock %} </title>
+    <link href="{{ asset('image/logo_nav.png')}}" rel="icon" />
+    <!-- Bootstrap core CSS -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.6.1/font/bootstrap-icons.css">
+    <link href="{{ asset('assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link  href="{{ asset('assets/css/portal.css') }}" rel="stylesheet"/>
+    <style>
+  
+		.bd-placeholder-img {
+			font-size: 1.125rem;
+			text-anchor: middle;
+			-webkit-user-select: none;
+			-moz-user-select: none;
+			user-select: none;
+		}
+
+		@media (min-width: 768px) {
+			.bd-placeholder-img-lg {
+			font-size: 3.5rem;
+			}
+		}
+    </style>
+    {% block stylesheets %}{% endblock %}
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('assets/css/sidebars.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+<body >
+	<header class="mb-2">
+		<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+			<div class="container-fluid">
+				{% if is_granted('ROLE_COMMU') or is_granted('ROLE_COMMER') or  is_granted('ROLE_ADMIN') %}
+					<a class="navbar-brand" href="{{ path ('admin')}}">
+						<img src="{{ asset('assets/img/logoE&C_rgb_colored.png') }}" alt="" width="30" height="30" class="d-inline-block align-text-top">
+						Espace Admin
+					</a>
+					{% else %}
+					<a class="navbar-brand" href="{{ path ('account')}}">
+						<img src="{{ asset('assets/img/logoE&C_rgb_colored.png') }}" alt="" width="30" height="30" class="d-inline-block align-text-top">
+						Espace User
+					</a>
+				{% endif %}
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample05" aria-controls="navbarsExample05" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarsExample05">
+				<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+					{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') %}
+					<li class="nav-item">
+					<a class="nav-link {% if var is same as ('easeandcar') %} active {% endif %}" aria-current="page" href="{{ path('easeandcar_edit', { 'id': 1 }) }}">Ease & Car</a>
+					</li>
+					{% endif %}
+					{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') or is_granted('ROLE_USER') %}
+					<li class="nav-item">
+					<a class="nav-link {% if var is same as ('contact') %} active {% endif %}" href="{{ path('contact_liste')}}">Contacts</a>
+					</li>
+					{% endif %}
+					{% if is_granted('ROLE_USER') %}
+					<li class="nav-item">
+					<a class="nav-link {% if var is same as ('devis') %} active {% endif %}" href="{{ path('devis_liste')}}">Devis</a>
+					</li>
+					{% endif %}
+					{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') %}
+					<li class="nav-item">
+					<a class="nav-link {% if var is same as ('client') %} active {% endif %}" href="{{ path('client_index')}}">Clients</a>
+					</li>
+					<li class="nav-item">
+					<a class="nav-link {% if var is same as ('devis') %} active {% endif %}" href="{{ path('devis_liste')}}">Devis</a>
+					</li>
+					<li class="nav-item">
+					<a class="nav-link {% if var is same as ('contrat') %} active {% endif %}" href="{{ path('contrat_index')}}">Contrats</a>
+					</li>
+					<li class="nav-item">
+					<a class="nav-link {% if var is same as ('facture') %} active {% endif %}" href="{{ path('facture_index')}}">Factures</a>
+					</li>
+					{% endif %}
+					{% if is_granted('ROLE_ADMIN') %}
+					<li class="nav-item">
+					<a class="nav-link {% if var is same as ('users') %} active {% endif %}" href="{{ path('user_index')}}">Utilisateurs</a>
+					</li>
+					{% endif %}
+					{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMU') %}
+					<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle {% if var in ['Carousel','NosServices','Section Devis','Engagements','CommentçaMarche','Bandeau','Temoignage'] %} active {% endif %}" href="#" id="dropdown05" data-bs-toggle="dropdown" aria-expanded="false">Thèmes</a>
+					<ul class="dropdown-menu" aria-labelledby="dropdown05">
+						<li><a class="dropdown-item" href="{{ path('sectioncarousel_index') }}">Carrousel</a></li>
+						<li><a class="dropdown-item" href="{{ path('sectionnosservices_index') }}">Nos Services</a></li>
+						<li><a class="dropdown-item" href="{{ path('commentcamarche_index') }}">Comment ça Marche</a></li>
+						<li><a class="dropdown-item" href="{{ path('sectiondevi_index') }}">Section Devis</a></li>
+						<li><a class="dropdown-item" href="{{ path('sectionnosengagements_index') }}">Nos Engagements</a></li>
+						<li><a class="dropdown-item" href="{{ path('bandeau_index') }}">Bandeau</a></li>
+						<li><a class="dropdown-item" href="{{ path('sectiontemoignage_index') }}">Témoignage</a></li>
+					</ul>
+					</li>
+					<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle{% if var in ['FAQ','actualité','CGV','confidentialite'] %} active {% endif %}" href="#" id="dropdown50" data-bs-toggle="dropdown" aria-expanded="false">Pages</a>
+					<ul class="dropdown-menu" aria-labelledby="dropdown50">
+						<li><a class="dropdown-item" href="{{ path('faq_edit', { 'id': 1 })}}">FAQ</a></li>
+						<li><a class="dropdown-item" href="{{ path('actualit_edit',{'id' : 1})}}">Actualité</a></li>
+						<li><a class="dropdown-item" href="{{ path('cgv_edit', { 'id': 1 })}}">CGV</a></li>
+						<li><a class="dropdown-item" href="{{ path('confidentialite_edit', { 'id': 1 })}}">Confidentialité</a></li>
+					</ul>
+					</li>
+					{% endif %}
+					<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle{% if var in ['Profil'] %} active {% endif %}" href="#" id="dropdown50" data-bs-toggle="dropdown" aria-expanded="false">{{app.user.firstname}}</a>
+					<ul class="dropdown-menu" aria-labelledby="dropdown50">
+						<li><a class="dropdown-item" href="{{path('account')}}">Profile</a></li>
+						<li><a class="dropdown-item" href="{{path('home')}}">Accueil</a></li>
+						<li><a class="dropdown-item" href="{{path('app_logout')}}">Déconnexion</a></li>
+					</ul>
+					</li>
+				</ul>
+				</div>
+			</div>
+		</nav>
+	</header>
+
+	{% block content %}{% endblock %}
+
+    <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+</body>
+</html>

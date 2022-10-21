@@ -1,0 +1,11 @@
+<h1>Bonjour</h1>
+
+<br/><p>Vous avez demandé de rénitialiser votre mot de passe sur le site Ease & car.</p><br/><br/>
+
+<p>Merci de bien vouloir cliquer sur le lien suivant pour mettre à jour votre mot de passe.</p>
+
+<a href="{{ url('app_reset_password', {token: resetToken.token}) }}">{{ url('app_reset_password', {token: resetToken.token}) }}</a>
+
+<p>Ce lien expirera dans{{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.</p>
+
+<p>Cordialement,</p>

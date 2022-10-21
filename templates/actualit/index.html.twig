@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{controller_name}} {% endblock title %}
+{% block content %}
+{% include "header.html.twig" %}
+<main id="main">
+<section id="heroActu" class="d-flex justify-cntent-center align-items-center">
+      <div
+        id="heroCarousel"
+        class="container carousel carousel-fade"
+        data-bs-ride="carousel"
+        data-bs-interval="5000"
+      >
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+          <div class="carousel-container">
+            <img src="" alt="" class="img-fluid" />
+            <h2>Actualité</h2>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Hero -->
+
+    <section class="about" data-aos="fade-up">
+      <div class="container">
+        <div class="row m-3">
+          <div class="col-lg-6">
+            <img src="{{asset('uploads/'~ actualits[0].image) }}" class="img-fluid" alt="">
+          </div>
+          <div class="col-lg-6 pt-5 pt-lg-0">
+            <h3 class="fs-1">{{ actualits[0].titre }}</h3>
+            <p class="fs-4" style="text-align: justify;">
+             {{ actualits[0].contenu|raw }}
+            </p>
+            <!--<ul>
+              <li><i class="bi bi-check2-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat.</li>
+              <li><i class="bi bi-check2-circle"></i> Duis aute irure dolor in reprehenderit in voluptate velit.</li>
+              <li><i class="bi bi-check2-circle"></i> Ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate trideta storacalaperda mastiro dolore eu fugiat nulla pariatur.</li>
+            </ul>-->
+            
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End About Section -->
+
+  <style>
+    button[type="submit"] {
+background: #68a4c4;
+border: 0;
+padding: 10px 24px;
+color: #fff;
+transition: 0.4s;
+}
+</style>
+{% include "footer.html.twig" %}
+{% endblock content %}

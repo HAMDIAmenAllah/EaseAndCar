@@ -1,0 +1,407 @@
+{% extends 'base.html.twig' %}
+{% block title %} {{controller_name}} {% endblock title %}
+{% block content %}
+{% include "header.html.twig" %}
+<main id="main">
+    <section id="hero2" class="d-flex justify-cntent-center align-items-center">
+            <div id="heroCarousel" class="container carousel carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+              <!-- Slide 1 -->
+              <div class="carousel-item active">
+                <div class="carousel-container">
+                  <img src="" alt="" class="img-fluid" />
+                  <h2>Nous contacter</h2>
+                  <br />
+                  <p class="animate__animated animate__fadeInUp">
+                    Vous avez une question ? Remplissez le formulaire et nous
+                  </p>
+                  <p class="animate__animated animate__fadeInUp">
+                    vous répondons dans les meilleurs délais.
+                  </p>
+                </div>
+              </div>
+            </div>
+    </section>
+      
+    <!-- End Hero -->
+
+    <main id="main">
+      <!-- ======= Contact Section ======= -->
+      <section
+        class="contact"
+        data-aos="fade-up"
+        data-aos-easing="ease-in-out"
+        data-aos-duration="500"
+      >
+        <div class="container">
+          <div class="section-title">
+            <h2>Formulaire de contact</h2>
+          </div>
+
+          <div class="row">
+              <div class="col-lg-10 mx-auto">
+                
+                <div class="">         
+                 
+                    <div>
+                      {{ form_start(form) }}
+                      {{ form_errors(form) }}
+
+                      <div class="row mt-3">
+                        <div class="col-md-6 form-group">
+                          {{ form_errors(form.nom) }}
+                          <div>
+                            {{
+                              form_widget(form.nom, {
+                                attr: {
+                                  placeholder: "Nom :"
+                                }
+                              })
+                            }}
+                          </div>
+                        </div>
+
+                        <div class="col-md-6 form-group mt-3 mt-md-0">
+                          {{ form_errors(form.prenom) }}
+                          <div>
+                            {{
+                              form_widget(form.prenom, {
+                                attr: {
+                                  placeholder: "Prénom :"
+                                }
+                              })
+                            }}
+                          </div>
+                        </div>
+                      </div>
+
+  <div class="row mt-3">
+    <div class="col-md-6 form-group mt-3 mt-md-0">
+      {{ form_errors(form.mail) }}
+      <div>
+        {{
+          form_widget(form.mail, {
+            attr: {
+              placeholder: "Adresse e-mail :"
+            }
+          })
+        }}
+      </div>
+    </div>
+
+    <div class="col-md-6 form-group mt-3 mt-md-0">
+      {{ form_errors(form.portable) }}
+      <div>
+        {{
+          form_widget(form.portable, {
+            attr: {
+              placeholder: "Portable :"
+            }
+          })
+        }}
+      </div>
+    </div>
+  </div>
+  <div class="row mt-3">
+    <div class="col-md-6 form-group mt-3 mt-md-0">
+      {{ form_errors(form.societe) }}
+      <div>
+        {{
+          form_widget(form.societe, {
+            attr: {
+              placeholder: "Société :"
+            }
+          })
+        }}
+      </div>
+    </div>
+
+    <div class="col-md-6 form-group mt-3 mt-md-0">
+      {{ form_errors(form.subject) }}
+      <div>
+        {{
+          form_widget(form.subject, {
+            attr: {
+              placeholder: "Subject :"
+            }
+          })
+        }}
+      </div>
+    </div>
+  </div>
+
+  <div class="form-group mt-3">
+    {{ form_errors(form.message) }}
+    <div>
+      {{
+        form_widget(form.message, {
+          attr: {
+            placeholder: "Message :"
+          }
+        })
+      }}
+    </div>
+  </div>
+  
+  <center><button class="btn btn-ease mt-2">{{ button_label|default('Envoyer votre message') }}</button></center>
+
+  {# <div class="form-group mt-3">
+    {{
+      form_widget(form.contact, {
+        attr: { placeholder: "envoyer votre message" }
+      })
+    }}
+  </div>
+ #}
+  <div>
+    {{ form_rest(form) }}
+  </div>
+  {{ form_end(form) }}
+</div>
+
+
+                </div> 
+              </div>
+          </div>
+        </div>
+      </section>
+      <!-- End Contact Section -->
+
+      <!-- ======= Our Team Section ======= -->
+
+      <!-- End Our Team Section -->
+
+
+      
+      <!-- ======= avis client Section ======= -->
+      <section class="testimonials" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500" style="background-color: #e6e6e6">
+        <div class="container">
+          <div class="section-title">
+            <h2>Notre équipe</h2>
+          </div>
+
+          <div class="testimonials-carousel swiper-container">
+            <div class="swiper-wrapper">
+              <div class="testimonial-item swiper-slide">
+                <img src="{{asset('image/equipe/1.jpg')}}" class="testimonial-img"/>
+                <h3>K. Mostapha</h3>
+                <h4>Chief Executive Officer</h4>
+              </div>
+
+              <div class="testimonial-item swiper-slide">
+                <img src="{{asset('image/equipe/2.jpg')}}"class="testimonial-img"/>
+                <h3>A. Laetitia</h3>
+                <h4>Product Manager</h4>
+                
+              </div>
+
+              <div class="testimonial-item swiper-slide">
+                <img src="{{asset('image/equipe/3.jpg')}}" class="testimonial-img"/>
+                <h3>C. Gaëlle</h3>
+                <h4>Chief Technical Operation</h4>
+                
+              </div>
+
+              <div class="testimonial-item swiper-slide">
+                <img src="{{asset('image/equipe/4.jpg')}}" class="testimonial-img"/>
+                <h3>H. Helwe</h3>
+                <h4>Accountant</h4>
+                
+              </div>
+
+              <div class="testimonial-item swiper-slide">
+                <img src="{{asset('image/equipe/6.jpg')}}" class="testimonial-img"/>
+                <h3>F. Manuela Ventocilla</h3>
+                <h4>Financing</h4>
+                
+              </div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
+
+
+      <!-- ======= Team Section ======= -->
+      {# <section class="team" data-aos="fade-up" data-aos-easing="ease-in-out" data-aos-duration="500" style="background-color: #e6e6e6">
+        <div class="container">
+          <div class="section-title">
+            <h2>Équipe commerciale</h2>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-12 d-flex align-items-stretch">
+              <div class="member">
+                <div class="member-img img-fluid">
+                  <img src="" class="img-fluid" alt="" />
+                  <div class="social ">
+                    <a href=""><i class="bi bi-twitter"></i></a>
+                    <a href=""><i class="bi bi-facebook"></i></a>
+                    <a href=""><i class="bi bi-instagram"></i></a>
+                    <a href=""><i class="bi bi-linkedin"></i></a>
+                  </div>
+                </div>
+                <div class="member-info">
+                  <h4>Mostapha KECHOU</h4>
+                  <span>Chief Executive Officer</span>
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a
+                    type specimen book.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12 d-flex align-items-stretch">
+              <div class="member">
+                <div class="member-img">
+                  <img src="" class="img-fluid" alt="" />
+                  <div class="social d-flex">
+                    <a href=""><i class="bi bi-twitter"></i></a>
+                    <a href=""><i class="bi bi-facebook"></i></a>
+                    <a href=""><i class="bi bi-instagram"></i></a>
+                    <a href=""><i class="bi bi-linkedin"></i></a>
+                  </div>
+                </div>
+                <div class="member-info">
+                  <h4>Laetitia ANDRE</h4>
+                  <span>Product Manager</span>
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a
+                    type specimen book.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-12 d-flex align-items-stretch">
+            
+              <div class="member">
+                <div class="member-img">
+                  <img src="" class="img-fluid" alt="" />
+                  <div class="social d-flex">
+                    <a href=""><i class="bi bi-twitter"></i></a>
+                    <a href=""><i class="bi bi-facebook"></i></a>
+                    <a href=""><i class="bi bi-instagram"></i></a>
+                    <a href=""><i class="bi bi-linkedin"></i></a>
+                  </div>
+                </div>
+                <div class="member-info">
+                  <h4>Gaëlle CHAIGNEAU</h4>
+                  <span>CTO</span>
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a
+                    type specimen book.
+                  </p>
+                </div>
+              </div>
+          </div>
+        </div>
+      </section>
+      <section
+        class="team"
+        data-aos="fade-up"
+        data-aos-easing="ease-in-out"
+        data-aos-duration="500"
+      >
+        <div class="container">
+          <div class="section-title">
+            <h2>Équipe RH</h2>
+          </div>
+          <div class="row">
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+              <div class="member">
+                <div class="member-img">
+                  <img src="" class="img-fluid" alt="" />
+                  <div class="social d-flex">
+                    <a href=""><i class="bi bi-twitter"></i></a>
+                    <a href=""><i class="bi bi-facebook"></i></a>
+                    <a href=""><i class="bi bi-instagram"></i></a>
+                    <a href=""><i class="bi bi-linkedin"></i></a>
+                  </div>
+                </div>
+                <div class="member-info">
+                  <h4>Helwe HOTON</h4>
+                  <span>Accountant</span>
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a
+                    type specimen book.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+              <div class="member">
+                <div class="member-img">
+                  <img src="" class="img-fluid" alt="" />
+                  <div class="social">
+                    <a href=""><i class="bi bi-twitter"></i></a>
+                    <a href=""><i class="bi bi-facebook"></i></a>
+                    <a href=""><i class="bi bi-instagram"></i></a>
+                    <a href=""><i class="bi bi-linkedin"></i></a>
+                  </div>
+                </div>
+                <div class="member-info">
+                  <h4>Emilie MORIA</h4>
+                  <span>Marketing</span>
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a
+                    type specimen book.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 d-flex align-items-stretch">
+              <div class="member">
+                <div class="member-img">
+                  <img src="" class="img-fluid" alt="" />
+                  <div class="social">
+                    <a href=""><i class="bi bi-twitter"></i></a>
+                    <a href=""><i class="bi bi-facebook"></i></a>
+                    <a href=""><i class="bi bi-instagram"></i></a>
+                    <a href=""><i class="bi bi-linkedin"></i></a>
+                  </div>
+                </div>
+                <div class="member-info">
+                  <h4>Manuela Ventocilla FRANCO</h4>
+                  <span>Financing</span>
+                  <p>
+                    Lorem Ipsum is simply dummy text of the printing and
+                    typesetting industry. Lorem Ipsum has been the industry's
+                    standard dummy text ever since the 1500s, when an unknown
+                    printer took a galley of type and scrambled it to make a
+                    type specimen book.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section> #}
+</main>
+  <style>
+    button[type="submit"] {
+background: #68a4c4;
+border: 0;
+padding: 10px 24px;
+color: #fff;
+transition: 0.4s;
+}
+</style>
+{% include "footer.html.twig" %}
+{% endblock content %}

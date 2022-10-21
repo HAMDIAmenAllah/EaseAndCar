@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{controller_name}}{% endblock %}
+{% block stylesheets %}
+  <link href="{{ asset('/assets/css/styleHoussem.css') }}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+{% include "header.html.twig" %}
+  <main id="main">
+
+    <!-- ======= Hero Section ======= -->
+    <section id="heronModeles" class="d-flex justify-cntent-center align-items-center">
+      <div
+        id="heroCarousel"
+        class="container carousel carousel-fade"
+        data-bs-ride="carousel"
+        data-bs-interval="5000"
+      >
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+          <div class="carousel-container">
+            <img src="" alt="" class="img-fluid" />
+            <h2>Véhicules Handicap</h2>
+            <br />
+            <p class="animate__animated animate__fadeInUp fs-4">
+              Nous proposons un large choix de véhicules adaptés que vous pouvez découvrir ici. <br> 
+              Du plus petit au plus grand, du plus simple au plus équipé, 
+              nous choisirons pour vous le véhicule aménagé adapté au handicap qui convient le mieux à vos besoins.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Hero -->
+
+    <!-- ======= Why Us Section ======= -->
+   <section class="why-us section-bg" data-aos="fade-up" date-aos-delay="200">
+    <div class="container">
+
+      <div class="row">
+        
+        <div class="col-lg-6 video-box">
+          <center>
+          <img src="{{asset('assets/img/Ford-Tourneo.png')}}" class="img-fluid" alt="">
+        </center>
+        </div>
+
+        <div class="col-lg-6 d-flex flex-column justify-content-center ">
+            <h3 class="title"><a href="#">FORD TOURNEO CUSTOM</a></h3>
+            <p class="description" align="justify"><p class="fs-6"><img src="{{asset('assets/img/car-door.png')}}" role="icon" alt="">&#160;&#160;&#160; 5 portes   &#160;  <img src="{{asset('assets/img/seat.png')}}" alt="">&#160;&#160; 8 places assises  &#160;&#160;&#160;  <img src="{{asset('assets/img/discapacity-wheels-chair-circular-sign.png')}}" alt="">&#160;&#160; &#160;4 personnes en fauteuil roulant </p>
+              La FORD TOURNEO CUSTOM aménagée handicap est équipée d’une plateforme élévatrice à l’arrière qui facilite la montée en fauteuil roulant aussi bien pour le passager que pour les accompagnants. Les descentes sont sécurisées et le véhicule permet au passager en fauteuil roulant de s’installer où il le souhaite grâce à un plancher entièrement plat à l’arrière.</p>        
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Why Us Section -->
+  <!-- ======= Why Us Section ======= -->
+  <section class="why-us section-bg" data-aos="fade-up" date-aos-delay="200">
+    <div class="container">
+
+      <div class="row">
+        <div class="col-lg-6 video-box">
+          <center>
+            <img src="{{asset('assets/img/Kangoo.png')}}" class="img-fluid" alt="">
+          </center>
+        </div>
+
+        <div class="col-lg-6 d-flex flex-column justify-content-center">
+          <h3 class="title"><a href="#">RENAULT KANGOO</a></h3>
+          <p class="description" align="justify"><p class="fs-6"><img src="{{asset('assets/img/car-door.png')}}" role="icon" alt="">&#160;&#160;&#160; 6 portes   &#160;  <img src="{{asset('assets/img/seat.png')}}" alt="">&#160;&#160; 5 places assises  &#160;&#160;&#160;  <img src="{{asset('assets/img/discapacity-wheels-chair-circular-sign.png')}}" alt="">&#160;&#160; &#160;1 personne en fauteuil roulant </p>
+            Simplicité et efficacité : se sont les principales caractéristiques du RENAULTKANGOO aménagé handicap. Comme pour tous les véhicules de notre flotte, le KANGOO a été sélectionné pour sa sécurité. Toutes les places assises disposent d’une ceinture de sécurité 3 points. Le passager en situation de handicap est lui aussi équipé d’une ceinture 3 points.</p>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Why Us Section -->
+</main>
+{% include "footer.html.twig" %}
+{% endblock %}

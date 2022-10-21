@@ -1,0 +1,44 @@
+{% block body %}
+    
+
+    <table class="table text-start">
+        <tbody>
+           {#  <tr>
+                <th>Id</th>
+                <td>{{ client.id }}</td>
+            </tr> #}
+            <tr>
+                <th class="w-50">Nom</th>
+                <td class="w-50">{{ client.nom }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Prenom</th>
+                <td class="w-50">{{ client.prenom }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Portable</th>
+                <td class="w-50">{{ client.portable }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Mail</th>
+                <td class="w-50">{{ client.mail }}</td>
+            </tr>
+            <tr>
+                <th class="w-50">Societe</th>
+                <td class="w-50">{{ client.societe }}</td>
+            </tr> 
+          {#   <tr >
+                
+            </tr> #}
+            <tr>
+                <td class="w-50" colspan="2" style="border-bottom: none;">{{ include('notes/liste.html.twig') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('client_index') }}">back to list</a>
+
+    <a href="{{ path('client_edit', {'id': client.id}) }}">edit</a>
+
+    {{ include('client/_delete_form.html.twig') }} #}
+{% endblock %}

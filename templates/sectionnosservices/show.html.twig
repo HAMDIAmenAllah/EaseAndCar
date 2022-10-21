@@ -1,0 +1,37 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Sectionnosservices{% endblock %}
+
+{% block content %}
+<div class="flex-column container mt-5">
+
+    <h1>Sectionnosservices</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sectionnosservice.id }}</td>
+            </tr>
+            <tr>
+                <th>Image</th>
+                <td>{{ sectionnosservice.image }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ sectionnosservice.titre }}</td>
+            </tr>
+            <tr>
+                <th>Url</th>
+                <td>{{ sectionnosservice.url }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('sectionnosservices_index') }}">back to list</a>
+
+    <a href="{{ path('sectionnosservices_edit', {'id': sectionnosservice.id}) }}">edit</a>
+
+    {{ include('sectionnosservices/_delete_form.html.twig') }}
+</div>
+{% endblock %}

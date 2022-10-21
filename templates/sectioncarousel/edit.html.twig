@@ -1,0 +1,16 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Edit Sectioncarousel{% endblock %}
+
+{% block content %}
+<div class="flex-column container mt-5">
+
+    <h1>Edit Sectioncarousel</h1>
+
+    {{ include('sectioncarousel/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    {# <a href="{{ path('sectioncarousel_index') }}">back to list</a> #}
+
+    {# {{ include('sectioncarousel/_delete_form.html.twig') }} #}
+</div>
+{% endblock %}

@@ -1,0 +1,78 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{controller_name}}{% endblock %}
+{% block stylesheets %}
+  <link href="{{ asset('/assets/css/styleHoussem.css') }}" rel="stylesheet">
+{% endblock %}
+{% block content %}
+{% include "header.html.twig" %}
+  <main id="main">
+
+    <!-- ======= Hero Section ======= -->
+    <section id="heronModeles" class="d-flex justify-cntent-center align-items-center">
+      <div
+        id="heroCarousel"
+        class="container carousel carousel-fade"
+        data-bs-ride="carousel"
+        data-bs-interval="5000"
+      >
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+          <div class="carousel-container">
+            <img src="" alt="" class="img-fluid" />
+            <h2>Minibus</h2>
+            <br />
+            <p class="animate__animated animate__fadeInUp fs-4">
+              Vous organisez un événement, vous êtes un nombre important de passagers ? Nos solutions de voitures grandes capacités viennent compléter nos services. Nous vous proposons des véhicules jusqu’à 8 places assises. Tous sont très spacieux et pourront accueillir tous vos bagages.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Hero -->
+
+    <!-- ======= Why Us Section ======= -->
+   <section class="why-us section-bg" data-aos="fade-up" date-aos-delay="200">
+    <div class="container">
+
+      <div class="row">
+        
+        <div class="col-lg-6 video-box">
+          <center>
+          <img src="{{asset('assets/img/talento.png')}}" class="img-fluid" alt="">
+        </center>
+        </div>
+
+        <div class="col-lg-6 d-flex flex-column justify-content-center ">
+            <h3 class="title"><a href="#">FIAT TALENTO</a></h3>
+            <p class="description" align="justify"><p class="fs-6"><img src="{{asset('assets/img/car-door.png')}}" role="icon" alt="">&#160;&#160;&#160; 5 portes   &#160;  <img src="{{asset('assets/img/seat.png')}}" alt="">&#160;&#160; 8 places assises  &#160;&#160;&#160;  <img src="{{asset('assets/img/discapacity-wheels-chair-circular-sign.png')}}" alt="">&#160;&#160; &#160;4 personnes en fauteuil roulant </p>
+              Puissance, fiabilité et faibles coûts de fonctionnement pour le transport de personnes et les déplacements professionnels, en milieu urbain comme ailleurs. Des motorisations Euro 6 très variées vous permettent de travailler de façon sûre et efficiente sur le plan financier.</p>
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Why Us Section -->
+  <!-- ======= Why Us Section ======= -->
+   <section class="why-us section-bg" data-aos="fade-up" date-aos-delay="200">
+    <div class="container">
+
+      <div class="row">
+        
+        <div class="col-lg-6 video-box">
+          <center>
+          <img src="{{asset('assets/img/caravelle.png')}}" width="450" height="300"  class="img-fluid" alt="">
+        </center>
+        </div>
+
+        <div class="col-lg-6 d-flex flex-column justify-content-center ">
+            <h3 class="title"><a href="#">VOLKSWAGEN CARAVELLE</a></h3>
+            <p class="description" align="justify"><p class="fs-6"><img src="{{asset('assets/img/car-door.png')}}" role="icon" alt="">&#160;&#160;&#160; 5 portes   &#160;  <img src="{{asset('assets/img/seat.png')}}" alt="">&#160;&#160; 8 places assises  &#160;&#160;&#160;  <img src="{{asset('assets/img/discapacity-wheels-chair-circular-sign.png')}}" alt="">&#160;&#160; &#160;4 personnes en fauteuil roulant </p>
+              Lorsque l’on parle de transport professionnel de personnes, le nom le plus cité est celui de la Caravelle 6.1. Au cours des 30 dernières années, elle est presque devenue synonyme de navette parfaite. Ses compétences de base? Confort et flexibilité. Ses compétences spécifiques ? Services numériques intelligents et offre multimédia à la pointe de la technologie. Et une fois le travail terminé ? Elle se transforme en minibus familial après avoir été une salle de réunion.</p>        
+        </div>
+      </div>
+
+    </div>
+  </section><!-- End Why Us Section -->
+</main>
+{% include "footer.html.twig" %}
+{% endblock %}

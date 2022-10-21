@@ -1,0 +1,15 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}New Sectionnosengagements{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-5">
+
+    <h1>Create new Sectionnosengagements</h1>
+
+    {{ include('sectionnosengagements/_form.html.twig') }}
+
+    <a href="{{ path('sectionnosengagements_index') }}">back to list</a>
+    </div>
+
+{% endblock %}

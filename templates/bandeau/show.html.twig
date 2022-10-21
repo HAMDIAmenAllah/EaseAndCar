@@ -1,0 +1,33 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Bandeau{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-5">
+
+    <h1>Bandeau</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ bandeau.id }}</td>
+            </tr>
+            <tr>
+                <th>Nombre</th>
+                <td>{{ bandeau.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ bandeau.titre }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('bandeau_index') }}">back to list</a>
+
+    <a href="{{ path('bandeau_edit', {'id': bandeau.id}) }}">edit</a>
+
+    {{ include('bandeau/_delete_form.html.twig') }}
+    </div>
+{% endblock %}

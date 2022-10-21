@@ -1,0 +1,530 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Liste de clients - Ease & Car{% endblock %}
+{% block stylesheets %}
+
+<style>
+    #devis-tab
+      .nav-link{
+      font-size: .875rem;
+      font-weight: bold;
+      color : black;
+      text-decoration: none;
+    }
+    #devis-tab
+    .nav-link.active.all-tab{
+      color: #009cde;
+      border-bottom: 2px solid #009cde;
+    }
+    #devis-tab
+    .nav-link.active.valider-tab{
+      color: #198754;
+      border-bottom: 2px solid #198754;
+    }
+    #devis-tab
+    .nav-link.active.refuser-tab{
+      color: #dc3545;
+      border-bottom: 2px solid #dc3545;
+    }
+    #devis-tab
+    .nav-link.active.encours-tab{
+      color: #ffc107;
+      border-bottom: 2px solid #ffc107;
+    }
+    #devis-tab
+    .nav-link.active.enattente-tab{
+      color: #6c757d;
+      border-bottom: 2px solid #6c757d;
+    }
+  </style>    
+{% endblock %}
+
+{% block content %}
+<div class="collapsed d-flex container flex-column mt-5">
+    <div>
+        <h1>Liste Client</h1>
+        <a class="btn btn-ease" href="{{ path('client_new') }}">Créer un nouveau</a>
+    </div>
+    <nav id="devis-tab" class="devis-tab nav shadow-lg bg-body flex-column flex-sm-row mb-2 mt-4">
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link active all-tab" id="devis-all-tab" data-bs-toggle="tab" href="#devis-all" role="tab" aria-controls="devis-all" aria-selected="true">All</a>
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link valider-tab"  id="devis-valider-tab" data-bs-toggle="tab" href="#devis-valider" role="tab" aria-controls="devis-valider" aria-selected="false">Gagné</a>
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link refuser-tab" id="devis-refuser-tab" data-bs-toggle="tab" href="#devis-refuser" role="tab" aria-controls="devis-refuser" aria-selected="false">Perdu</a>
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link encours-tab" id="devis-encours-tab" data-bs-toggle="tab" href="#devis-encours" role="tab" aria-controls="devis-encours" aria-selected="false">En attente</a>
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link enattente-tab" id="devis-enattente-tab" data-bs-toggle="tab" href="#devis-enattente" role="tab" aria-controls="devis-enattente" aria-selected="false">Nouveau</a>
+    </nav>
+    <div class="tab-content" id="devis-tab-content">
+    
+      <div class="tab-pane fade show active" id="devis-all" role="tabpanel" aria-labelledby="devis-all-tab">
+        <br>
+        <table class="table-sm table table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+            <tbody class="align-middle text-start">
+                <tr>
+                        <th>Nom</th>
+                        <th>Prenom</th>
+                        <th>Portable</th>
+                        <th>Mail</th>
+                        <th>Societe</th>
+                        <th>Statut</th>
+                        <th></th>
+                </tr>
+            {% for client in clients %}
+                <tr>
+                    {# <td>{{ client.id }}</td> #}
+                    <td>{{ client.nom }}</td>
+                    <td>{{ client.prenom }}</td>
+                    <td>{{ client.portable }}</td>
+                    <td>{{ client.mail }}</td>              
+                    <td>{{ client.societe }}</td>
+                    <td>{% if ( client.statut =="nouveau") %}
+                        <span class="badge bg-secondary">{{ client.statut }}</span>
+                        {% elseif (client.statut =="en attente") %}
+                        <span class="badge bg-warning text-dark">{{ client.statut }}</span>
+                        {% elseif ( client.statut =="gagné") %}
+                        <span class="badge bg-success">{{ client.statut }}</span>
+                        {% elseif ( client.statut =="perdu") %}
+                        <span class="badge bg-danger">{{ client.statut }}</span>
+                        {% else %}
+                        <span class="badge bg-light text-dark">{{ client.statut }}</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-{{ client.id }}" >Afficher</button></li>
+                                    <li><a class="dropdown-item" href="{{ path ('client_edit', {'id':client.id})}}">Modifier</a></li>
+                                    <li>{{ include('client/_delete_form.html.twig', {'id': client.id}) }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="Show-{{ client.id }}" tabindex="-1" aria-labelledby="ShowLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-scrollable">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                            <table class="table table-borderless m-0 p-0">
+                                                <tbody>
+                                                <tr>
+                                                    <th class="w-50"><h5 class="modal-title" id="ShowLabel">Client</h5></th>
+                                                    <td class="w-50">
+                                                    {% if ( client.statut =="nouveau") %}
+                                                        <span class="badge bg-secondary">{{ client.statut }}</span>
+                                                    {% elseif (client.statut =="en attente") %}
+                                                        <span class="badge bg-warning text-dark">{{ client.statut }}</span>
+                                                    {% elseif ( client.statut =="gagné") %}
+                                                        <span class="badge bg-success">{{ client.statut }}</span>
+                                                    {% elseif ( client.statut =="perdu") %}
+                                                        <span class="badge bg-danger">{{ client.statut }}</span>
+                                                    {% else %}
+                                                        <span class="badge bg-light text-dark">{{ client.statut }}</span>
+                                                    {% endif %}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{render(path ('client_show', {'id': client.id}))}}
+                                        </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="7">Champ vide</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+      </div>
+      <div class="tab-pane fade" id="devis-valider" role="tabpanel" aria-labelledby="devis-valider-tab">
+        <br>
+        <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+            
+            <tbody class="align-middle text-start">
+                <tr >
+                    {# <th>Id</th> #}
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Portable</th>
+                    <th>Mail</th>
+                    <th>Societe</th>
+                    <th>Statut</th>
+                    <th>actions</th>
+                </tr>
+            {% for client in clients %}
+                {% if client.statut == "gagné" %}
+                    <tr>
+                        {# <td>{{ client.id }}</td> #}
+                        <td>{{ client.nom }}</td>
+                        <td>{{ client.prenom }}</td>
+                        <td>{{ client.portable }}</td>
+                        <td>{{ client.mail }}</td>              
+                        <td>{{ client.societe }}</td>
+                        <td>{% if ( client.statut =="nouveau") %}
+                            <span class="badge bg-secondary">{{ client.statut }}</span>
+                            {% elseif (client.statut =="en attente") %}
+                            <span class="badge bg-warning text-dark">{{ client.statut }}</span>
+                            {% elseif ( client.statut =="gagné") %}
+                            <span class="badge bg-success">{{ client.statut }}</span>
+                            {% elseif ( client.statut =="perdu") %}
+                            <span class="badge bg-danger">{{ client.statut }}</span>
+                            {% else %}
+                            <span class="badge bg-light text-dark">{{ client.statut }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-valider-{{ client.id }}" >Afficher</button></li>
+                                        <li><a class="dropdown-item" href="{{ path ('client_edit', {'id':client.id})}}">Modifier</a></li>
+                                        <li>{{ include('client/_delete_form.html.twig', {'id': client.id}) }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Show-valider-{{ client.id }}" tabindex="-1" aria-labelledby="ShowLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                         <div class="modal-header">
+                                            <table class="table table-borderless m-0 p-0">
+                                                <tbody>
+                                                <tr>
+                                                    <th class="w-50"><h5 class="modal-title" id="ShowLabel">Client</h5></th>
+                                                    <td class="w-50">
+                                                    {% if ( client.statut =="nouveau") %}
+                                                        <span class="badge bg-secondary">{{ client.statut }}</span>
+                                                        {% elseif (client.statut =="en attente") %}
+                                                        <span class="badge bg-warning text-dark">{{ client.statut }}</span>
+                                                        {% elseif ( client.statut =="gagné") %}
+                                                        <span class="badge bg-success">{{ client.statut }}</span>
+                                                        {% elseif ( client.statut =="perdu") %}
+                                                        <span class="badge bg-danger">{{ client.statut }}</span>
+                                                        {% else %}
+                                                        <span class="badge bg-light text-dark">{{ client.statut }}</span>
+                                                    {% endif %}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{render(path ('client_show', {'id': client.id}))}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% else %}
+                <tr>
+                    <td colspan="7">Champ vide</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+      </div>
+      <div class="tab-pane fade" id="devis-refuser" role="tabpanel" aria-labelledby="devis-refuser-tab">
+        <br>
+        <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+            
+            <tbody class="align-middle text-start">
+                <tr >
+                    {# <th>Id</th> #}
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Portable</th>
+                    <th>Mail</th>
+                    <th>Societe</th>
+                    <th>Statut</th>
+                    <th>actions</th>
+                </tr>
+            {% for client in clients %}
+                {% if client.statut == "perdu" %}
+                    <tr>
+                        {# <td>{{ client.id }}</td> #}
+                        <td>{{ client.nom }}</td>
+                        <td>{{ client.prenom }}</td>
+                        <td>{{ client.portable }}</td>
+                        <td>{{ client.mail }}</td>              
+                        <td>{{ client.societe }}</td>
+                        <td>{% if ( client.statut =="nouveau") %}
+                            <span class="badge bg-secondary">{{ client.statut }}</span>
+                            {% elseif (client.statut =="en attente") %}
+                            <span class="badge bg-warning text-dark">{{ client.statut }}</span>
+                            {% elseif ( client.statut =="gagné") %}
+                            <span class="badge bg-success">{{ client.statut }}</span>
+                            {% elseif ( client.statut =="perdu") %}
+                            <span class="badge bg-danger">{{ client.statut }}</span>
+                            {% else %}
+                            <span class="badge bg-light text-dark">{{ client.statut }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-refuser-{{ client.id }}" >Afficher</button></li>
+                                        <li><a class="dropdown-item" href="{{ path ('client_edit', {'id':client.id})}}">Modifier</a></li>
+                                        <li>{{ include('client/_delete_form.html.twig', {'id': client.id}) }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Show-refuser-{{ client.id }}" tabindex="-1" aria-labelledby="ShowLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                         <div class="modal-header">
+                                            <table class="table table-borderless m-0 p-0">
+                                                <tbody>
+                                                <tr>
+                                                    <th class="w-50"><h5 class="modal-title" id="ShowLabel">Client</h5></th>
+                                                    <td class="w-50">
+                                                    {% if ( client.statut =="nouveau") %}
+                                                        <span class="badge bg-secondary">{{ client.statut }}</span>
+                                                        {% elseif (client.statut =="en attente") %}
+                                                        <span class="badge bg-warning text-dark">{{ client.statut }}</span>
+                                                        {% elseif ( client.statut =="gagné") %}
+                                                        <span class="badge bg-success">{{ client.statut }}</span>
+                                                        {% elseif ( client.statut =="perdu") %}
+                                                        <span class="badge bg-danger">{{ client.statut }}</span>
+                                                        {% else %}
+                                                        <span class="badge bg-light text-dark">{{ client.statut }}</span>
+                                                    {% endif %}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{render(path ('client_show', {'id': client.id}))}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% else %}
+                <tr>
+                    <td colspan="7">Champ vide</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+      </div>
+      <div class="tab-pane fade" id="devis-encours" role="tabpanel" aria-labelledby="devis-encours-tab">
+        <br>
+        <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+            <tbody class="talign-middle text-start">
+                <tr >
+                    {# <th>Id</th> #}
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Portable</th>
+                    <th>Mail</th>
+                    <th>Societe</th>
+                    <th>Statut</th>
+                    <th>actions</th>
+                </tr>
+            {% for client in clients %}
+                {% if client.statut == "en attente" %}
+                    <tr>
+                        {# <td>{{ client.id }}</td> #}
+                        <td>{{ client.nom }}</td>
+                        <td>{{ client.prenom }}</td>
+                        <td>{{ client.portable }}</td>
+                        <td>{{ client.mail }}</td>              
+                        <td>{{ client.societe }}</td>
+                        <td>{% if ( client.statut =="nouveau") %}
+                            <span class="badge bg-secondary">{{ client.statut }}</span>
+                            {% elseif (client.statut =="en attente") %}
+                            <span class="badge bg-warning text-dark">{{ client.statut }}</span>
+                            {% elseif ( client.statut =="gagné") %}
+                            <span class="badge bg-success">{{ client.statut }}</span>
+                            {% elseif ( client.statut =="perdu") %}
+                            <span class="badge bg-danger">{{ client.statut }}</span>
+                            {% else %}
+                            <span class="badge bg-light text-dark">{{ client.statut }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-encours-{{ client.id }}" >Afficher</button></li>
+                                        <li><a class="dropdown-item" href="{{ path ('client_edit', {'id':client.id})}}">Modifier</a></li>
+                                        <li>{{ include('client/_delete_form.html.twig', {'id': client.id}) }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Show-encours-{{ client.id }}" tabindex="-1" aria-labelledby="ShowLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                         <div class="modal-header">
+                                            <table class="table table-borderless m-0 p-0">
+                                                <tbody>
+                                                <tr>
+                                                    <th class="w-50"><h5 class="modal-title" id="ShowLabel">Client</h5></th>
+                                                    <td class="w-50">
+                                                    {% if ( client.statut =="nouveau") %}
+                                                        <span class="badge bg-secondary">{{ client.statut }}</span>
+                                                        {% elseif (client.statut =="en attente") %}
+                                                        <span class="badge bg-warning text-dark">{{ client.statut }}</span>
+                                                        {% elseif ( client.statut =="gagné") %}
+                                                        <span class="badge bg-success">{{ client.statut }}</span>
+                                                        {% elseif ( client.statut =="perdu") %}
+                                                        <span class="badge bg-danger">{{ client.statut }}</span>
+                                                        {% else %}
+                                                        <span class="badge bg-light text-dark">{{ client.statut }}</span>
+                                                    {% endif %}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{render(path ('client_show', {'id': client.id}))}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% else %}
+                <tr>
+                    <td colspan="7">Champ vide</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+      </div>
+      <div class="tab-pane fade" id="devis-enattente" role="tabpanel" aria-labelledby="devis-enattente-tab">
+        <br>
+        <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+            <tbody class="align-middle text-start">
+                <tr >
+                    {# <th>Id</th> #}
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th>Portable</th>
+                    <th>Mail</th>
+                    <th>Societe</th>
+                    <th>Statut</th>
+                    <th>actions</th>
+                </tr>
+            {% for client in clients %}
+                {% if client.statut == "nouveau" %}
+                    <tr>
+                        {# <td>{{ client.id }}</td> #}
+                        <td>{{ client.nom }}</td>
+                        <td>{{ client.prenom }}</td>
+                        <td>{{ client.portable }}</td>
+                        <td>{{ client.mail }}</td>              
+                        <td>{{ client.societe }}</td>
+                        <td>{% if ( client.statut =="nouveau") %}
+                            <span class="badge bg-secondary">{{ client.statut }}</span>
+                            {% elseif (client.statut =="en attente") %}
+                            <span class="badge bg-warning text-dark">{{ client.statut }}</span>
+                            {% elseif ( client.statut =="gagné") %}
+                            <span class="badge bg-success">{{ client.statut }}</span>
+                            {% elseif ( client.statut =="perdu") %}
+                            <span class="badge bg-danger">{{ client.statut }}</span>
+                            {% else %}
+                            <span class="badge bg-light text-dark">{{ client.statut }}</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                                <div class="btn-group" role="group">
+                                    <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Actions
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                        <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-enattente-{{ client.id }}" >Afficher</button></li>
+                                        <li><a class="dropdown-item" href="{{ path ('client_edit', {'id':client.id})}}">Modifier</a></li>
+                                        <li>{{ include('client/_delete_form.html.twig', {'id': client.id}) }}</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Show-enattente-{{ client.id }}" tabindex="-1" aria-labelledby="ShowLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <table class="table table-borderless m-0 p-0">
+                                                <tbody>
+                                                <tr>
+                                                    <th class="w-50"><h5 class="modal-title" id="ShowLabel">Client</h5></th>
+                                                    <td class="w-50">
+                                                    {% if ( client.statut =="nouveau") %}
+                                                        <span class="badge bg-secondary">{{ client.statut }}</span>
+                                                        {% elseif (client.statut =="en attente") %}
+                                                        <span class="badge bg-warning text-dark">{{ client.statut }}</span>
+                                                        {% elseif ( client.statut =="gagné") %}
+                                                        <span class="badge bg-success">{{ client.statut }}</span>
+                                                        {% elseif ( client.statut =="perdu") %}
+                                                        <span class="badge bg-danger">{{ client.statut }}</span>
+                                                        {% else %}
+                                                        <span class="badge bg-light text-dark">{{ client.statut }}</span>
+                                                    {% endif %}
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                            <button type="button" class="btn-close"  data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{render(path ('client_show', {'id': client.id}))}}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endif %}
+            {% else %}
+                <tr>
+                    <td colspan="7">Champ vide</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+      </div> 
+    </div>
+
+    
+</div>
+{% endblock %}

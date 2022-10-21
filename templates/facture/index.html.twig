@@ -1,0 +1,149 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Devis Client{% endblock %}
+{% block stylesheets %}
+    <style>
+    .titre {
+      color: #009cde;
+    }
+    section {
+      margin-top: 50px;
+    }
+    .background {
+      background: #009cde;
+    }
+    .right {
+      text-align: right;
+    }
+    .tabBorder {
+      border-bottom: hidden;
+      border-left: hidden;
+    }
+    .signature {
+      text-align: -webkit-center;
+    }
+    .devidate
+    { 
+      position:relative;  left: 500px;
+    }
+    .societe
+    {
+      margin-left: 12px;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+
+<div class="container  mt-5">
+      <div class="row">
+        <div class="col-6">
+          <img src="{{asset('assets/img/logo_EC.png')}}">
+        </div>
+        <div class="col-6">
+          <h1 class="text-center titre">DEVIS</h1>
+        </div>
+      </div>
+
+      <!--infos société-->
+      <section>
+        <h3 class="titre">Société</h3>
+        <div class="row">
+          <div class="col-4 shadow-lg p-3 ps-5 societe">
+            <p>{{devisCar.EaseCar.raisonSociale}}</p>
+            <p>{{devisCar.EaseCar.adresse}}</p>
+            <p>N° de tél: {{devisCar.EaseCar.telephone}}</p>
+          </div>
+          <div class="col-3 shadow-lg devidate p-3 ps-5">
+            <p>Devis N°: {{ devisCar.createdAt|date("ymd") }}{{ devisCar.numDevis }}</p>
+            <p>Date : {{ devisCar.createdAt|date("d/m/Y") }}</p>
+          </div>
+        </div>
+      </section>
+      <!-- infos client-->
+      <section>
+        <h3 class="titre">Information client:</h3>
+        <div class="border p-3 ps-5 shadow-lg col-6">
+          <p>Nom : {{devisCar.nomEntreprise}}</p>
+          <p>Adresse : {{devisCar.adresseSiege}}</p>
+          <p>N° de tél : {{devisCar.Client.portable}}</p>
+          {# <p>Détails de la voiture :</p> #}
+        </div>
+      </section>
+      <!-- infos voiture-->
+      <section>
+        <h3 class="titre">Information voiture :    </h3>
+        <table class="table table-bordered">
+          <thead>
+            <tr class="background">
+              <th scope="col">Réf</th>
+              <th scope="col">Type</th>
+              <th scope="col">Date de début</th>
+              <th scope="col">Date de fin</th>
+              <th scope="col">Nombre de véhicules</th>
+              <th scope="col">Tarif HT</th>
+              <th scope="col">Kilomètrage</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for row in devisCar.detailsDevis %}
+              <tr>
+                <th scope="row">{{row.reference}}</th>
+                <td>{{row.type}}</td>
+                <td>{{row.debut|date("d/m/Y")}}</td>
+                <td>{{row.fin|date("d/m/Y")}}</td>
+                <td>{{row.nombreVehicules}}</td>
+                <td>{{row.tarifHT}}</td>
+                <td>{{row.kilometrage}}</td>
+              </tr>
+            {% endfor %}
+            <tr>
+              <td
+                colspan="5"
+                rowspan="3"
+                class="table-borderless tabBorder"
+              ></td>
+              <td>Total HT</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>TVA 20%</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td>Total TTC</td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <!--signature-->
+      <section>
+        <div>
+          <b>
+            Si ce devis vous convient, veuillez nous le retourner signé précédé
+            de la mention : "BON POUR ACCORD ET EXECUTION DU DEVIS"
+          </b>
+        </div>
+        <div class="row mt-4">
+          <h4 class="col-6">Date :</h4>
+          <h4 class="col-6 signature">signature</h4>
+        </div>
+      </section>
+      <!--Conditions générales-->
+      <section class="mt-5">
+        <div>
+          <p>
+            Validité du devis: <br />
+            Conditions de réglement :  {% if devisCar.conditionReglement != null %}{{devisCar.conditionReglement}}{% endif %}<br />
+            {{devisCar.EaseCar.raisonSociale}} - {{devisCar.EaseCar.formeJuridique}} / {{devisCar.EaseCar.numTVA}}
+          </p>
+        </div>
+      </section>
+      <div class="position-relative  mb-5">
+        <form method="post" action="{{ path('facture_pdf', {'id': devisCar.id}) }}" {# onsubmit="return confirm('Êtes-vous sûr de bien vouloir telecharger ce devis ?');" #}>
+          <button class="btn btn-ease">Télecharger PDF</button>
+        </form>
+      </div>
+</div>
+{% endblock %}

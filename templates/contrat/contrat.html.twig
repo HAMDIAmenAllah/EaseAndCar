@@ -1,0 +1,475 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+{% block title %}Contrat - Ease&car {# {{devisCar.Client.nom}} #}{% endblock %}
+{% block stylesheets %}
+<style>
+	hr
+    {
+        border: 2px solid #009cde;
+        margin-bottom: 2rem;
+    }
+    .border 
+    {
+        border-style: solid;
+        border-color: #009cde;
+        border-width: 4px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="collapsed d-flex container flex-column">
+	<div class="container my-5 shadow-lg" style="padding: 60px 40px; height: 3508px">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-6">
+                  <img src="{{asset('assets/img/logo_EC.png')}}">
+                </div>
+                <div class="col-6">
+                  <h1 class="text-center titre">Contrat de location</h1>
+                </div>
+              </div>
+        </div>
+        <div class="border mx-auto mt-5 col-9">
+            <h4 class="text-left p-2">
+                Contrat numéro : 21090934324
+            </h4>
+        </div>
+        <div class="mt-3 mx-auto mt-5 col-9 row">
+            <h4 class="text-left">Société</h4>
+            <hr>
+            <div class="col-6">
+                <p>Raison sociale : EASE & CAR</p>
+                <p>adresse :  ld St Julien, 69620 CHAMELET</p>
+                <p>Tél : 06 86 75 12 39</p>
+            </div>
+            <div class="col-6">
+                <p>Siret : 853 025 955 00016</p>
+                <p>Forme juridique : SAS</p>
+                <p>RCS : Villefranche sur Saone-Tarare B 853 025 955</p>
+            </div>
+        </div>
+        <div class="row mt-5 mx-auto col-9">
+            <h4>Vos informations client</h4>
+            <hr>
+            <div class="col-6">
+                <p>Nom : SIMON</p>
+                <p>Prenom : Pierre </p>
+                <p>Portable : 06 72 63 25 17</p>
+            </div>
+            <div class="col-6">
+                <p>Mail : pierre@gmail.com</p>
+                <p>Société : Enedis</p>
+                <p>adresse : 112 Rue d'Aguesseau, 92100 Boulogne-Billancourt</p>
+            </div>
+        </div>
+        <div class="row mt-5 mx-auto col-9">
+            <h4>Informations véhicules</h4>
+            <hr>
+            <div class="col-6">
+                <p>Réf : 324</p>
+                <p>Type : Citadine </p>
+                <p>Date de début : 19/10/2021</p>
+                <p>Date de fin : 19/10/2021</p>
+                {# <p>Nombre de véhicules</p> #}
+            </div>
+            <div class="col-6">
+                <p>Kilomètrage : 200Km</p>
+                <p>Tarif HT : 400,00€</p>
+                <p>TVA 20% : 80,00€</p>
+                <p>Total TTC : 480,00€</p>
+            </div>
+        </div>
+        <div class="border mx-auto mt-5 col-9">
+            <h4 class="text-left p-2">
+                Votre véhicule est situé à : 
+            </h4>
+        </div>
+    </div>
+    <div class="container my-5 shadow-lg" style="padding: 60px 40px;">
+            <div class="mt-3 mx-auto mt-5 col-9 row">
+                <h4 class="text-left">Contrat numéro : 21090934324</h4>
+                <hr>
+            </div>
+            <div class="row mt-3 mx-auto col-9">
+                <h4>Information sur la location</h4>
+                <hr>
+                <div class="row col-12">
+                    <b class="col-3"></b>
+                    <b class="col-3">Départ</b>
+                    <b class="col-3">Date et heure de retour</b>
+                    <b class="col-3">Durée prévue / facturée</b>
+                </div>
+                <div class="row col-12">
+                    <b class="col-3">Date/Heure</b>
+                    <p class="col-3">20 sept. 21 1600</p>
+                    <p class="col-3">30 sept. 21 1800</p>
+                    <p class="col-3">2 mois, 27 jours / 3 mois</p>
+                </div>
+                <div class="row col-12">
+                    <b class="col-3">Prix de location</b>
+                    <b class="col-2">Quantité</b>
+                    <b class="col-2">prix H.T</b>
+                    <b class="col-2">TVA (20.00%)</b>
+                    <b class="col-3">prix T.T.C</b>
+                </div>
+                <div class="row col-12">
+                    <p class="col-3">Prix de base</p>
+                    <p class="col-2">1</p>
+                    <p class="col-2">432.00</p>
+                    <p class="col-2">86.40</p>
+                    <p class="col-3 ">518.40</p>
+                </div>
+                <p>3 mois de location incluant Rachat partiel de franchise en cas de dommage*, Rachat
+                partiel de franchise en cas de vol (TPC)* et 1100 Km inclus</p>
+                 <div class="row col-12 bold">
+                    <b class="col-6">Suppléments</b>
+                    <b class="col-2">prix H.T</b>
+                    <b class="col-2">TVA(20,00%)</b>
+                    <b class="col-2">prix T.T.C</b>
+                </div>
+                {# <b>Suppléments</b> #}
+                <div class="row col-12">
+                    <p class="col-6">Participation aux coûts d'immatriculation</p>
+                    <p class="col-2">23.36</p>
+                    <p class="col-2">4.67</p>
+                    <p class="col-2">28.03</p>
+                </div>
+                <b>Immatriculation</b>
+                <div class="row col-12">
+                    <p class="col-6">Estimation du tarif de votre location</p>
+                    <p class="col-2">455.36</p>
+                    <p class="col-2">91.07</p>
+                    <p class="col-2">546.43</p>
+                </div>
+            </div>
+            <div class="row mt-3 mx-auto col-9">
+                <div class="row col-12">
+                    <b class="col-3">Remarques</b>
+                    <p class="col-2"></p>
+                    <p class="col-3"></p>
+                    <p class="col-4">Conditions</p>
+                </div>
+                <div class="row col-12">          
+                        <p class="col-3">Jour supplémentaire</p>
+                        <p class="col-2">€57.60 T.T.C.</p>
+                        <p class="col-3"></p>
+                        <p class="col-4">Prix soumis à un minimum de 1 jour de location</p>
+                </div>
+                <div class="row col-12">
+                        <p class="col-3">Km supplémentaire</p>
+                        <p class="col-2">€0.28 T.T.C.</p>
+                        <p class="col-3"></p>
+                        <p class="col-4"></p>
+                </div>
+                <div class="row col-12">
+                    <p class="col-3">Prix du carburant par litre</p>
+                    <p class="col-2">€3.03 H.T.</p>
+                    <p class="col-3"></p>
+                    <p class="col-4"></p>
+                </div>
+                <div class="row col-12">
+                    <p class="col-3">Franchise dommage par incident</p>
+                    <p class="col-2">€2200.00</p>
+                    <p class="col-3"></p>
+                    <p class="col-4"></p>
+                </div>
+                <div class="row col-12">
+                    <p class="col-3">*Franchise en cas de vol</p>
+                    <p class="col-2">€2200.00</p>
+                    <p class="col-3"></p>
+                    <p class="col-4"></p>
+                </div>
+                <div class="row col-12">
+                    <p class="col-3">frais d’administration des dommages</p>
+                    <p class="col-2">€45.60 T.T.C.</p>
+                    <p class="col-3"></p>
+                    <p class="col-4"></p>
+                </div>
+                <div class="row col-12">
+                    <p class="col-3">Frais d’immobilisation</p>
+                    <p class="col-2">€48.00</p>
+                    <p class="col-3"></p>
+                    <p class="col-4"></p>
+                </div>
+                <br>
+                <h4>Informations complémentaires</h4>
+                <hr>
+            </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div class="container my-5 shadow-lg" style="padding: 60px 40px;">
+        <div class="mt-3 mx-auto mt-5 col-9 row">
+            <h4 class="text-left col-4">Etat du véhicule</h4>
+            <p class="col-4">Immatriculation</p>
+            <h4 class="col-4">FR ET627CG</h4>
+            <hr>
+        </div>
+        <div class="row mt-3 mx-auto col-9">
+            <div class="row">
+                <p class="col-6">Exterieur</p>
+                <p class="col-6">Interieur</p>
+            </div>
+           <div class="row">
+                <div class="col-6">
+                    <img src="{{asset('assets/img/1.png')}}">
+                </div>
+                <div class="col-6">
+                    <img src="{{asset('assets/img/2.png')}}">
+                </div>
+           </div>
+           <br>
+           <div class="row mt-4 mb-5">
+                <p class="col-4">Element</p>
+                <p class="col-4">Description</p>
+                <p class="col-4">nombre</p>
+                <p></p>
+            </div>
+            <div class="mt-3 mx-auto mt-5 col-12 row">
+                <h4 class="text-left col-9">Informations sur le paiement</h4>
+                <hr>
+            </div>  
+            <div class="row col-12">
+                <p class="col-3">Paiement Carte de crédit :</p>
+                <p class="col-2">€3546.43</p>
+                <p class="col-3"></p>
+                <p class="col-4"></p>
+            </div>
+            <div class="row col-12">
+                <p class="col-3">Carte de crédit :</p>
+                <p class="col-3">Visa XXXX XXXX XXXX 8399</p>
+                <p class="col-3">Date d'expiration:09/22</p>
+                <p class="col-3">Code SD</p>
+            </div>
+            <div class="row col-12 mt-1">
+               <p>Estimation du montant dû de votre location : €0.00</p>
+            </div>
+            <div class="row col-12">
+                <b>Déclaration et informations importantes</b>
+                <p class="text-justify">En signant le présent document, vous (i) confirmez que toutes les informations que vous avez fournies sont vraies,
+                    exactes et complètes, (ii) comprenez et acceptez les conditions du contrat dans cette langue, (iii) acceptez de payer les
+                    frais de location ainsi que les frais supplémentaires éventuels tels que, notamment, les frais de dommage, amendes
+                    de stationnement ou de circulation, et frais de traitement administratif (frais de traitement administratif des procèsverbaux
+                    est €42). Vous reconnaissez que le véhicule vous est remis dans l’état indiqué.
+                    Vous confirmez avoir réceptionné tous les documents contractuels : le présent Contrat de location, les Conditions
+                    générales de location et les Conditions Spécifiques du lieu de location.
+                    La personne dont le nom figure sur le présent contrat doit le signer et payer les frais de location correspondants.
+                    Il s’agit du seul conducteur à bénéficier des éventuels compléments de protection et assurances supplémentaires
+                    souscrits (sauf souscription à un ou plusieurs suppléments « conducteur additionnel »). En signant le présent
+                    document, vous nous autorisez à procéder aux contrôles de sécurité et de permis de conduire, à débiter votre carte
+                    de paiement du montant total de la location et de tous les autres frais applicables, conformément au contrat (et vous
+                    confirmez avoir lu et accepter les différentes parties de l’Addendum politique de confidentialité sur les véhicules
+                    connectés des Conditions générales de location).
+                </p>
+            </div>
+            <div class="row col-12">
+                <b class="col-2">Nom du client :</b>
+                <p class="col-4">Adiate, Ste</p>
+                <p class="col-3">Date d'impression</p>
+                <p class="col-3">28 sept. 2021 1146</p>
+            </div>
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+    <div class="container my-5 shadow-lg" style="padding: 60px 40px;">
+        <div class="mt-5 col-9 mx-auto">
+            <div class="row">
+                <div class="col-6">
+                 <h4><u>Conditions Essentielles</u></h4>
+                </div>
+            </div>
+        </div>
+        <div class="col-9 mx-auto">
+            <p><b><u>1) Contrat de location.</u></b> Le contrat est conclu entre nous, le fournisseur du véhicule, et vous, le conducteur principal, tel
+                que désigné sur le contrat de location.
+                Veuillez lire les Conditions générales de location et les Conditions spécifiques du lieu de location, qui font partie
+                intégrante de votre contrat de location. <br>
+                <b><u>2) Le véhicule.</u></b> Nous devons fournir le véhicule et tout l’équipement de sécurité obligatoire (ci-après le " véhicule "), en
+                bon état de marche, régulièrement immatriculé et toutes taxes afférentes acquittées. En Europe, nous devons fournir des
+                véhicules obligatoirement assurés au titre de la responsabilité civile aux tiers. Le conducteur n’est à ce titre pas considéré
+                comme un tiers et n’est pas couvert par cette assurance.
+                Vous devez restituer le véhicule et les options dans l’état dans lequel ils vous ont été remis, à l’exception de l’usure normale.
+                Veuillez inspecter minutieusement le véhicule avant de partir.
+                Veuillez nous demander de rectifier l’état des lieux du véhicule si un dommage n’y est pas indiqué, si le niveau de carburant
+                est erroné, si le certificat d’immatriculation, le certificat d’assurance, le formulaire de constat d’accident ou de tout équipement
+                de sécurité obligatoire n’est pas présent dans le véhicule. <br>
+                <b><u>3) Durée de location.</u></b> Vous êtes responsable du véhicule et des options pendant la durée de la location : <br>
+                <b>a)</b> La durée de location commence quand vous prenez le véhicule (" procédure de retrait ") et prend fin quand nous confirmons
+                la restitution du véhicule et de ses clés (" procédure de restitution "). <br>
+                <b>b)</b> Vous devez restituer le véhicule pendant les heures d’ouverture auprès d’un agent de retour à l’agence de restitution
+                convenue. Si vous choisissez de restituer le véhicule en dehors des heures d’ouverture ou si vous partez avant la fin de
+                la procédure de restitution du véhicule, vous le faites à vos propres risques et demeurez responsable jusqu’à la fin de
+                la procédure de restitution. <br>
+                <b>c)</b> Si vous utilisez le service " Livraison et retrait " (selon les disponibilités), vous serez responsable du véhicule à partir
+                du moment où nous vous l’avons livré jusqu’à ce que nous le récupérions. <br>
+                <b><u>4) Coûts.</u></b> Vous devez payer les montants indiqués sur votre contrat de location au titre du véhicule et des options souscrites
+                pour la durée de location. Vous devez payer toute extension de la durée de location, y compris pour les options souscrites.
+                Vous devez payer les coûts liés au vol et aux dommages, les frais de nettoyage approfondi, frais de remorquage,
+                frais de péage, et les redevances et amendes de stationnement, de circulation ou liées à l’utilisation du véhicule,
+                ainsi que des frais de traitement correspondants, dans les cas prévus aux présentes conditions. <br>
+                <b><u>5) Utilisation du véhicule:</u></b> Vous devez: i) utiliser le véhicule de façon prudente et diligente, ii) utiliser le véhicule en
+                respectant la réglementation du pays dans lequel vous conduisez, iii) utiliser le véhicule conformément à la loi et à des
+                fins licites, iv) utiliser le carburant approprié, v) verrouiller le véhicule lorsque vous ne l’utilisez pas et vous assurer que
+                l’ensemble des fenêtres, toits ouvrants, panneaux ou capotes de toits amovibles sont convenablement fermés, vi) arrêter
+                d’utiliser le véhicule immédiatement, sous réserve de préserver votre sécurité, et nous informer immédiatement en cas de
+                défaut constaté sur le véhicule.
+                Vous ne devez pas: i) utiliser le véhicule à des fins commerciales ; pour tout sport automobile (de loisir ou
+                professionnel) ou autre activité connexe ; hors des voies carrossables ; pour remorquer un autre véhicule ou une
+                remorque ; transporter des matières inflammables, explosives, corrosives ou comburantes, à l’exception des huiles
+                essentielles de minéraux ou produits analogues dans la mesure autorisée par la législation en vigueur (ou comme
+                indiqué dans les Conditions spécifiques du lieu de location) et du carburant ou gaz nécessaire au fonctionnement
+                du véhicule ; ii) permettre à toute personne autre qu’un conducteur autorisé d’utiliser le véhicule.
+                Vous ne pourrez conduire que dans les pays que nous autorisons. Si vous conduisez un véhicule immatriculé dans
+                un État membre de l’UE en dehors de l’UE, ou si vous conduisez dans un État membre de l’UE un véhicule immatriculé
+                hors UE, vous ne devez pas utiliser le véhicule dans ce pays étranger plus longtemps que cela n’est autorisé par les lois
+                applicables. Veuillez consulter les Conditions spécifiques du lieu de location, vous renseigner auprès de l’agent de location
+                ou consulter les autorités douanières compétentes. <br>
+                <b><u>6) Accidents, vols et dommages.</u></b> Vous devez aviser i) la police immédiatement et ii) nous-mêmes dans les 48 heures,
+                si le véhicule est impliqué dans un accident ou un dommage, même si aucun tiers n’est impliqué.
+                Si le véhicule est perdu, volé ou endommagé vous devez, dans la mesure autorisée par la loi, payer le montant de la
+                franchise indiquée sur ce contrat de location pour chaque incident clairement distinct ayant causé des dommages,
+                les taxes applicables et nos frais de traitement de dommage ou de vol (sauf si vous avez souscrit à des compléments
+                de protection pour réduire davantage votre franchise). Votre franchise ne s’appliquera pas dans les circonstances définies
+                à l’article 7 relatif aux Compléments de protection.
+                Veuillez noter que si vous endommagez le véhicule plus d’une fois, vous devrez, autant que la loi le permet, payer la franchise
+                indiquée sur le contrat de location pour chaque incident clairement distinct ayant causé des dommages.
+                Nous tenterons de recouvrer le montant de la franchise et des autres frais auprès de la partie fautive si vous démontrez que
+                le dommage, le vol ou la perte ne relève pas d’une faute, d’une violation délibérée, d’un acte de fraude ou d’une négligence
+                grave de votre part (dans la mesure des termes utilisés par la loi applicable). Pour nous aider, vous devez nous remettre un
+                formulaire de constat amiable d’accident dûment rempli et comprenant les coordonnées des autres parties concernées, dans
+                les 48 heures suivant l’accident. Dans la mesure autorisée par la loi, nous appliquerons des frais couvrant nos coûts
+                pour vous contacter afin d’obtenir un constat d’accident dûment complété.
+                Votre responsabilité ne sera pas engagée en cas de perte ou de dommage imputable à un défaut d’entretien du véhicule
+                de notre part ou couvert par la garantie du constructeur. <br>
+                <b><u>7) Compléments de protection.</u></b> Les compléments de protection réduisent le montant que vous devez payer à celui de
+                la franchise indiquée si le véhicule est volé ou endommagé. En Europe, nos tarifs incluent une franchise de base et nous
+                ne vous facturerons pas plus que la franchise indiquée plus les taxes applicables et nos frais de traitement de
+                dommages ou de vol (sauf dans les cas où votre franchise ne s’applique pas). Vous pouvez réduire davantage votre
+                franchise en souscrivant à d’autres compléments de protection.
+                Votre franchise ne s’applique pas si la perte ou le dommage est imputable à un i) acte délibéré ou frauduleux, une
+                omission ou négligence grave de votre part (dans la mesure des termes utilisés par la loi applicable) ou ii) une
+                violation délibérée des articles 5 (Utilisation du véhicule) et 6 (Accidents, vols et dommages).
+                Si votre franchise ne s’applique pas, nous serons en droit de vous réclamer une indemnisation, dont le montant
+                tiendra compte dela sévérité de la négligence et pourra être égal au montant de notre préjudice au titre des pertes ou dommages subis
+                ou à venir (selon le montant le plus élevé), dans la limite autorisée par la loi applicable.
+                </p>
+        </div>
+    </div>
+    <div class="container my-5 shadow-lg" style="padding: 60px 40px;">
+        <div class="col-9 mx-auto">
+            <p>
+                <b><u>8) Amendes et frais.</u></b> Vous devez payer les redevances de stationnement ou les amendes liées à la circulation
+                encourues pendant la durée de location et liées à votre usage du véhicule. Vous devez payer nos frais de traitement,
+                couvrant notre temps consacré au traitement de ces amendes ou redevances, sauf si vous démontrez l’absence de perte ou
+                de dommage, ou, le cas échéant, qu’il est significativement inférieur aux frais de traitement. <br>
+                <b><u>9) Carburant.</u></b> Vous devez restituer le véhicule avec la même quantité de carburant qu’à son retrait, sauf si vous avez
+                souscrit au Service Plein Carburant. Si vous ne restituez pas le véhicule avec le même niveau de carburant, vous devrez
+                payer le carburant consommé au tarif " Paiement au retour " en vigueur.
+                Si vous parcourez une distance inférieure à celle indiquée dans la rubrique " Easyfuel " des Conditions spécifiques de votre
+                lieu de location et que vous ne fournissez pas de justificatif d’achat de carburant, vous devez payer le forfait " Easyfuel ",
+                sauf si vous démontrez l’absence de perte ou de dommage, ou, le cas échéant, qu’il est significativement inférieur au forfait
+                " Easyfuel ". En souscrivant à l’option " Plein Carburant ", vous ne serez pas tenu de faire le plein de carburant avant de
+                restituer le véhicule. Nous ne proposons aucun remboursement pour le carburant non utilisé si vous souscrivez au
+                service "Plein Carburant", à moins que vous ne restituiez le véhicule après avoir fait le plein de carburant, auquel cas nous
+                vous rembourserons les frais du service " Plein Carburant ". <br>
+                <b><u>10) Conducteurs additionnels et passagers.</u></b> Il vous appartient de veiller à ce que tous les conducteurs additionnels
+                que vous avez ajouté au contrat de location, ou les passagers que vous autorisez à monter dans le véhicule, respectent
+                les présentes conditions. Vous êtes tenu de supporter tous les coûts ou frais que nous subissons si un conducteur
+                additionnel ou un passager ne respecte pas les présentes conditions.
+                Votre franchise peut ne pas s’appliquer si la perte ou le dommage est dû à un acte intentionnel ou frauduleux, une
+                omission ou une grave négligence commis par un conducteur additionnel ou un passager (dans la mesure des
+                termes utilisés par la loi applicable) ou ii) une violation délibérée des articles 5 et 6. <br>
+                <b><u>11) Modifications apportées à votre location.</u></b> Vous devez payer un prix potentiellement plus important si vous modifiez
+                la durée de location ou si vous dépassez le kilométrage convenu. Vous devez payer un supplément d’aller simple si vous
+                restituez le véhicule dans une agence différente de celle de son retrait. <br>
+                <b><u>12) Restitutions anticipées.</u></b> Si vous restituez le véhicule et les options de façon anticipée, vous perdrez le bénéfice de
+                toutes offres spéciales dont vous ne rempliriez plus les conditions. Cela pourrait avoir pour conséquence que la location vous
+                coûte plus cher. Aucun remboursement n’est accordé pour les jours de location non utilisés. <br>
+                <b><u>13) Restitutions tardives.</u></b> Sauf accord contraire, vous devez restituer le véhicule ainsi que l’ensemble des produits
+                optionnels aux heure, date et lieu convenus dans le contrat de location. Si vous pensez être en retard, il est dans votre intérêt
+                de nous soumettre une demande de prolongation du délai de restitution. En cas de restitution tardive, nous nous réservons le
+                droit de recourir le troisième jour suivant la date de restitution initialement prévue au contrat de location, à une pré-autorisation
+                de paiement de 5 jours supplémentaires de location sur votre carte de débit, ou de 10 jours supplémentaires de location si
+                vous utilisez une carte de crédit, et ce aux tarifs en vigueur en agence au troisième jour de retard. En cas de restitution du
+                véhicule dans les 5 ou 10 jours suivant la date de restitution initialement prévue au contrat de location, seuls les jours de
+                location effectifs ainsi que l’ensemble des frais exigibles (et notamment les frais de restitution tardive) vous seront facturés. <br>
+                <b><u>14) Pré-autorisation (de paiement).</u></b> Nous effectuons une demande de pré-autorisation bancaire de débit sur votre carte
+                de paiement. Cela a pour effet de bloquer une somme sur votre carte de paiement, et vous devez donc vous assurer de
+                disposer d’une quantité de fonds suffisante, étant précisé que nous ne procéderons au paiement qu’au terme de la location.
+                Si vous réglez avec une autre carte, nous attirons votre attention sur le fait qu’il pourra s’écouler jusqu’à 28 jours avant que
+                votre banque ne libère le montant bloqué sur votre autre carte. <br>
+                <b><u>15) Paiements.</u></b> Si vous avez opté de payer dans une devise autre que celle de ce pays, nous effectuons la conversion en
+                utilisant un taux de change basé sur l’indice des tarifs de gros de la Citibank, majoré de 4 %.
+                En signant le contrat de location, vous nous autorisez à débiter sur votre carte de paiement tous les frais engagés
+                au cours de la période de location. <br>
+                <b><u>16) Repérage.</u></b> Les véhicules peuvent être équipés de systèmes de géo-localisation et de repérage afin de les localiser
+                en cas de vol ou de non-restitution à l’agence de location, ou pour localiser le véhicule en cas d’accident ou de panne. <br>
+                <b><u>17) Utilisation de vos données personnelles.</u></b> Nous utilisons vos données personnelles pour: a) vous fournir les
+                services de location et b) décider si nous vous fournirons des services de location à l’avenir. Nous ne communiquons vos
+                données personnelles que dans la mesure autorisée par la loi et, si nécessaire, avec votre consentement exprès : <br>
+                <b><u>a)</u></b> aux membres du système Avis Rent A Car, situés au sein et en dehors de l’Europe, mais uniquement dans la mesure
+                nécessaire à la fourniture des services de location, et à Wizard Co. Inc., le propriétaire du système de réservation,
+                situé aux États-Unis d’Amérique, mais uniquement dans la mesure nécessaire au traitement de votre réservation via le
+                système de réservation, <br>
+                <b><u>b)</u></b> aux Autorités et aux sociétés gestionnaires de parcs de stationnement, s’ils ont légalement droit à cette information
+                et dans la mesure qui nous est permise par la loi, ou pour vérifier la validité de votre permis de conduire, <br>
+                <b><u>c)</u></b> à des tiers agissant pour notre compte pour le traitement des réclamations, le recouvrement de sommes que vous
+                nous devez et de la réalisation d’enquêtes auprès des clients, que nous utilisons pour améliorer les services que nous
+                vous proposons.
+                Vous avez un droit légal d’accès aux données personnelles que nous détenons vous concernant (sous réserve du paiement
+                des frais afférents, si la loi applicable l’autorise) et, sous réserve de justification, vous pouvez demander que toute donnée
+                personnelle soit corrigée, modifiée, bloquée ou supprimée. Le responsable du traitement des données est le fournisseur de
+                location du véhicule, tel que précisé sur le contrat de location. <br>
+                <b><u>18) Propriété perdue.</u></b> Nous ferons de notre mieux pour vous contacter si nous retrouvons des effets personnels dans
+                le véhicule. Tous les éléments contenant des renseignements personnels ou financiers seront détruits sous 28 jours,
+                conformément à notre politique de confidentialité et aux Conditions générales de location. Tous les autres éléments seront
+                supprimés sous trois mois. <br>
+                <b><u>19) Droit applicable.</u></b> Le droit applicable à notre contrat est celui du pays où vous avez effectué le retrait du véhicule et
+                conclu le contrat de location.
+            </p>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                    <label class="form-check-label" for="flexCheckDefault">
+                        <h4>J’ai lu et compris le contenu du présent document, que
+                            j’accepte</h4>
+                    </label>
+                </div>
+        </div>
+    </div>
+</div>	
+{% endblock %}

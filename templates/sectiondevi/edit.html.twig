@@ -1,0 +1,16 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Edit Sectiondevi{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-5">
+
+    <h1>Edit Sectiondevi</h1>
+
+    {# <a href="{{ path('sectiondevi_index') }}">Retour à la liste</a> #}
+
+    {{ include('sectiondevi/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    {# {{ include('sectiondevi/_delete_form.html.twig') }} #}
+    </div>
+{% endblock %}

@@ -1,0 +1,39 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Bandeau index{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-5 ">
+
+    <h1>Gestion Bandeau Electronique</h1>
+
+    <table class="table-sm table table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+        <tbody class="align-middle text-start">
+            <tr>
+                {# <th>Id</th> #}
+                <th>Nombre</th>
+                <th>Titre</th>
+                <th>Actions</th>
+            </tr>
+        {% for bandeau in bandeaus %}
+            <tr>
+                {# <td>{{ bandeau.id }}</td> #}
+                <td>{{ bandeau.nombre }}</td>
+                <td>{{ bandeau.titre }}</td>
+                <td>
+                    {# <a href="{{ path('bandeau_show', {'id': bandeau.id}) }}">show</a> #}
+                    <a type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" href="{{ path('bandeau_edit', {'id': bandeau.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Champ vide</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('bandeau_new') }}">Create new</a> #}
+    </div>
+
+{% endblock %}

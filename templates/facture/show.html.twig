@@ -1,0 +1,56 @@
+{% block body %}
+    <h1>Facture</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ facture.id }}</td>
+            </tr>
+            <tr>
+                <th>NumFacture</th>
+                <td>{{ facture.numFacture }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ facture.date ? facture.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>RaisonSociale</th>
+                <td>{{ facture.raisonSociale }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ facture.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ facture.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ facture.nom }}</td>
+            </tr>
+            <tr>
+                <th>AdresseClient</th>
+                <td>{{ facture.adresseClient }}</td>
+            </tr>
+            <tr>
+                <th>TelephoneClient</th>
+                <td>{{ facture.telephoneClient }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ facture.etat }}</td>
+            </tr>
+            <tr>
+                <th>PrixHt</th>
+                <td>{{ facture.prixHt }}</td>
+            </tr>
+            <tr>
+                <th>PrixTtc</th>
+                <td>{{ facture.prixTtc }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}

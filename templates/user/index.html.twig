@@ -1,0 +1,491 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Liste des Utilisateurs - Ease & Car{% endblock %}
+{% block stylesheets %}
+  <style>
+    #devis-tab
+      .nav-link{
+      font-size: .875rem;
+      font-weight: bold;
+      color : black;
+      text-decoration: none;
+    }
+    #devis-tab
+    .nav-link.active.all-tab{
+      color: #009cde;
+      border-bottom: 2px solid #009cde;
+    }
+    #devis-tab
+    .nav-link.active.valider-tab{
+      color: #009cde;
+      border-bottom: 2px solid #009cde;
+    }
+    #devis-tab
+    .nav-link.active.refuser-tab{
+      color: #009cde;
+      border-bottom: 2px solid #009cde;
+    }
+    #devis-tab
+    .nav-link.active.encours-tab{
+      color: #009cde;
+      border-bottom: 2px solid #009cde;
+    }
+    #devis-tab
+    .nav-link.active.enattente-tab{
+      color: #009cde;
+      border-bottom: 2px solid #009cde;
+    }
+  </style>
+{% endblock %}
+{% block content %}
+
+<div class="flex-column container mt-2">
+    <h1>Liste des Utilisateurs</h1>
+    <a class="btn btn-ease" href="{{ path('user_new') }}">Create new</a>
+    <nav id="devis-tab" class="devis-tab nav shadow-lg bg-body flex-column flex-sm-row mb-2 mt-4">
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link active all-tab" id="users-all-tab" data-bs-toggle="tab" href="#users-all" role="tab" aria-controls="users-all" aria-selected="true">All</a>
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link all-tab"  id="admin-tab" data-bs-toggle="tab" href="#admin" role="tab" aria-controls="admin" aria-selected="false">Admin</a>
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link all-tab" id="commer-tab" data-bs-toggle="tab" href="#commer" role="tab" aria-controls="commer" aria-selected="false">Commercials</a>
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link all-tab" id="commu-tab" data-bs-toggle="tab" href="#commu" role="tab" aria-controls="commu" aria-selected="false">Communications</a>
+      <a class="flex-sm-fill fs-5 text-sm-center nav-link all-tab" id="users-tab" data-bs-toggle="tab" href="#users" role="tab" aria-controls="users" aria-selected="false">Utilisateurs</a>
+    </nav>
+    <div class="tab-content" id="devis-tab-content">
+        <div class="tab-pane fade show active" id="users-all" role="tabpanel" aria-labelledby="users-all-tab">
+            <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body align-middle text-start">
+                <tbody>
+                <tr>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                {% for user in users %}
+                    <tr>
+                        
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>
+                            {% if (user.roles[0] =="ROLE_ADMIN") %}
+                                Admin
+                            {% elseif (user.roles[0] =="ROLE_USER") %}
+                                Utilisateur
+                            {% elseif (user.roles[0] =="ROLE_COMMER") %}
+                                Commercial
+                            {% elseif (user.roles[0] =="ROLE_COMMU") %}
+                                Communication
+                            {% endif %}
+                            {# {{ user.roles[0]}} #} {#  ? user.roles|json_encode : '' #}
+                        </td>{# ? user.roles|json_encode : '' #}
+                        <td>
+                            <div class="btn-group align-middle text-start " role="group" aria-label="Button group with nested dropdown">
+                                <div class="btn-group text-start" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-{{ user.id }}">Afficher</button></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-{{ user.id }}">Modifier</a></li>
+                                    <li>{{ include('user/_delete_form.html.twig', {'id': user.id}) }}</li>
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Show-{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Utilisateur</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ render(path('user_show', {'id': user.id})) }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Edit-{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Utilisateur</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form" method="post" action="{{ path('user_edit', {'id': user.id}) }}">
+        										{{ render(path('user_edit', {'id': user.id})) }}
+		        							</form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {# <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a> #}
+                        </td>
+                        
+                    </tr>
+                    
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
+            <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body align-middle text-start">
+                <tbody>
+                <tr>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                {% for user in users %}
+                {% if user.roles[0] == "ROLE_ADMIN" %}
+                    <tr>
+                        
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>
+                            {% if (user.roles[0] =="ROLE_ADMIN") %}
+                                Admin
+                            {% elseif (user.roles[0] =="ROLE_USER") %}
+                                Utilisateur
+                            {% elseif (user.roles[0] =="ROLE_COMMER") %}
+                                Commercial
+                            {% elseif (user.roles[0] =="ROLE_COMMU") %}
+                                Communication
+                            {% endif %}
+                            {# {{ user.roles[0]}} #} {#  ? user.roles|json_encode : '' #}
+                        </td>{# ? user.roles|json_encode : '' #}
+                        <td>
+                            <div class="btn-group align-middle text-start " role="group" aria-label="Button group with nested dropdown">
+                                <div class="btn-group text-start" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-Admin-{{ user.id }}">Afficher</button></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-Admin-{{ user.id }}">Modifier</a></li>
+                                    <li>{{ include('user/_delete_form.html.twig', {'id': user.id}) }}</li>
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Show-Admin-{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Utilisateur</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ render(path('user_show', {'id': user.id})) }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Edit-Admin-{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Utilisateur</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form" method="post" action="{{ path('user_edit', {'id': user.id}) }}">
+        										{{ render(path('user_edit', {'id': user.id})) }}
+		        							</form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {# <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a> #}
+                        </td>
+                        
+                    </tr>
+                {% endif %}
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="commer" role="tabpanel" aria-labelledby="commer-tab">
+            <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body align-middle text-start">
+                <tbody>
+                <tr>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                {% for user in users %}
+                {% if user.roles[0] == "ROLE_COMMER" %}
+                    <tr>
+                        
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>
+                            {% if (user.roles[0] =="ROLE_ADMIN") %}
+                                Admin
+                            {% elseif (user.roles[0] =="ROLE_USER") %}
+                                Utilisateur
+                            {% elseif (user.roles[0] =="ROLE_COMMER") %}
+                                Commercial
+                            {% elseif (user.roles[0] =="ROLE_COMMU") %}
+                                Communication
+                            {% endif %}
+                            {# {{ user.roles[0]}} #} {#  ? user.roles|json_encode : '' #}
+                        </td>{# ? user.roles|json_encode : '' #}
+                        <td>
+                            <div class="btn-group align-middle text-start " role="group" aria-label="Button group with nested dropdown">
+                                <div class="btn-group text-start" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-Commer-{{ user.id }}">Afficher</button></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-Commer-{{ user.id }}">Modifier</a></li>
+                                    <li>{{ include('user/_delete_form.html.twig', {'id': user.id}) }}</li>
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Show-Commer-{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Utilisateur</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ render(path('user_show', {'id': user.id})) }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Edit-Commer-{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Utilisateur</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form" method="post" action="{{ path('user_edit', {'id': user.id}) }}">
+        										{{ render(path('user_edit', {'id': user.id})) }}
+		        							</form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {# <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a> #}
+                        </td>
+                        
+                    </tr>
+                {% endif %}
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="commu" role="tabpanel" aria-labelledby="commu-tab">
+            <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body align-middle text-start">
+                <tbody>
+                <tr>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                {% for user in users %}
+                {% if user.roles[0] == "ROLE_COMMU" %}
+                    <tr>
+                        
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>
+                            {% if (user.roles[0] =="ROLE_ADMIN") %}
+                                Admin
+                            {% elseif (user.roles[0] =="ROLE_USER") %}
+                                Utilisateur
+                            {% elseif (user.roles[0] =="ROLE_COMMER") %}
+                                Commercial
+                            {% elseif (user.roles[0] =="ROLE_COMMU") %}
+                                Communication
+                            {% endif %}
+                            {# {{ user.roles[0]}} #} {#  ? user.roles|json_encode : '' #}
+                        </td>{# ? user.roles|json_encode : '' #}
+                        <td>
+                            <div class="btn-group align-middle text-start " role="group" aria-label="Button group with nested dropdown">
+                                <div class="btn-group text-start" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-Commu-{{ user.id }}">Afficher</button></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-Commu-{{ user.id }}">Modifier</a></li>
+                                    <li>{{ include('user/_delete_form.html.twig', {'id': user.id}) }}</li>
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Show-Commu-{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Utilisateur</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ render(path('user_show', {'id': user.id})) }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Edit-Commu-{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Utilisateur</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form" method="post" action="{{ path('user_edit', {'id': user.id}) }}">
+        										{{ render(path('user_edit', {'id': user.id})) }}
+		        							</form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {# <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a> #}
+                        </td>
+                        
+                    </tr>
+                {% endif %}
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="tab-pane fade" id="users" role="tabpanel" aria-labelledby="users-tab">
+            <table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body align-middle text-start">
+                <tbody>
+                <tr>
+                        <th>Prénom</th>
+                        <th>Nom</th>
+                        <th>Role</th>
+                        <th></th>
+                    </tr>
+                {% for user in users %}
+                {% if user.roles[0] == "ROLE_USER" %}
+                    <tr>
+                        
+                        <td>{{ user.firstname }}</td>
+                        <td>{{ user.lastname }}</td>
+                        <td>
+                            {% if (user.roles[0] =="ROLE_ADMIN") %}
+                                Admin
+                            {% elseif (user.roles[0] =="ROLE_USER") %}
+                                Utilisateur
+                            {% elseif (user.roles[0] =="ROLE_COMMER") %}
+                                Commercial
+                            {% elseif (user.roles[0] =="ROLE_COMMU") %}
+                                Communication
+                            {% endif %}
+                            {# {{ user.roles[0]}} #} {#  ? user.roles|json_encode : '' #}
+                        </td>{# ? user.roles|json_encode : '' #}
+                        <td>
+                            <div class="btn-group align-middle text-start " role="group" aria-label="Button group with nested dropdown">
+                                <div class="btn-group text-start" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Actions
+                                </button>
+                                <ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <li><button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Show-Commu-{{ user.id }}">Afficher</button></li>
+                                    <li><a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-Commu-{{ user.id }}">Modifier</a></li>
+                                    <li>{{ include('user/_delete_form.html.twig', {'id': user.id}) }}</li>
+                                </ul>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Show-Commu-{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Utilisateur</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            {{ render(path('user_show', {'id': user.id})) }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal fade" id="Edit-Commu-{{user.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-scrollable">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Utilisateur</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form class="form" method="post" action="{{ path('user_edit', {'id': user.id}) }}">
+        										{{ render(path('user_edit', {'id': user.id})) }}
+		        							</form>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {# <a href="{{ path('user_edit', {'id': user.id}) }}">edit</a> #}
+                        </td>
+                        
+                    </tr>
+                {% endif %}
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    
+</div>    
+{% endblock %}

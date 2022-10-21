@@ -1,0 +1,60 @@
+security:
+  # https://symfony.com/doc/current/security/experimental_authenticators.html
+  enable_authenticator_manager: true
+  password_hashers:
+    App\Entity\User:
+      algorithm: auto
+
+  # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
+  providers:
+    # used to reload user from session & other features (e.g. switch_user)
+    app_user_provider:
+      entity:
+        class: App\Entity\User
+        property: email
+  firewalls:
+    dev:
+      pattern: ^/(_(profiler|wdt)|css|images|js)/
+      security: false
+    main:
+      lazy: true
+      provider: app_user_provider
+      custom_authenticator: App\Security\LoginFormAuthenticator
+      logout:
+        path: app_logout
+        # where to redirect after logout
+        target: app_login
+      remember_me:
+        name: SECURITY_DEMO
+        secret: "%kernel.secret%"
+        lifetime: 604800 # 1 week in seconds
+        path: /
+      # activate different ways to authenticate
+      # https://symfony.com/doc/current/security.html#firewalls-authentication
+
+      # https://symfony.com/doc/current/security/impersonating_user.html
+      # switch_user: true
+
+  # Easy way to control access for large sections of your site
+  # Note: Only the *first* access control that matches will be used
+  access_control:
+    - { path: ^/admin,                  roles: [ROLE_COMMU, ROLE_COMMER, ROLE_ADMIN] }
+    - { path: ^/compte,                 roles: [ROLE_COMMU, ROLE_COMMER, ROLE_USER, ROLE_ADMIN] }
+    - { path: ^/easeandcar,             roles: [ROLE_COMMER, ROLE_ADMIN] }
+    - { path: ^/sectioncarousel,        roles: [ROLE_COMMU, ROLE_ADMIN] }
+    - { path: ^/sectionnosservices,     roles: [ROLE_COMMU, ROLE_ADMIN] }
+    - { path: ^/commentcamarche,        roles: [ROLE_COMMU, ROLE_ADMIN] }
+    - { path: ^/sectiondevis,           roles: [ROLE_COMMU, ROLE_ADMIN] }
+    - { path: ^/sectionnosengagements,  roles: [ROLE_COMMU, ROLE_ADMIN] }
+    - { path: ^/bandeau,                roles: [ROLE_COMMU, ROLE_ADMIN] }
+    - { path: ^/sectiontemoignage,      roles: [ROLE_COMMU, ROLE_ADMIN] }
+    - { path: ^/faq/1,                  roles: [ROLE_COMMU, ROLE_ADMIN] }
+    - { path: ^/actualit/1,             roles: [ROLE_COMMU, ROLE_ADMIN] }
+    - { path: ^/cgv/1,                  roles: [ROLE_COMMU, ROLE_ADMIN] }
+    - { path: ^/confidentialite/1,      roles: [ROLE_COMMU, ROLE_ADMIN] }
+    - { path: ^/user,                   roles: [ROLE_ADMIN] }
+    - { path: ^/devis/liste,            roles: [ROLE_ADMIN, ROLE_COMMER] }
+    - { path: ^/facture,                roles: [ROLE_ADMIN, ROLE_COMMER] }
+    - { path: ^/contrat,                roles: [ROLE_ADMIN, ROLE_COMMER] }
+
+

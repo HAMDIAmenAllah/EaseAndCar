@@ -1,0 +1,45 @@
+
+
+{% block body %}
+    <h1>DetailsDevis index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Reference</th>
+                <th>Type</th>
+                <th>Debut</th>
+                <th>Fin</th>
+                <th>NombreVehicules</th>
+                <th>TarifHT</th>
+                <th>Kilometrage</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for details_devi in details_devis %}
+            <tr>
+                <td>{{ details_devi.id }}</td>
+                <td>{{ details_devi.reference }}</td>
+                <td>{{ details_devi.type }}</td>
+                <td>{{ details_devi.debut ? details_devi.debut|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ details_devi.fin ? details_devi.fin|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ details_devi.nombreVehicules }}</td>
+                <td>{{ details_devi.tarifHT }}</td>
+                <td>{{ details_devi.kilometrage }}</td>
+                <td>
+                    <a href="{{ path('detailsdevis_show', {'id': details_devi.id}) }}">show</a>
+                    <a href="{{ path('detailsdevis_edit', {'id': details_devi.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    {# <a href="{{ path('detailsdevis_new') }}">Create new</a> #}
+{% endblock %}

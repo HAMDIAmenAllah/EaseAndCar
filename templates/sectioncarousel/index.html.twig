@@ -1,0 +1,43 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Sectioncarousel index{% endblock %}
+
+{% block content %}
+<div class="flex-column container mt-5">
+
+    <h1>Gestion Section Carousel</h1>
+
+    <a class="btn btn-ease" href="{{ path('sectioncarousel_new') }}">Créer un nouveau</a>
+
+    <table class="table-sm table table-hover rounded shadow-lg p-3 mb-5 mt-2 bg-body">
+        <tbody class="align-middle text-start">
+            <tr>
+                {# <th>Id</th> #}
+                {# <th>Image</th> #}
+                <th>Titre</th>
+                <th>Text</th>
+                <th>Actions</th>
+            </tr>
+        {% for sectioncarousel in sectioncarousels %}
+            <tr>
+                {# <td>{{ sectioncarousel.id }}</td> #}
+                {# <td>{{ sectioncarousel.image }}</td> #}
+                <td>{{ sectioncarousel.titre }}</td>
+                <td>{{ sectioncarousel.text }}</td>
+                <td>
+                    {# <a href="{{ path('sectioncarousel_show', {'id': sectioncarousel.id}) }}">show</a> #}
+                    <a class="btn btn-outline-light text-dark border border-secondary rounded btn-sm" href="{{ path('sectioncarousel_edit', {'id': sectioncarousel.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Champ vide</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+</div>
+
+{% endblock %}

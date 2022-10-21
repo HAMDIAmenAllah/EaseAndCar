@@ -1,0 +1,23 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Editer Actualité - Ease & car{% endblock %}
+
+
+{% block content %}
+    <div class="flex-column container mt-5">
+        <h1>Editer Actualité</h1>
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <button class="btn btn-ease">{{ button_label|default('Mettre à jour') }}</button>
+            {{ form_end(form) }}
+            {#{{ include('actualit/_form.html.twig', {'button_label': 'Editer'}) }}
+
+         <a href="{{ path('actualit_index') }}">retour en arrière</a>
+
+            {{ include('actualit/_delete_form.html.twig') }} #}
+    
+    </div>
+{% endblock %}
+
+

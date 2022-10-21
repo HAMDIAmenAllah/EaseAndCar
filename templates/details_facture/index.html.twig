@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}DetailsFacture index{% endblock %}
+
+{% block body %}
+    <h1>DetailsFacture index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Reference</th>
+                <th>Type</th>
+                <th>Debut</th>
+                <th>Fin</th>
+                <th>NombreVehicules</th>
+                <th>TarifHT</th>
+                <th>Kilometrage</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for details_facture in details_factures %}
+            <tr>
+                <td>{{ details_facture.id }}</td>
+                <td>{{ details_facture.reference }}</td>
+                <td>{{ details_facture.type }}</td>
+                <td>{{ details_facture.debut ? details_facture.debut|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ details_facture.fin ? details_facture.fin|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ details_facture.nombreVehicules }}</td>
+                <td>{{ details_facture.tarifHT }}</td>
+                <td>{{ details_facture.kilometrage }}</td>
+                <td>
+                    <a href="{{ path('details_facture_show', {'id': details_facture.id}) }}">show</a>
+                    <a href="{{ path('details_facture_edit', {'id': details_facture.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('details_facture_new') }}">Create new</a>
+{% endblock %}

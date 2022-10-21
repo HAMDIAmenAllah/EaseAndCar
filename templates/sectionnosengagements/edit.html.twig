@@ -1,0 +1,16 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Edit Sectionnosengagements{% endblock %}
+
+{% block content %}
+    <div class="flex-column container mt-5">
+
+    <h1>Modifier Section Nos Engagements</h1>
+
+    {# <a href="{{ path('sectionnosengagements_index') }}">Retour à la liste</a> #}
+
+    {{ include('sectionnosengagements/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    {# {{ include('sectionnosengagements/_delete_form.html.twig') }} #}
+    </div>
+{% endblock %}

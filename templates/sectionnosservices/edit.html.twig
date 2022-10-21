@@ -1,0 +1,16 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Edit Sectionnosservices{% endblock %}
+
+{% block content %}
+<div class="flex-column container mt-5">
+
+    <h1>Modifier Section nos services</h1>
+
+    {# <a href="{{ path('sectionnosservices_index') }}">Retour à la liste</a> #}
+
+    {{ include('sectionnosservices/_form.html.twig', {'button_label': 'Mettre à jour'}) }}
+
+    {# {{ include('sectionnosservices/_delete_form.html.twig') }} #}
+</div>
+{% endblock %}

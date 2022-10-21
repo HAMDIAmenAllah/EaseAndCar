@@ -1,0 +1,47 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Easeandcar index{% endblock %}
+
+{% block body %}
+    <h1>Easeandcar index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>RaisonSociale</th>
+                <th>Siret</th>
+                <th>Adresse</th>
+                <th>Telephone</th>
+                <th>Email</th>
+                <th>FormeJuridique</th>
+                <th>RCS</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for easeandcar in easeandcars %}
+            <tr>
+                <td>{{ easeandcar.id }}</td>
+                <td>{{ easeandcar.raisonSociale }}</td>
+                <td>{{ easeandcar.siret }}</td>
+                <td>{{ easeandcar.adresse }}</td>
+                <td>{{ easeandcar.telephone }}</td>
+                <td>{{ easeandcar.email }}</td>
+                <td>{{ easeandcar.formeJuridique }}</td>
+                <td>{{ easeandcar.RCS }}</td>
+                <td>
+                    <a href="{{ path('easeandcar_show', {'id': easeandcar.id}) }}">show</a>
+                    <a href="{{ path('easeandcar_edit', {'id': easeandcar.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="9">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('easeandcar_new') }}">Create new</a>
+{% endblock %}

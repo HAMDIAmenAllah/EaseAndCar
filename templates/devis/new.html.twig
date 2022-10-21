@@ -1,0 +1,11 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}New Devis{% endblock %}
+
+{% block content %}
+<div class="flex-column container mt-2">
+    <h1>Créer un nouveau Devis</h1>
+
+    {{ include('devis/_form.html.twig', {'button_label': 'Créer'}) }}
+</div>
+{% endblock %}

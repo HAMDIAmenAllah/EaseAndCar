@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Contrat{% endblock %}
+
+{% block body %}
+    <h1>Contrat</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ contrat.id }}</td>
+            </tr>
+            <tr>
+                <th>NumContrat</th>
+                <td>{{ contrat.numContrat }}</td>
+            </tr>
+            <tr>
+                <th>Date</th>
+                <td>{{ contrat.date ? contrat.date|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>RaisonSociale</th>
+                <td>{{ contrat.raisonSociale }}</td>
+            </tr>
+            <tr>
+                <th>Adresse</th>
+                <td>{{ contrat.adresse }}</td>
+            </tr>
+            <tr>
+                <th>Telephone</th>
+                <td>{{ contrat.telephone }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ contrat.nom }}</td>
+            </tr>
+            <tr>
+                <th>AdresseClient</th>
+                <td>{{ contrat.adresseClient }}</td>
+            </tr>
+            <tr>
+                <th>TelephoneClient</th>
+                <td>{{ contrat.telephoneClient }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ contrat.etat }}</td>
+            </tr>
+            <tr>
+                <th>PrixHt</th>
+                <td>{{ contrat.prixHt }}</td>
+            </tr>
+            <tr>
+                <th>PrixTtc</th>
+                <td>{{ contrat.prixTtc }}</td>
+            </tr>
+            <tr>
+                <th>Reference</th>
+                <td>{{ contrat.reference }}</td>
+            </tr>
+            <tr>
+                <th>Type</th>
+                <td>{{ contrat.type }}</td>
+            </tr>
+            <tr>
+                <th>Debut</th>
+                <td>{{ contrat.debut ? contrat.debut|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>Fin</th>
+                <td>{{ contrat.fin ? contrat.fin|date('Y-m-d') : '' }}</td>
+            </tr>
+            <tr>
+                <th>NombreVehicules</th>
+                <td>{{ contrat.nombreVehicules }}</td>
+            </tr>
+            <tr>
+                <th>TarifHT</th>
+                <td>{{ contrat.tarifHT }}</td>
+            </tr>
+            <tr>
+                <th>Kilometrage</th>
+                <td>{{ contrat.kilometrage }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('contrat_index') }}">back to list</a>
+
+    <a href="{{ path('contrat_edit', {'id': contrat.id}) }}">edit</a>
+
+    {{ include('contrat/_delete_form.html.twig') }}
+{% endblock %}

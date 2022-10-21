@@ -1,0 +1,22 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Mon compte - Ease & Car{% endblock %}
+
+{% block content %}
+    <div class="flex-column container">
+        <h1 class="mt-5">Mon compte</h1>
+        <p> Bienvenue {{app.user.firstname}} dans votre compte.
+        c'est dans cet espace que vous allez pouvoir gérer toutes vos informations personnelles.
+        <hr>
+        {% if notification %}
+            <div class="alert {% if success is same as 'success' %} alert-info {% else %} alert-danger {% endif %}">
+                {{ notification }}
+            </div>
+        {% endif %}
+        <a href="{{ path ('accountName') }}">-Modifier mon nom et prénom</a>
+        <br>
+        <a href="{{ path ('accountMail') }}">-Modifier mon adresse e-mail</a>
+        <br>
+        <a href="{{ path ('accountPassword') }}">-Modifier mon mot de passe</a>
+    </div>
+{% endblock %}

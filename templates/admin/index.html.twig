@@ -1,0 +1,18 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+{% block title %}{{ controller_name }}{% endblock %}
+{% block content %}
+<center class="ms-5">
+<br>
+{% if app.user %}
+    <h1 class="ms-5"> Bonjour {{ app.user.firstname }}</h1>
+    <br> <br>
+    <h5 class="ms-5"> vous êtes bien connecté</h5>
+    </center>
+{% else %}
+ 
+ {{ render(path('app_login')) }}
+
+
+{% endif %}
+{% endblock %}
+

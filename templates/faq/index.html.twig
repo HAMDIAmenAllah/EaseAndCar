@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{controller_name}}{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block content %}
+{% include "header.html.twig" %}
+    <main id="main">
+
+    <!-- ======= Hero Section ======= -->
+    <section id="heroFAQ" class="d-flex justify-cntent-center align-items-center">
+      <div
+        id="heroCarousel"
+        class="container carousel carousel-fade"
+        data-bs-ride="carousel"
+        data-bs-interval="5000"
+      >
+        <!-- Slide 1 -->
+        <div class="carousel-item active">
+          <div class="carousel-container">
+            <img src="" alt="" class="img-fluid" />
+            <h2>FAQ</h2>
+            <br />
+            {# <p class="animate__animated animate__fadeInUp fs-4">
+              Vous souhaitez avoir un devis ? <br>
+            Remplissez le formulaire et nous vous répondons dans les meilleurs délais.
+            </p> #}
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- End Hero -->
+    <div class="container mt-5 mb-5">
+    {{faqs[0].contenu|raw}}
+    </div>
+    
+  </main><!-- End #main -->
+{% include "footer.html.twig" %}
+{% endblock %}

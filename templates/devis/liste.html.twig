@@ -1,0 +1,670 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Liste Devis - Ease & Car{% endblock %}
+{% block stylesheets %}
+<style>
+	#devis-tab .nav-link {
+		font-size: .875rem;
+		font-weight: bold;
+		color: black;
+		text-decoration: none;
+	}
+
+	#devis-tab .nav-link.active.all-tab {
+		color: #009cde;
+		border-bottom: 2px solid #009cde;
+	}
+
+	#devis-tab .nav-link.active.valider-tab {
+		color: #198754;
+		border-bottom: 2px solid #198754;
+	}
+
+	#devis-tab .nav-link.active.refuser-tab {
+		color: #dc3545;
+		border-bottom: 2px solid #dc3545;
+	}
+
+	#devis-tab .nav-link.active.encours-tab {
+		color: #ffc107;
+		border-bottom: 2px solid #ffc107;
+	}
+
+	#devis-tab .nav-link.active.enattente-tab {
+		color: #6c757d;
+		border-bottom: 2px solid #6c757d;
+	}
+</style>
+{% endblock %}
+{% block content %}
+<div class="collapsed d-flex container flex-column">
+	<div>
+		<h1>Liste Devis</h1>
+		{% if is_granted('ROLE_COMMER') or  is_granted('ROLE_ADMIN') %}
+			<div class="d-flex">
+				<a class="btn btn-ease me-3" href="{{ path('devis_new') }}">Créer un nouveau</a>
+				<form class="form d-flex" methode="POST" action="{{ path('devis_liste') }}">
+					{{form_start(form)}}
+					{{form_widget(form.filter)}}
+					<button class="btn btn-ease ms-1">{{ button_label|default('Filtrer') }}</button>
+					{{form_end(form)}}
+				</form>
+			</div>
+		{% endif %}
+	</div>
+	<nav id="devis-tab" class="devis-tab nav shadow-lg bg-body flex-column flex-sm-row mb-2 mt-4">
+		<a class="flex-sm-fill fs-5 text-sm-center nav-link active all-tab" id="devis-all-tab" data-bs-toggle="tab"
+			href="#devis-all" role="tab" aria-controls="devis-all" aria-selected="true">All</a>
+		<a class="flex-sm-fill fs-5 text-sm-center nav-link valider-tab" id="devis-valider-tab" data-bs-toggle="tab"
+			href="#devis-valider" role="tab" aria-controls="devis-valider" aria-selected="false">Validé</a>
+		<a class="flex-sm-fill fs-5 text-sm-center nav-link refuser-tab" id="devis-refuser-tab" data-bs-toggle="tab"
+			href="#devis-refuser" role="tab" aria-controls="devis-refuser" aria-selected="false">Refusé</a>
+		<a class="flex-sm-fill fs-5 text-sm-center nav-link encours-tab" id="devis-encours-tab" data-bs-toggle="tab"
+			href="#devis-encours" role="tab" aria-controls="devis-encours" aria-selected="false">En cours</a>
+		<a class="flex-sm-fill fs-5 text-sm-center nav-link enattente-tab" id="devis-enattente-tab" data-bs-toggle="tab"
+			href="#devis-enattente" role="tab" aria-controls="devis-enattente" aria-selected="false">En attente</a>
+	</nav>
+	<div class="tab-content" id="devis-tab-content">
+		<div class="tab-pane fade show active" id="devis-all" role="tabpanel" aria-labelledby="devis-all-tab">
+			<table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-3 mt-2 bg-body ">
+				<tbody>
+					<tr class="align-middle text-start">
+						<th>Type</th>
+						<th>Entreprise</th>
+						<th>Email</th>
+						<th>Tel</th>
+						<th>Statut</th>
+						<th></th>
+					</tr>
+					{% for devi in devis %}
+					<tr>
+						<td class="align-middle text-start">{{ devi.typeEntreprise }}</td>
+						<td class="align-middle text-start">{{ devi.nomEntreprise }}</td>
+						<td class="align-middle text-start">{{ devi.adresseEmail }}</td>
+						<td class="align-middle text-start">{{ devi.numeroTel }}</td>
+						<td class="align-middle text-start">
+							{% if ( devi.statut =="en attente") %}
+							<span class="badge bg-secondary">{{ devi.statut }}</span>
+							{% elseif (devi.statut =="en cours") %}
+							<span class="badge bg-warning text-dark">{{ devi.statut }}</span>
+							{% elseif ( devi.statut =="validé") %}
+							<span class="badge bg-success">{{ devi.statut }}</span>
+							{% elseif ( devi.statut =="refusé") %}
+							<span class="badge bg-danger">{{ devi.statut }}</span>
+							{% else %}
+							<span class="badge bg-light text-dark">{{ devi.statut }}</span>
+							{% endif %}
+						</td>
+						<td>
+							<!-- Modal -->
+							{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') %}
+							<div class="btn-group align-middle text-start " role="group"
+								aria-label="Button group with nested dropdown">
+								<div class="btn-group text-start" role="group">
+									<button id="btnGroupDrop1" type="button"
+										class="btn btn-outline-light text-dark border border-secondary rounded btn-sm"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										Actions
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+										<li><button type="button" class=" dropdown-item" data-bs-toggle="modal"
+												data-bs-target="#Show-{{ devi.id }}">Afficher</button></li>
+										<li><a class="dropdown-item"
+												href="{{path('devis_edit', {'id': devi.id})}}">Modifier</a></li>
+										{% if devi.statut == "validé" or devi.statut == "en attente" or devi.statut == "en cours" %}
+										<li><a class=" dropdown-item"
+												href="{{path('devis_car', {'id': devi.id})}}">Générer Devis</a></li>
+										{% endif %}
+										{% if devi.statut == "validé"%}
+										<li><a class=" dropdown-item" href="{{path('creer_contrat', {'id': devi.id})}}">Créer Contrat</a></li>
+										{% endif %}
+										{% if devi.statut == "validé"%}
+										<li><a class="dropdown-item"
+												href="{{path('genererFacture', {'id': devi.id})}}">Créer Facture</a>
+										</li>
+										{% endif %}
+										<li>{{ include('devis/_delete_form.html.twig', {'id': devi.id}) }}</li>
+									</ul>
+								</div>
+							</div>
+							{% else %}
+							<button type="button"
+								class="btn btn-outline-light text-dark border border-secondary rounded btn-sm"
+								data-bs-toggle="modal" data-bs-target="#Show-{{ devi.id }}">Afficher</button>
+							{% endif %}
+							<!-- Modal Show -->
+							<div class="modal fade" id="Show-{{devi.id}}" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-scrollable">
+									<div class="modal-content">
+										<div class="modal-header">
+											<table class="table table-borderless m-0 p-0">
+												<tbody>
+													<tr>
+														<th class="w-50">
+															<h5 class="modal-title" id="exampleModalLabel">Devis</h5>
+														</th>
+														<td class="w-50">
+															{% if ( devi.statut =="en attente") %}
+															<span class="badge bg-secondary">{{ devi.statut }}</span>
+															{% elseif (devi.statut =="en cours") %}
+															<span
+																class="badge bg-warning text-dark">{{ devi.statut }}</span>
+															{% elseif ( devi.statut =="validé") %}
+															<span class="badge bg-success">{{ devi.statut }}</span>
+															{% elseif ( devi.statut =="refusé") %}
+															<span class="badge bg-danger">{{ devi.statut }}</span>
+															{% else %}
+															<span
+																class="badge bg-light text-dark">{{ devi.statut }}</span>
+															{% endif %}
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"
+												aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											{{ render(path('devis_show', {'id': devi.id})) }}
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Fermer</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					{% else %}
+					<tr>
+						<td colspan="15">Champ vide</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			<div class="d-flex justify-content-center mt-0 mb-0">
+				{{ knp_pagination_render(devis, "pagination.html.twig") }}
+			</div>
+		</div>
+		<div class="tab-pane fade" id="devis-valider" role="tabpanel" aria-labelledby="devis-valider-tab">
+			<table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 bg-body ">
+				<tbody>
+					<tr class="align-middle text-start">
+						<th>Type</th>
+						<th>Entreprise</th>
+						<th>Email</th>
+						<th>Tel</th>
+						<th>Statut</th>
+						{# <th>TypeVehicule</th>
+                  <th>TypeLocation</th> #}
+						<th></th>
+					</tr>
+					{% for devi in data %}
+					{% if devi.statut == "validé" %}
+					<tr>
+						<td class="align-middle text-start">{{ devi.typeEntreprise }}</td>
+						<td class="align-middle text-start">{{ devi.nomEntreprise }}</td>
+						<td class="align-middle text-start">{{ devi.adresseEmail }}</td>
+						<td class="align-middle text-start">{{ devi.numeroTel }}</td>
+						<td class="align-middle text-start">
+							{% if ( devi.statut =="en attente") %}
+							<span class="badge bg-secondary">{{ devi.statut }}</span>
+							{% elseif (devi.statut =="en cours") %}
+							<span class="badge bg-warning text-dark">{{ devi.statut }}</span>
+							{% elseif ( devi.statut =="validé") %}
+							<span class="badge bg-success">{{ devi.statut }}</span>
+							{% elseif ( devi.statut =="refusé") %}
+							<span class="badge bg-danger">{{ devi.statut }}</span>
+							{% else %}
+							<span class="badge bg-light text-dark">{{ devi.statut }}</span>
+							{% endif %}
+						</td>
+						{# <td>{{ devi.typeVehicule }}</td>
+                  <td>{{ devi.typeLocation }}</td> #}
+						<td>
+							<!-- Modal -->
+							{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') %}
+							<div class="btn-group align-middle text-start " role="group"
+								aria-label="Button group with nested dropdown">
+								<div class="btn-group text-start" role="group">
+									<button id="btnGroupDrop1" type="button"
+										class="btn btn-outline-light text-dark border border-secondary rounded btn-sm"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										Actions
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+										<li><button type="button" class="btn btn-ease dropdown-item"
+												data-bs-toggle="modal"
+												data-bs-target="#Show-valide-{{ devi.id }}">Afficher</button></li>
+										<li><a class="btn btn-warning dropdown-item"
+												href="{{path('devis_edit', {'id': devi.id})}}">Modifier</a></li>
+										<li><a class="btn btn-warning dropdown-item"
+												href="{{path('devis_car', {'id': devi.id})}}">Générer Devis</a></li>
+										<li><a class=" dropdown-item" href="{{path('creer_contrat', {'id': devi.id})}}">Créer Contrat</a></li>
+										<li><a class="dropdown-item"
+												href="{{path('genererFacture', {'id': devi.id})}}">Générer Facture</a>
+										</li>
+										<li>{{ include('devis/_delete_form.html.twig', {'id': devi.id}) }}</li>
+									</ul>
+								</div>
+							</div>
+							{% else %}
+							<button type="button"
+								class="btn btn-outline-light text-dark border border-secondary rounded btn-sm"
+								data-bs-toggle="modal" data-bs-target="#Show-{{ devi.id }}">Afficher</button>
+							{% endif %}
+							<!-- Modal Show -->
+							<div class="modal fade" id="Show-valide-{{devi.id}}" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-scrollable">
+									<div class="modal-content">
+										<div class="modal-header">
+											<table class="table table-borderless m-0 p-0">
+												<tbody>
+													<tr>
+														<th class="w-50">
+															<h5 class="modal-title" id="exampleModalLabel">Devis</h5>
+														</th>
+														<td class="w-50">
+															{% if ( devi.statut =="en attente") %}
+															<span class="badge bg-secondary">{{ devi.statut }}</span>
+															{% elseif (devi.statut =="en cours") %}
+															<span
+																class="badge bg-warning text-dark">{{ devi.statut }}</span>
+															{% elseif ( devi.statut =="validé") %}
+															<span class="badge bg-success">{{ devi.statut }}</span>
+															{% elseif ( devi.statut =="refusé") %}
+															<span class="badge bg-danger">{{ devi.statut }}</span>
+															{% else %}
+															<span
+																class="badge bg-light text-dark">{{ devi.statut }}</span>
+															{% endif %}
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"
+												aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											{{ render(path('devis_show', {'id': devi.id})) }}
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Fermer</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					{% endif %}
+
+					{% else %}
+					<tr>
+						<td colspan="15">Champ vide</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="devis-refuser" role="tabpanel" aria-labelledby="devis-refuser-tab">
+			<table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 bg-body ">
+				<tbody>
+					<tr class="align-middle text-start">
+						<th>Type</th>
+						<th>Entreprise</th>
+						<th>Email</th>
+						<th>Tel</th>
+						<th>Statut</th>
+						{# <th>TypeVehicule</th>
+                  <th>TypeLocation</th> #}
+						<th></th>
+					</tr>
+					{% for devi in data %}
+					{% if devi.statut == "refusé" %}
+					<tr>
+						<td class="align-middle text-start">{{ devi.typeEntreprise }}</td>
+						<td class="align-middle text-start">{{ devi.nomEntreprise }}</td>
+						<td class="align-middle text-start">{{ devi.adresseEmail }}</td>
+						<td class="align-middle text-start">{{ devi.numeroTel }}</td>
+						<td class="align-middle text-start">
+							{% if ( devi.statut =="en attente") %}
+							<span class="badge bg-secondary">{{ devi.statut }}</span>
+							{% elseif (devi.statut =="en cours") %}
+							<span class="badge bg-warning text-dark">{{ devi.statut }}</span>
+							{% elseif ( devi.statut =="validé") %}
+							<span class="badge bg-success">{{ devi.statut }}</span>
+							{% elseif ( devi.statut =="refusé") %}
+							<span class="badge bg-danger">{{ devi.statut }}</span>
+							{% else %}
+							<span class="badge bg-light text-dark">{{ devi.statut }}</span>
+							{% endif %}
+						</td>
+						{# <td>{{ devi.typeVehicule }}</td>
+                  <td>{{ devi.typeLocation }}</td> #}
+						<td>
+							<!-- Modal -->
+							{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') %}
+							<div class="btn-group align-middle text-start " role="group"
+								aria-label="Button group with nested dropdown">
+								<div class="btn-group text-start" role="group">
+									<button id="btnGroupDrop1" type="button"
+										class="btn btn-outline-light text-dark border border-secondary rounded btn-sm"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										Actions
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+										<li><button type="button" class="btn btn-ease dropdown-item"
+												data-bs-toggle="modal"
+												data-bs-target="#Show-refuser-{{ devi.id }}">Afficher</button></li>
+										<li><a class="btn btn-warning dropdown-item"
+												href="{{path('devis_edit', {'id': devi.id})}}">Modifier</a>{# <button type="button" class="btn btn-warning dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit-{{ devi.id }}"> #}{# </button> #}
+										</li>
+										<li>{{ include('devis/_delete_form.html.twig', {'id': devi.id}) }}</li>
+									</ul>
+								</div>
+							</div>
+							{% else %}
+							<button type="button"
+								class="btn btn-outline-light text-dark border border-secondary rounded btn-sm"
+								data-bs-toggle="modal" data-bs-target="#Show-{{ devi.id }}">Afficher</button>
+							{% endif %}
+							<!-- Modal Show -->
+							<div class="modal fade" id="Show-refuser-{{devi.id}}" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-scrollable">
+									<div class="modal-content">
+										<div class="modal-header">
+											<table class="table table-borderless m-0 p-0">
+												<tbody>
+													<tr>
+														<th class="w-50">
+															<h5 class="modal-title" id="exampleModalLabel">Devis</h5>
+														</th>
+														<td class="w-50">
+															{% if ( devi.statut =="en attente") %}
+															<span class="badge bg-secondary">{{ devi.statut }}</span>
+															{% elseif (devi.statut =="en cours") %}
+															<span
+																class="badge bg-warning text-dark">{{ devi.statut }}</span>
+															{% elseif ( devi.statut =="validé") %}
+															<span class="badge bg-success">{{ devi.statut }}</span>
+															{% elseif ( devi.statut =="refusé") %}
+															<span class="badge bg-danger">{{ devi.statut }}</span>
+															{% else %}
+															<span
+																class="badge bg-light text-dark">{{ devi.statut }}</span>
+															{% endif %}
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"
+												aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											{{ render(path('devis_show', {'id': devi.id})) }}
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Fermer</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					{% endif %}
+
+					{% else %}
+					<tr>
+						<td colspan="15">Champ vide</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="devis-encours" role="tabpanel" aria-labelledby="devis-encours-tab">
+			<table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 bg-body ">
+				<tbody>
+					<tr class="align-middle text-start">
+						<th>Type</th>
+						<th>Entreprise</th>
+						<th>Email</th>
+						<th>Tel</th>
+						<th>Statut</th>
+						{# <th>TypeVehicule</th>
+                  <th>TypeLocation</th> #}
+						<th></th>
+					</tr>
+					{% for devi in data %}
+					{% if devi.statut == "en cours" %}
+					<tr>
+						<td class="align-middle text-start">{{ devi.typeEntreprise }}</td>
+						<td class="align-middle text-start">{{ devi.nomEntreprise }}</td>
+						<td class="align-middle text-start">{{ devi.adresseEmail }}</td>
+						<td class="align-middle text-start">{{ devi.numeroTel }}</td>
+						<td class="align-middle text-start">
+							{% if ( devi.statut =="en attente") %}
+							<span class="badge bg-secondary">{{ devi.statut }}</span>
+							{% elseif (devi.statut =="en cours") %}
+							<span class="badge bg-warning text-dark">{{ devi.statut }}</span>
+							{% elseif ( devi.statut =="validé") %}
+							<span class="badge bg-success">{{ devi.statut }}</span>
+							{% elseif ( devi.statut =="refusé") %}
+							<span class="badge bg-danger">{{ devi.statut }}</span>
+							{% else %}
+							<span class="badge bg-light text-dark">{{ devi.statut }}</span>
+							{% endif %}
+						</td>
+						{# <td>{{ devi.typeVehicule }}</td>
+                  <td>{{ devi.typeLocation }}</td> #}
+						<td>
+							<!-- Modal -->
+							{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') %}
+							<div class="btn-group align-middle text-start " role="group"
+								aria-label="Button group with nested dropdown">
+								<div class="btn-group text-start" role="group">
+									<button id="btnGroupDrop1" type="button"
+										class="btn btn-outline-light text-dark border border-secondary rounded btn-sm"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										Actions
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+										<li><button type="button" class="btn btn-ease dropdown-item"
+												data-bs-toggle="modal"
+												data-bs-target="#Show-encours-{{ devi.id }}">Afficher</button></li>
+										<li><a class="btn btn-warning dropdown-item"
+												href="{{path('devis_edit', {'id': devi.id})}}">Modifier</a></li>
+										<li><a class="btn btn-warning dropdown-item"
+												href="{{path('devis_car', {'id': devi.id})}}">Générer Devis</a></li>
+										<li>{{ include('devis/_delete_form.html.twig', {'id': devi.id}) }}</li>
+									</ul>
+								</div>
+							</div>
+							{% else %}
+							<button type="button"
+								class="btn btn-outline-light text-dark border border-secondary rounded btn-sm"
+								data-bs-toggle="modal" data-bs-target="#Show-{{ devi.id }}">Afficher</button>
+							{% endif %}
+							<!-- Modal Show -->
+							<div class="modal fade" id="Show-encours-{{devi.id}}" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-scrollable">
+									<div class="modal-content">
+										<div class="modal-header">
+											<table class="table table-borderless m-0 p-0">
+												<tbody>
+													<tr>
+														<th class="w-50">
+															<h5 class="modal-title" id="exampleModalLabel">Devis</h5>
+														</th>
+														<td class="w-50">
+															{% if ( devi.statut =="en attente") %}
+															<span class="badge bg-secondary">{{ devi.statut }}</span>
+															{% elseif (devi.statut =="en cours") %}
+															<span
+																class="badge bg-warning text-dark">{{ devi.statut }}</span>
+															{% elseif ( devi.statut =="validé") %}
+															<span class="badge bg-success">{{ devi.statut }}</span>
+															{% elseif ( devi.statut =="refusé") %}
+															<span class="badge bg-danger">{{ devi.statut }}</span>
+															{% else %}
+															<span
+																class="badge bg-light text-dark">{{ devi.statut }}</span>
+															{% endif %}
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"
+												aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											{{ render(path('devis_show', {'id': devi.id})) }}
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Fermer</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					{% endif %}
+
+					{% else %}
+					<tr>
+						<td colspan="15">Champ vide</td>
+					</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		<div class="tab-pane fade" id="devis-enattente" role="tabpanel" aria-labelledby="devis-enattente-tab">
+			<table class="table-sm table mt-4 table-hover rounded shadow-lg p-3 mb-5 bg-body ">
+				<tbody>
+					<tr class="align-middle text-start">
+						<th>Type</th>
+						<th>Entreprise</th>
+						<th>Email</th>
+						<th>Tel</th>
+						<th>Statut</th>
+						{# <th>TypeVehicule</th>
+                  <th>TypeLocation</th> #}
+						<th></th>
+					</tr>
+					{% for devi in data %}
+					{% if devi.statut == "en attente" %}
+					<tr>
+						<td class="align-middle text-start">{{ devi.typeEntreprise }}</td>
+						<td class="align-middle text-start">{{ devi.nomEntreprise }}</td>
+						<td class="align-middle text-start">{{ devi.adresseEmail }}</td>
+						<td class="align-middle text-start">{{ devi.numeroTel }}</td>
+						<td class="align-middle text-start">
+							{% if ( devi.statut =="en attente") %}
+							<span class="badge bg-secondary">{{ devi.statut }}</span>
+							{% elseif (devi.statut =="en cours") %}
+							<span class="badge bg-warning text-dark">{{ devi.statut }}</span>
+							{% elseif ( devi.statut =="validé") %}
+							<span class="badge bg-success">{{ devi.statut }}</span>
+							{% elseif ( devi.statut =="refusé") %}
+							<span class="badge bg-danger">{{ devi.statut }}</span>
+							{% else %}
+							<span class="badge bg-light text-dark">{{ devi.statut }}</span>
+							{% endif %}
+						</td>
+						{# <td>{{ devi.typeVehicule }}</td>
+                  <td>{{ devi.typeLocation }}</td> #}
+						<td>
+							<!-- Modal -->
+							{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_COMMER') %}
+							<div class="btn-group align-middle text-start " role="group"
+								aria-label="Button group with nested dropdown">
+								<div class="btn-group text-start" role="group">
+									<button id="btnGroupDrop1" type="button"
+										class="btn btn-outline-light text-dark border border-secondary rounded btn-sm"
+										data-bs-toggle="dropdown" aria-expanded="false">
+										Actions
+									</button>
+									<ul class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+										<li><button type="button" class="btn btn-ease dropdown-item"
+												data-bs-toggle="modal"
+												data-bs-target="#Show-enattente-{{ devi.id }}">Afficher</button></li>
+										<li><a class="btn btn-warning dropdown-item"
+												href="{{path('devis_edit', {'id': devi.id})}}">Modifier</a></li>
+										<li><a class="btn btn-warning dropdown-item"
+												href="{{path('devis_car', {'id': devi.id})}}">Générer Devis</a></li>
+										<li>{{ include('devis/_delete_form.html.twig', {'id': devi.id}) }}</li>
+									</ul>
+								</div>
+							</div>
+							{% else %}
+							<button type="button"
+								class="btn btn-outline-light text-dark border border-secondary rounded btn-sm"
+								data-bs-toggle="modal" data-bs-target="#Show-{{ devi.id }}">Afficher</button>
+							{% endif %}
+							<!-- Modal Show -->
+							<div class="modal fade" id="Show-enattente-{{devi.id}}" tabindex="-1"
+								aria-labelledby="exampleModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-dialog-scrollable">
+									<div class="modal-content">
+										<div class="modal-header">
+											<table class="table table-borderless m-0 p-0">
+												<tbody>
+													<tr>
+														<th class="w-50">
+															<h5 class="modal-title" id="exampleModalLabel">Devis</h5>
+														</th>
+														<td class="w-50">
+															{% if ( devi.statut =="en attente") %}
+															<span class="badge bg-secondary">{{ devi.statut }}</span>
+															{% elseif (devi.statut =="en cours") %}
+															<span
+																class="badge bg-warning text-dark">{{ devi.statut }}</span>
+															{% elseif ( devi.statut =="validé") %}
+															<span class="badge bg-success">{{ devi.statut }}</span>
+															{% elseif ( devi.statut =="refusé") %}
+															<span class="badge bg-danger">{{ devi.statut }}</span>
+															{% else %}
+															<span
+																class="badge bg-light text-dark">{{ devi.statut }}</span>
+															{% endif %}
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											<button type="button" class="btn-close" data-bs-dismiss="modal"
+												aria-label="Close"></button>
+										</div>
+										<div class="modal-body">
+											{{ render(path('devis_show', {'id': devi.id})) }}
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary"
+												data-bs-dismiss="modal">Fermer</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</td>
+					</tr>
+					{% endif %}
+
+					{% else %}
+					<tr>
+						<td colspan="15">Champ vide</td>
+					</tr>
+
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<!-- Button trigger modal -->
+</div>
+{% endblock %}

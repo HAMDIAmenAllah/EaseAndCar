@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Carousel index{% endblock %}
+
+{% block body %}
+    <h1>Carousel index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Image</th>
+                <th>Contenu</th>
+                <th>BtnTxt</th>
+                <th>BtnUrl</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for carousel in carousels %}
+            <tr>
+                <td>{{ carousel.id }}</td>
+                <td>{{ carousel.titre }}</td>
+                <td>{{ carousel.image }}</td>
+                <td>{{ carousel.contenu }}</td>
+                <td>{{ carousel.btnTxt }}</td>
+                <td>{{ carousel.btnUrl }}</td>
+                <td>
+                    <a href="{{ path('carousel_show', {'id': carousel.id}) }}">show</a>
+                    <a href="{{ path('carousel_edit', {'id': carousel.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Champ vide</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('carousel_new') }}">Create new</a>
+{% endblock %}

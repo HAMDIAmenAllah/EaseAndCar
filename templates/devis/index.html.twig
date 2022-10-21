@@ -1,0 +1,190 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{controller_name}}{% endblock %}
+{% block stylesheets %}
+{% endblock %}
+{% block content %}
+	{% include "header.html.twig" %}
+	<main id="main">
+		<!-- ======= Hero Section ======= -->
+		<section id="heroD" class="d-flex justify-cntent-center align-items-center">
+			<div id="heroCarousel" class="container carousel carousel-fade"	data-bs-ride="carousel"	data-bs-interval="5000">
+			<!-- Slide 1 -->
+				<div class="carousel-item active">
+					<div class="carousel-container">
+						<img src="" alt="" class="img-fluid" />
+						<h2>Demandez votre devis</h2>
+						<br/>
+						<p class="animate__animated animate__fadeInUp fs-4">
+							Vous souhaitez avoir un devis ? <br>
+							Remplissez le formulaire et nous vous répondons dans les meilleurs délais.
+						</p>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Hero -->
+		<!--Devis Form-->
+		<section class="p-2" id="contactForm" >
+			<form class="container" method="post">
+				{{ form_start(form) }}
+				<center class>
+					<div class="section-title">
+						<h2 id="titre" class="fs-1">Faites votre demande</h2>
+					</div>
+				</center>
+				<div class="container m-auto p-auto">
+					<div class="row mb-3">
+						<!--Type-->
+						<div class="col-12 col-md-6 ">
+							{{ form_label(form.typeEntreprise, "Je suis : ") }}
+							{{ form_errors(form.typeEntreprise) }}
+						</div>
+						<div class="col-12 col-md-6">
+							{{ form_widget(form.typeEntreprise) }}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<!--Entreprise-->
+						<div class="col-12 col-md-6">
+							{{ form_label(form.nomEntreprise, "Nom de l'entreprise : ") }}
+							{{ form_errors(form.nomEntreprise) }}
+						</div>
+						<div class="col-12 col-md-6">
+							{{ form_widget(form.nomEntreprise) }}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<!--Adresse Email-->
+						<div class="col-12 col-md-6">
+							{{ form_label(form.adresseEmail, "Adresse mail : ") }}
+							{{ form_errors(form.adresseEmail) }}
+						</div>
+						<div class="col-12 col-md-6">
+							{{ form_widget(form.adresseEmail) }}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<!--Numérro de téléphone-->
+						<div class="col-12 col-md-6">
+							{{ form_label(form.numeroTel, "Numéro de téléphone : ") }}
+							{{ form_errors(form.numeroTel) }}
+						</div>
+						<div class="col-12 col-md-6">
+							{{ form_widget(form.numeroTel) }}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<!--Adresse du siège social-->
+						<div class="col-12 col-md-6">
+							{{ form_label(form.adresseSiege, "Adresse du siège social : ") }}
+							{{ form_errors(form.adresseSiege) }}
+						</div>
+						<div class="col-12 col-md-6">
+							{{ form_widget(form.adresseSiege) }}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<!--Depart-->
+						<div class="col-12 col-md-6">
+							{{ form_label(form.departementDepart, "J'ai besoin d'un véhicule au départ de : ") }}
+							{{ form_errors(form.departementDepart) }}
+						</div>
+						<div class="col-12 col-md-6">
+							{{ form_widget(form.departementDepart) }}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<!--Periode-->
+						<div class="col-12 col-md-6">
+							{{ form_label(form.debutLocation, "Période de location : ") }}
+							{{ form_errors(form.debutLocation) }}
+							{{ form_errors(form.finLocation) }}
+						</div>
+						<div class="col-12 col-sm-6 col-md-3 mb-3">
+							{{ form_widget(form.debutLocation) }}
+						</div>
+						<div class="col-12 col-sm-6 col-md-3 mb-3">
+							{{ form_widget(form.finLocation) }}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<!--Type vehicules-->
+						<div class="col-12 col-md-6">
+							{{ form_label(form.typeVehicule, "Type de véhicule dont j’ai besoin : ") }}
+							{{ form_errors(form.typeVehicule) }}
+						</div>
+						<div class="col-12 col-md-6">
+							{{ form_widget(form.typeVehicule) }}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<!--Type de Location-->
+						<div class="col-12 col-md-6">
+							{{ form_label(form.typeLocation, "Type de location : ") }}
+							{{ form_errors(form.typeLocation)}}
+						</div>
+						<div class="col-12 col-md-6">
+							{{form_widget(form.typeLocation)}}                    
+						</div>
+					</div>
+					<div class="row mb-3">
+						<!--Nombre de place assises-->
+						<div class="col-12 col-md-6">
+							{{ form_label(form.nombrePlaces, "Nombre de place assises (conducteur compris) : ") }}
+							{{ form_errors(form.nombrePlaces) }}
+						</div>
+						<div class="col-12 col-md-6">
+							{{ form_widget(form.nombrePlaces) }}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<!--chauffeur accompagnateur-->
+						<div class="col-12 col-md-6">
+							{{ form_label(form.besoinChauffeur, "J'ai besoin d'un chauffeur accompagnateur : ") }}
+							{{ form_errors(form.besoinChauffeur) }}
+						</div>
+						<div class="col-12 col-md-6">
+							<div class="d-flex flex-row">
+								{{ form_widget(form.besoinChauffeur) }}                
+							</div>
+						</div>
+					</div>
+					<div class="row mb-3">
+						<!--La demande-->
+						<div class="col-12 col-md-6">
+							{{ form_label(form.message) }}
+							{{ form_errors(form.message) }}
+						</div>
+						<div class="col-12 col-md-6">
+							{{form_widget(form.message)}}
+						</div>
+					</div>
+					<div class="row mb-3">
+						<!--Consentement-->
+						<div class="col-12 col-md-6"></div>
+						<div class="col-12 col-md-6">
+							<div class="">
+								{{form_widget(form.consentement)}}
+							</div>
+						</div>
+					</div>
+					<div class="row mb-0">
+						<!--Submit-->
+						<div class="col-12 col-md-6"></div>
+						<div class="col-12 col-md-6">
+							<div class="">
+								<button class="btn btn-ease">{{ button_label|default('Demander votre devis') }}</button>
+							</div>
+						</div>
+					</div>
+				</div>
+				{{ form_end(form) }}
+			</form>
+		</section>
+		<br>
+		<!--End Devis Form-->
+		
+	</main><!-- End #main -->
+	{% include "footer.html.twig" %}
+{% endblock %}

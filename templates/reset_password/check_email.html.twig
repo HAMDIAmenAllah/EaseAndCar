@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}E-mail envoyé - Ease & car{% endblock %}
+
+{% block stylesheets %}
+    <link href="{{ asset('assets/css/connexion.css') }}" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+
+<div class="container align-middle formulaire ">
+            <div class="row justify-content-center ">
+
+                    <div class="section-title col-md-6 col-lg-4 text-center pt-3 px-5" style="background : #fff; border-radius: 20px 20px 0px 0px;">
+                        <h2 id="titre" class="fs-3">E-mail de réinitialisation du mot de passe envoyé</h2>
+                    </div>
+            </div>
+
+        <div class="row justify-content-center ">
+            <div class="col-md-6 col-lg-4 px-5 text-justify" style="background : #fff; border-radius: 0px 0px 20px 20px; text-align : justify;">
+
+                <p >
+                    un e-mail vient d'être envoyé contenant un lien que vous pouvez utiliser pour réinitialiser votre mot de passe.
+
+                    Ce lien expirera dans {{ resetToken.expirationMessageKey|trans(resetToken.expirationMessageData, 'ResetPasswordBundle') }}.
+                </p>
+                <p>Si vous ne recevez pas d'e-mail, veuillez vérifier votre dossier spam ou <a href="{{ path('app_forgot_password_request') }}">réessayer</a>.</p>
+                        
+                    {# <center>
+                        <div class="mb-3 mt-3">
+                            <button class="btn btn-md btn-ease w-30" type="submit">
+                                Valider
+                            </button>
+                        </div>
+                    </center>
+                    <p class="text-center text-break">
+                Vous vous rappeler de votre mot de passe ?<a href="{{path("app_login")}}">Connectez-vous !</a> 
+                </p> #}
+                
+            <div class="row justify-content-center ">
+        <div 
+            class="col-md-6 col-lg-4 px-5" style="background : #fff; border-radius: 0px 0px 20px 20px;">    
+        </div>
+
+    
+{% endblock %}

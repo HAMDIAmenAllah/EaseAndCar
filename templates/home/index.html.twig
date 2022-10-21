@@ -1,0 +1,187 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+  {% include "header.html.twig" %}
+  <main id="main">
+    {# Carousel #}
+    <section id="hero" class="d-flex justify-cntent-center align-items-center">
+      <div id="heroCarousel" class="container carousel carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
+        <!-- Slide 1 active -->
+        {% for sectioncarousel in sectioncarousels %}
+          <div class="carousel-item  {% if loop.index == 1 %} active {% else %}  {% endif %}">
+            <div class="carousel-container">
+              <img src="" alt="" class="img-fluid" />
+              <h2 class="animate__animated animate__fadeInDown" style="margin-top: 120px">{{sectioncarousel.titre}} </h2>
+              <br/>
+              <br/>
+              <p class="animate__animated animate__fadeInUp">
+                {{sectioncarousel.text}}
+              </p>
+            </div>
+          </div>
+        {% endfor %}
+        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon bx bx-chevron-left" aria-hidden="true"></span>
+        </a>
+        <a class="carousel-control-next" href="#heroCarousel" role="button" data-bs-slide="next">
+          <span class="carousel-control-next-icon bx bx-chevron-right" aria-hidden="true"></span>
+        </a>
+      </div>
+    </section>
+    {# END carousel #}
+    {# section #}
+    <!-- ======= Service Section ======= -->
+    <section class="service-details">
+      <div class="container">
+          <div class="section-title">
+              <h2>Nos services</h2>
+          </div>
+          <div class="row">
+            {% for sectionnosservice in sectionnosservices %}
+              <div class="col-md-4 d-flex align-items-stretch" data-aos="fade-up">
+                  <div class="card">
+                      <div class="card-img">
+                        <img src="{{asset('uploads/' ~ sectionnosservice.image)}}"/>
+                      </div>
+                      <div class="card-body">
+                      <p class="card-title">
+                          <a href="{{sectionnosservice.url}}">{{sectionnosservice.titre}}</a>
+                      </p>
+                      </div>
+                  </div>
+              </div>
+            {% endfor %}
+          </div>
+      </div>
+    </section>
+    {# ENd section #}
+    {# comment ça marche #}
+    <!-- ======= Comment ça marche Section ======= -->
+    <section class="services" style="background-color: #e6e6e6">
+      <div class="container">
+        <div class="section-title">
+          <h2>Comment ça marche ?</h2>
+          <p>
+            <b>Ease&Car</b> se charge de trouver la voiture qyi convient à
+            votre société au quotidien.
+          </p>
+          <p>Réserver vos véhicues et ne pensez plus à rien.</p>
+        </div>
+        <br />
+        <div class="row mx-auto">
+          {% for commentcamarche in commentcamarches %}
+          <div class="col-md-6 col-lg-3  mx-auto" style= "max-height : 100%" data-aos="fade-up" data-aos-delay="200">
+          <div class="icon-box icon-box-cyan">
+            <div>
+              <img src="{{ asset('uploads/' ~ commentcamarche.image) }}" alt="" />
+            </div>
+              <br /> 
+            <p class="description">
+                {{commentcamarche.description }}
+            </p>
+          </div>
+        </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <!-- End Comment ça marche Section -->
+    <!-- devis section -->
+    <section id="devis" style="background: #e6e6e6">
+      <center>
+        {% for sectiondevi in sectiondevis %}
+        <div class="contenant">
+          <img src="{{asset('uploads/' ~ sectiondevi.image) }}" alt="" style="height: 400px" class="container-fluid" />
+          <div class="texte_centrer">
+            <h5 style="font-weight: bold">
+              {{sectiondevi.titre}}
+            </h5>
+            <a href="{{sectiondevi.urlbtn}}" class="btn-get-started animate__animated animate__fadeInUp">
+              <h7 style="font-weight: bold">{{sectiondevi.btn}}</h7>
+            </a>
+          </div>
+        </div>
+        {% endfor %}
+      </center>
+    </section>
+    <!-- end devis section -->
+    <!-- ======= Nos engagements Section ======= -->
+    <section class="engagements" style="background-color: #e6e6e6">
+      <div class="container">
+        <div class="section-title">
+          <h2>Nos engagements</h2>
+          <p>Ma voiture de société avec <b>Ease&Car</b>.</p>
+        </div>
+        <br/>
+        <div class="row">
+          {% for sectionnosengagement in sectionnosengagements %}
+          <div class="col-md-6 col-lg-6 d-flex align-items-stretch" data-aos="fade-up" data-aos-delay="200">
+            <div class="icon-box icon-box-green">
+              <div>
+                <img src="{{ asset('uploads/' ~ sectionnosengagement.image )}}" alt="" class="img-fluid" />
+              </div>
+              <br />
+              <h4 class="title">{{sectionnosengagement.titre}}</h4>
+              <p class="description">
+                {{sectionnosengagement.description}}
+              </p>
+            </div>
+          </div>
+          {% endfor %}
+      </div>
+    </section>
+    <!-- End engagements Section -->
+    <!-- ======= Facts Section ======= -->
+    <section class="facts section-bg" data-aos="fade-up">
+      <div class="container">
+        <div class="row counters">
+          {% for bandeau in bandeaus %}
+            <div class="col-lg-3 col-6 text-center">
+              <span data-purecounter-start="0" data-purecounter-end="{{bandeau.nombre}}" data-purecounter-duration="1" class="purecounter fs-1 fw-bold"></span>
+              <p>{{bandeau.titre}}</p>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <!-- End Facts Section -->
+    <!-- ======= avis client Section ======= -->
+    <section class="testimonials" data-aos="fade-up">
+      <div class="container">
+        <div class="section-title">
+          <h2>Témoignage client</h2>
+        </div>
+        <div class="testimonials-carousel swiper-container">
+          <div class="swiper-wrapper">
+            {% for sectiontemoignage in sectiontemoignages %}
+              <div class="testimonial-item swiper-slide">
+                <img src="{{asset('uploads/' ~ sectiontemoignage.image)}}" class="testimonial-img" alt=""/>
+                <h3>{{sectiontemoignage.nom}}</h3>
+                <h4>{{sectiontemoignage.situation}}</h4>
+                <p>
+                  <i class="bx bxs-quote-alt-left quote-icon-left"></i>
+                  « {{sectiontemoignage.avis}} ».
+                  <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                </p>
+              </div>
+            {% endfor %}
+          </div>
+        <div class="swiper-pagination"></div>
+      </div>
+    </section>  
+  </main>
+     {% if pop == 0 %}
+       <div  class="border p-3 ps-5 shadow-lg col-6  fw-bold w-75">
+        <center>
+          <p class="fixed-bottom bg-light w-75 border rounded p-3 ps-5 shadow-lg  fw-bold w-75 mx-auto">
+                &nbsp;&nbsp;Ease&car utilise des cookies et technologies similaires afin d’analyser la navigation, mesurer l’audience du site et ses performances (Google Analytics) ainsi que pour vous proposer, avec nos partenaires, des publicités adaptées à vos centres d’intérêts (Google Ads et Bing). En cliquant sur « J’accepte », vous consentez au dépôt de ces cookies et notamment à ce que ces informations soient partagées avec nos partenaires. Vous pouvez choisir de refuser et dans ce cas, vous ne pourrez pas recevoir de contenu personnalisé et seuls les cookies nécessaires au fonctionnement du site seront utilisés.
+                <br>
+                <a class="btn btn-light ms-1" type="button" href="{{path('pop')}}" style="border-radius: 12px;">refusé</a>
+                <a class="btn btn-ease btn-md" type="button" href="{{path('pop')}}" style="border-radius: 12px;">j'accepte</a>
+          </p>
+        </center>
+      </div>
+     {% endif %}
+     
+    <!-- End avis client Section -->
+  {% include "footer.html.twig" %}
+{% endblock %}

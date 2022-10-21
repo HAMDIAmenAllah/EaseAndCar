@@ -1,0 +1,72 @@
+{% extends 'admin/baseAdmin.html.twig' %}
+
+{% block title %}Contrat index{% endblock %}
+
+{% block content %}
+<div class="collapsed d-flex container flex-column">
+    <h1>Liste des contrats</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NumContrat</th>
+                <th>Date</th>
+                <th>RaisonSociale</th>
+                <th>Adresse</th>
+                <th>Telephone</th>
+                <th>Nom</th>
+                <th>AdresseClient</th>
+                <th>TelephoneClient</th>
+                <th>Etat</th>
+                <th>PrixHt</th>
+                <th>PrixTtc</th>
+                <th>Reference</th>
+                <th>Type</th>
+                <th>Debut</th>
+                <th>Fin</th>
+                <th>NombreVehicules</th>
+                <th>TarifHT</th>
+                <th>Kilometrage</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for contrat in contrats %}
+            <tr>
+                <td>{{ contrat.id }}</td>
+                <td>{{ contrat.numContrat }}</td>
+                <td>{{ contrat.date ? contrat.date|date('Y-m-d') : '' }}</td>
+                <td>{{ contrat.raisonSociale }}</td>
+                <td>{{ contrat.adresse }}</td>
+                <td>{{ contrat.telephone }}</td>
+                <td>{{ contrat.nom }}</td>
+                <td>{{ contrat.adresseClient }}</td>
+                <td>{{ contrat.telephoneClient }}</td>
+                <td>{{ contrat.etat }}</td>
+                <td>{{ contrat.prixHt }}</td>
+                <td>{{ contrat.prixTtc }}</td>
+                <td>{{ contrat.reference }}</td>
+                <td>{{ contrat.type }}</td>
+                <td>{{ contrat.debut ? contrat.debut|date('Y-m-d') : '' }}</td>
+                <td>{{ contrat.fin ? contrat.fin|date('Y-m-d') : '' }}</td>
+                <td>{{ contrat.nombreVehicules }}</td>
+                <td>{{ contrat.tarifHT }}</td>
+                <td>{{ contrat.kilometrage }}</td>
+                <td>
+                    <a href="{{ path('contrat_show', {'id': contrat.id}) }}">show</a>
+                    <a href="{{ path('contrat_edit', {'id': contrat.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="20">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('contrat_new') }}">Create new</a>
+
+</div>
+{% endblock %}
